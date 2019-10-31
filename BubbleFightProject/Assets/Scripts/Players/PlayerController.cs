@@ -3,29 +3,27 @@
 /// <summary>
 /// プレイヤーの制御クラス
 /// </summary>
-public class PlayerController : MonoBehaviour
+public partial class PlayerController : MonoBehaviour
 {
-    [SerializeField, Tooltip("移動力")]
-    float movePower = 10.0f;
-
     [SerializeField, Tooltip("プレイヤーの番号"), Range(0, 7)]
     int playerNumber = 0;
     [SerializeField, Tooltip("自分自身のRigidbody")]
     new Rigidbody rigidbody = null;
 
-    void Update()
+    PlayerStateManager playerStateManager = new PlayerStateManager();
+
+    void Start()
     {
-        Move();
+        playerStateManager.Init(this, new InBallState());
     }
 
-    /// <summary>
-    /// 移動処理
-    /// </summary>
-    void Move()
+    void Update()
     {
-        float stickHorizontal = SwitchInput.GetHorizontal(playerNumber) * movePower;
-        float stickVertical = SwitchInput.GetVertical(playerNumber) * movePower;
+        playerStateManager.Update();
+    }
 
-        rigidbody.AddForce(stickHorizontal, 0, stickVertical);
+    void OnDestroy()
+    {
+        playerStateManager.Destroy();
     }
 }
