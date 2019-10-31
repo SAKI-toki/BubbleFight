@@ -1,18 +1,47 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+/// <summary>
+/// プレイヤーの制御クラス
+/// </summary>
+public partial class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField, Tooltip("プレイヤーの番号"), Range(0, 7)]
+    int playerNumber = 0;
+
+    PlayerStateManager playerStateManager = new PlayerStateManager();
+
     void Start()
     {
-        
+        playerStateManager.Init(this, new OutBallState());
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        playerStateManager.Update();
+    }
+
+    void OnDestroy()
+    {
+        playerStateManager.Destroy();
+    }
+
+    void OnCollisionEnter(Collision other) { playerStateManager.OnCollisionEnter(other); }
+    void OnCollisionStay(Collision other) { playerStateManager.OnCollisionStay(other); }
+    void OnCollisionExit(Collision other) { playerStateManager.OnCollisionExit(other); }
+    void OnTriggerEnter(Collider other) { playerStateManager.OnTriggerEnter(other); }
+    void OnTriggerStay(Collider other) { playerStateManager.OnTriggerStay(other); }
+    void OnTriggerExit(Collider other) { playerStateManager.OnTriggerExit(other); }
+
+    /// <summary>
+    /// プレイヤーの回転
+    /// </summary>
+    void PlayerRotation(Vector3 lookatDir)
+    {
+        if (lookatDir == Vector3.zero) return;
+        //プレイヤーの回転
+        var startQ = transform.rotation;
+        transform.LookAt(transform.position + lookatDir);
+        var endQ = transform.rotation;
+        transform.rotation = Quaternion.Lerp(startQ, endQ, 0.3f);
     }
 }
