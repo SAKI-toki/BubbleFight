@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class FirstSceneTransition : MonoBehaviour
 {
-    const string TitleSceneName = "TitleScene";
     const float WaitTime = 3.0f;
     void Start()
     {
@@ -20,7 +19,7 @@ public class FirstSceneTransition : MonoBehaviour
     /// </summary>
     IEnumerator LoadStartScene()
     {
-        AsyncOperation async = SceneManager.LoadSceneAsync(TitleSceneName);
+        AsyncOperation async = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
         async.allowSceneActivation = false;
         yield return new WaitForSeconds(WaitTime);
         async.allowSceneActivation = true;

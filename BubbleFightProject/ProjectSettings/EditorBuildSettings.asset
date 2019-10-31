@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Commons/FirstScene.unity
     guid: 4fb39b0fb083f064489285e369ed112f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TitleScene.unity
     guid: c9d372b5c0a0761498caaa1f98a58873
+  - enabled: 1
+    path: Assets/Scenes/Test/EightPlayerDebugScene.unity
+    guid: cf6fe6863ed6c534ab21c67f7d7d8359
   - enabled: 1
     path: Assets/Scenes/Commons/InitializeScene.unity
     guid: d412596259cc01b419cb6dd90b8b7b8b

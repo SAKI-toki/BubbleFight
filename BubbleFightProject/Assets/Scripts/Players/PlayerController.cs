@@ -3,13 +3,12 @@
 /// <summary>
 /// プレイヤーの制御クラス
 /// </summary>
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField, Tooltip("移動力")]
     float movePower = 10.0f;
 
-    [SerializeField, Tooltip("プレイヤーの番号")]
+    [SerializeField, Tooltip("プレイヤーの番号"), Range(0, 7)]
     int playerNumber = 0;
     [SerializeField, Tooltip("自分自身のRigidbody")]
     new Rigidbody rigidbody = null;
