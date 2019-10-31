@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 0
   ballMovePower: 10
+  walkMoveSpeed: 3
 --- !u!54 &1395792898741096076
 Rigidbody:
   m_ObjectHideFlags: 0

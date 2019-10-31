@@ -31,4 +31,17 @@ public partial class PlayerController : MonoBehaviour
     void OnTriggerEnter(Collider other) { playerStateManager.OnTriggerEnter(other); }
     void OnTriggerStay(Collider other) { playerStateManager.OnTriggerStay(other); }
     void OnTriggerExit(Collider other) { playerStateManager.OnTriggerExit(other); }
+
+    /// <summary>
+    /// プレイヤーの回転
+    /// </summary>
+    void PlayerRotation(Vector3 lookatDir)
+    {
+        if (lookatDir == Vector3.zero) return;
+        //プレイヤーの回転
+        var startQ = transform.rotation;
+        transform.LookAt(transform.position + lookatDir);
+        var endQ = transform.rotation;
+        transform.rotation = Quaternion.Lerp(startQ, endQ, 0.3f);
+    }
 }

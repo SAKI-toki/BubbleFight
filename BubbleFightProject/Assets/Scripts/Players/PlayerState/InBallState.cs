@@ -64,12 +64,7 @@ public partial class PlayerController : MonoBehaviour
                 lookatDir.x = inputDir.x;
                 lookatDir.z = inputDir.z;
             }
-
-            //プレイヤーの回転
-            var startQ = playerController.transform.rotation;
-            playerController.transform.LookAt(playerController.transform.position + lookatDir);
-            var endQ = playerController.transform.rotation;
-            playerController.transform.rotation = Quaternion.Lerp(startQ, endQ, 0.3f);
+            playerController.PlayerRotation(lookatDir);
         }
 
         /// <summary>
@@ -82,9 +77,18 @@ public partial class PlayerController : MonoBehaviour
 
             //Rigidbodyのオンオフ
             var rigidbody = playerController.GetComponent<Rigidbody>();
-            if (enabled) rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            else rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-            rigidbody.isKinematic = !enabled;
+            if (enabled)
+            {
+                //この順番にしないと警告が出る
+                rigidbody.isKinematic = false;
+                rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            }
+            else
+            {
+                //この順番にしないと警告が出る
+                rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+                rigidbody.isKinematic = true;
+            }
 
         }
     }
