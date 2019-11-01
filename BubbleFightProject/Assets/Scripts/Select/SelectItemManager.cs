@@ -89,7 +89,7 @@ public abstract class SelectItemManager : MonoBehaviour
     /// </summary>
     protected bool ChoiceSelectItem(int operationIndex, SelectItemBase currentSelectItem)
     {
-        if (SwitchInput.GetButtonDown(operationIndex, SwitchButton.Success))
+        if (SwitchInput.GetButtonDown(operationIndex, SwitchButton.Ok))
         {
             return currentSelectItem.ChoiceThis();
         }

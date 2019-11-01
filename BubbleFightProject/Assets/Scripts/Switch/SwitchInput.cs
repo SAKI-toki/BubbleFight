@@ -438,6 +438,7 @@ public enum SwitchButton : long
     Trigger = 0x1 << 12,
     ZTrigger = 0x1 << 13,
 #endif
-    Success = SwitchButton.Right,
+    Ok = SwitchButton.Right,
+    Cancel = SwitchButton.Down,
     None = 0
 }

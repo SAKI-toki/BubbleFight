@@ -26,18 +26,17 @@ public class PlayerSelectManager : SelectItemManager
 
     protected override void SelectItemManagerInit()
     {
-        Debug.Assert(ItemCount == itemParentTransform.childCount);
+        //親オブジェクトから引っ張ってくる
         foreach (var item in itemParentTransform.GetComponentsInChildren<PlayerSelectItem>())
         {
             itemList.Add(item);
         }
+        //アイテム数が既定の数と同じでなければならない
+        Debug.Assert(ItemCount == itemList.Count);
 
-        GlobalVariable.isJoin[0] = true;
-        GlobalVariable.playerCount = 1;
-
-        for (int i = 0; i < GlobalVariable.MaxPlayerCount; ++i)
+        for (int i = 0; i < PlayerJoinManager.GetJoinPlayerCount(); ++i)
         {
-            if (GlobalVariable.isJoin[i])
+            if (PlayerJoinManager.IsJoin(i))
             {
                 var info = new PlayerSelectInfo();
                 info.index = i;
@@ -69,7 +68,7 @@ public class PlayerSelectManager : SelectItemManager
         }
 
         //全員が選んだかどうか
-        if (alreadyCount == GlobalVariable.playerCount)
+        if (alreadyCount == PlayerJoinManager.GetJoinPlayerCount())
         {
             Debug.LogError("END");
         }
