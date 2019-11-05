@@ -1,0 +1,71 @@
+using UnityEngine;
+
+/// <summary>
+/// ステージ選択の投票
+/// </summary>
+public class StageSelectVoting : MonoBehaviour
+{
+    [SerializeField, Tooltip("穴の当たり判定")]
+    StageSelectHoleCollider[] stageSelectHoleColliders = null;
+
+    //イベントの型
+    public delegate void AddVotingFunctionType();
+    //投票数
+    int[] votingCounts;
+
+    [SerializeField, Tooltip("プレイヤーPrefab")]
+    GameObject playerPrefab = null;
+
+    void Start()
+    {
+#if UNITY_EDITOR
+        PlayerJoinManager.DebugSetPlayerJoinCount(4);
+#endif
+        //全ての番号があるか確認する
+        if (!HasAllNumber()) return;
+        //配列の要素数の確保
+        votingCounts = new int[stageSelectHoleColliders.Length];
+        //全ての穴の当たり判定にイベントを追加する
+        foreach (var stageSelectHoleCollider in stageSelectHoleColliders)
+        {
+            stageSelectHoleCollider.SetEvent(delegate { votingCounts[stageSelectHoleCollider.GetStageNumber()] += 1; });
+        }
+    }
+
+    void Update()
+    {
+        if (AlreadyAllPlayerVoting()) Debug.LogError("全てのプレイヤーが投票した");
+    }
+
+    /// <summary>
+    /// 全てのプレイヤーが投票したかどうか
+    /// </summary>
+    bool AlreadyAllPlayerVoting()
+    {
+        int votingSum = 0;
+        foreach (var votingCount in votingCounts)
+        {
+            votingSum += votingCount;
+        }
+        return votingSum == PlayerJoinManager.GetJoinPlayerCount();
+    }
+
+    /// <summary>
+    /// 全ての番号があるかどうか
+    /// </summary>
+    bool HasAllNumber()
+    {
+        bool[] alreadyAppearNumber = new bool[stageSelectHoleColliders.Length];
+        foreach (var stageSelectHoleCollider in stageSelectHoleColliders)
+        {
+            var stageNumber = stageSelectHoleCollider.GetStageNumber();
+            if (alreadyAppearNumber[stageNumber])
+            {
+                Debug.LogError(stageNumber.ToString() + "のステージ番号が複数あります");
+                return false;
+            }
+            alreadyAppearNumber[stageNumber] = true;
+        }
+        return true;
+    }
+}

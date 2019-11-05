@@ -33,6 +33,7 @@ public class PlayerJoinManager : MonoBehaviour
             }
         }
 
+        //参加人数の更新
         UpdateJoinCount();
 
         //プレイ人数確定
@@ -72,4 +73,18 @@ public class PlayerJoinManager : MonoBehaviour
 
     static public int GetJoinPlayerCount() { return joinPlayerCount; }
     static public bool IsJoin(int index) { return isJoins[index]; }
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// デバッグ用にどこからでもプレイヤーの人数をいじれるようにする
+    /// </summary>
+    static public void DebugSetPlayerJoinCount(int PlayerCount)
+    {
+        joinPlayerCount = PlayerCount;
+        for (int i = 0; i < PlayerCount; ++i)
+        {
+            isJoins[i] = true;
+        }
+    }
+#endif
 }
