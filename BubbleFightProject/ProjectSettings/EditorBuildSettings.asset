@@ -8,12 +8,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Commons/FirstScene.unity
     guid: 4fb39b0fb083f064489285e369ed112f
-  - enabled: 0
+  - enabled: 1
+    path: Assets/Scenes/PlayerJoinScene.unity
+    guid: 121b0df853f2d124281b4d8ba941cd2a
+  - enabled: 1
+    path: Assets/Scenes/PlayerTypeSelectScene.unity
+    guid: 599f0f518eb27df4ca593bab83b77404
+  - enabled: 1
+    path: Assets/Scenes/StageSelectScene.unity
+    guid: fc02232bc15883544b931c38fc10f709
+  - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: c9d372b5c0a0761498caaa1f98a58873
-  - enabled: 1
-    path: Assets/Scenes/Test/EightPlayerDebugScene.unity
-    guid: cf6fe6863ed6c534ab21c67f7d7d8359
   - enabled: 1
     path: Assets/Scenes/Commons/InitializeScene.unity
     guid: d412596259cc01b419cb6dd90b8b7b8b

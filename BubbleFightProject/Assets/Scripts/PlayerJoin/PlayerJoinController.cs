@@ -10,7 +10,7 @@ public class PlayerJoinController : MonoBehaviour
     /// </summary>
     public void Join()
     {
-        transform.localScale = Vector3.one * 2;
+        transform.localScale = Vector3.one * 1.5f;
     }
 
     /// <summary>

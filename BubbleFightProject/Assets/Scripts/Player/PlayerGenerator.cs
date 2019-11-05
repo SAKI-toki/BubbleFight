@@ -38,7 +38,7 @@ public class PlayerGenerator : MonoBehaviour
     /// <summary>
     /// プレイヤーを生成
     /// </summary>
-    GameObject GeneratePlayer(int index)
+    public GameObject GeneratePlayer(int index)
     {
         return null;
     }

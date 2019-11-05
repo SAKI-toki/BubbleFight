@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// プレイヤーの参加かどうかを管理するクラス
@@ -20,16 +21,14 @@ public class PlayerJoinManager : MonoBehaviour
         for (int i = 0; i < PlayerCount.MaxValue; ++i)
         {
             //参加
-            if (SwitchInput.GetButtonDown(i, SwitchButton.Ok) && !IsJoin(i))
+            if (SwitchInput.GetButtonDown(i, SwitchButton.Ok))
             {
-                joinControllers[i].Join();
-                isJoins[i] = true;
+                JoinUnJoinExecute(i, true);
             }
             //非参加
-            else if (SwitchInput.GetButtonDown(i, SwitchButton.Cancel) && IsJoin(i))
+            else if (SwitchInput.GetButtonDown(i, SwitchButton.Cancel))
             {
-                joinControllers[i].UnJoin();
-                isJoins[i] = false;
+                JoinUnJoinExecute(i, false);
             }
         }
 
@@ -41,7 +40,25 @@ public class PlayerJoinManager : MonoBehaviour
             joinPlayerCount >= PlayerCount.MinValue)
         {
             //次のシーン
+            SceneManager.LoadScene("PlayerTypeSelectScene");
         }
+    }
+
+    /// <summary>
+    /// 参加、不参加の実行
+    /// </summary>
+    void JoinUnJoinExecute(int index, bool join)
+    {
+        if (join == IsJoin(index)) return;
+        if (join)
+        {
+            joinControllers[index].Join();
+        }
+        else //if(!join)
+        {
+            joinControllers[index].UnJoin();
+        }
+        isJoins[index] = join;
     }
 
     /// <summary>
@@ -85,6 +102,18 @@ public class PlayerJoinManager : MonoBehaviour
         {
             isJoins[i] = true;
         }
+    }
+    [SerializeField, Tooltip("デバッグ用のオンオフを実行するプレイヤー")]
+    int debugPlayerNumber = 0;
+    [SerializeField, Tooltip("デバッグ用のオンオフ")]
+    bool debugOnOff = false;
+    /// <summary>
+    /// デバッグ用のオンオフの実行
+    /// </summary>
+    [ContextMenu("デバッグ用のオンオフの実行")]
+    void DebugOnOff()
+    {
+        JoinUnJoinExecute(debugPlayerNumber, debugOnOff);
     }
 #endif
 }

@@ -13,8 +13,6 @@ public class StageSelectVoting : MonoBehaviour
     //投票数
     int[] votingCounts;
 
-    [SerializeField, Tooltip("プレイヤーPrefab")]
-    GameObject playerPrefab = null;
     [SerializeField, Tooltip("プレイヤーの生成位置")]
     Transform[] playerGenerateTransforms = null;
 
@@ -36,8 +34,7 @@ public class StageSelectVoting : MonoBehaviour
         {
             if (PlayerJoinManager.IsJoin(i))
             {
-                var playerObject = Instantiate(playerPrefab);
-                playerObject.transform.SetPositionAndRotation(playerGenerateTransforms[i].position, playerGenerateTransforms[i].rotation);
+                //プレイヤー生成
             }
         }
     }
