@@ -1,4 +1,4 @@
-/// <summary>
+﻿/// <summary>
 /// プレイヤーの参加に関する情報
 /// </summary>
 public static class PlayerCount

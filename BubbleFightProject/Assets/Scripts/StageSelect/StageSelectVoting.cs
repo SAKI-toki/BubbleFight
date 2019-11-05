@@ -1,4 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// ステージ選択の投票
@@ -41,7 +42,10 @@ public class StageSelectVoting : MonoBehaviour
 
     void Update()
     {
-        if (AlreadyAllPlayerVoting()) Debug.LogError("全てのプレイヤーが投票した");
+        if (AlreadyAllPlayerVoting())
+        {
+            SceneManager.LoadScene("GameScene");
+        }
     }
 
     /// <summary>
