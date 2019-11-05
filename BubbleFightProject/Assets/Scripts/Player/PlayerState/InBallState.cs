@@ -15,16 +15,9 @@ public partial class PlayerController : MonoBehaviour
         Vector3 inputDir = Vector3.zero;
         Vector3 lookatDir = Vector3.zero;
 
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        public InBallState(GameObject ballObject)
-        {
-            ballController = ballObject.AddComponent<BallController>();
-        }
-
         protected override void Init()
         {
+            ballController = playerController.transform.parent.GetComponent<BallController>();
             ballController.Initialize(playerController.playerNumber, playerController.ballMovePower);
             playerController.transform.localPosition = Vector3.zero;
             PlayerPhysicsSet(false);

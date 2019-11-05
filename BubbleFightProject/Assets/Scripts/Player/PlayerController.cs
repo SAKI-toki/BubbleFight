@@ -10,9 +10,23 @@ public partial class PlayerController : MonoBehaviour
 
     PlayerStateManager playerStateManager = new PlayerStateManager();
 
+    enum PlayerStateEnum { In, Out };
+    [SerializeField, Tooltip("プレイヤーの初期ステート")]
+    PlayerStateEnum initStateEnum = PlayerStateEnum.In;
+
     void Start()
     {
-        playerStateManager.Init(this, new OutBallState());
+        PlayerStateBase initState = null;
+        switch (initStateEnum)
+        {
+            case PlayerStateEnum.In:
+                initState = new InBallState();
+                break;
+            case PlayerStateEnum.Out:
+                initState = new OutBallState();
+                break;
+        }
+        playerStateManager.Init(this, initState);
     }
 
     void Update()

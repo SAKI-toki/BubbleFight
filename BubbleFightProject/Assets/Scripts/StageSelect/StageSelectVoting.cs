@@ -15,6 +15,8 @@ public class StageSelectVoting : MonoBehaviour
 
     [SerializeField, Tooltip("プレイヤーPrefab")]
     GameObject playerPrefab = null;
+    [SerializeField, Tooltip("プレイヤーの生成位置")]
+    Transform[] playerGenerateTransforms = null;
 
     void Start()
     {
@@ -29,6 +31,14 @@ public class StageSelectVoting : MonoBehaviour
         foreach (var stageSelectHoleCollider in stageSelectHoleColliders)
         {
             stageSelectHoleCollider.SetEvent(delegate { votingCounts[stageSelectHoleCollider.GetStageNumber()] += 1; });
+        }
+        for (int i = 0; i < PlayerCount.MaxValue; ++i)
+        {
+            if (PlayerJoinManager.IsJoin(i))
+            {
+                var playerObject = Instantiate(playerPrefab);
+                playerObject.transform.SetPositionAndRotation(playerGenerateTransforms[i].position, playerGenerateTransforms[i].rotation);
+            }
         }
     }
 

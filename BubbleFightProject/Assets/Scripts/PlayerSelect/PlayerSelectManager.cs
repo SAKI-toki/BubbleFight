@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerSelectManager : SelectItemManager
 {
     //アイテムの数
-    const int ItemCount = 10;
+    const int PlayerTypeItemCount = 10;
 
     /// <summary>
     /// プレイヤーセレクトの1プレイヤー当たりの情報
@@ -16,23 +16,23 @@ public class PlayerSelectManager : SelectItemManager
     {
         public int index;
         public bool alreadySelect = false;
-        public SelectItemBase currentSelectItem;
+        public SelectItemBase currentSelectPlayerTypeItem;
     }
 
     [SerializeField, Tooltip("アイテムの親オブジェクトのTransform")]
-    Transform itemParentTransform = null;
-    List<SelectItemBase> itemList = new List<SelectItemBase>();
+    Transform playerTypeItemParentTransform = null;
+    List<SelectItemBase> playerTypeItemList = new List<SelectItemBase>();
     List<PlayerSelectInfo> playerSelectInfos = new List<PlayerSelectInfo>();
 
     protected override void SelectItemManagerInit()
     {
         //親オブジェクトから引っ張ってくる
-        foreach (var item in itemParentTransform.GetComponentsInChildren<PlayerSelectItem>())
+        foreach (var item in playerTypeItemParentTransform.GetComponentsInChildren<PlayerSelectItem>())
         {
-            itemList.Add(item);
+            playerTypeItemList.Add(item);
         }
         //アイテム数が既定の数と同じでなければならない
-        Debug.Assert(ItemCount == itemList.Count);
+        Debug.Assert(PlayerTypeItemCount == playerTypeItemList.Count);
 
         for (int i = 0; i < PlayerJoinManager.GetJoinPlayerCount(); ++i)
         {
@@ -40,8 +40,8 @@ public class PlayerSelectManager : SelectItemManager
             {
                 var info = new PlayerSelectInfo();
                 info.index = i;
-                info.currentSelectItem = itemList[i];
-                itemList[i].ItemOn();
+                info.currentSelectPlayerTypeItem = playerTypeItemList[i];
+                playerTypeItemList[i].ItemOn();
                 playerSelectInfos.Add(info);
             }
         }
@@ -56,15 +56,16 @@ public class PlayerSelectManager : SelectItemManager
             //まだ選んでいなかったら
             if (!playerSelectInfos[i].alreadySelect)
             {
-                CursorMove(playerSelectInfos[i].index, ref playerSelectInfos[i].currentSelectItem);
-                playerSelectInfos[i].alreadySelect = ChoiceSelectItem(playerSelectInfos[i].index, playerSelectInfos[i].currentSelectItem);
+                CursorMove(playerSelectInfos[i].index, ref playerSelectInfos[i].currentSelectPlayerTypeItem);
+                playerSelectInfos[i].alreadySelect =
+                    ChoiceSelectItem(playerSelectInfos[i].index, playerSelectInfos[i].currentSelectPlayerTypeItem);
             }
             else
             {
                 ++alreadyCount;
             }
             //更新は毎回する
-            playerSelectInfos[i].currentSelectItem.ItemUpdate();
+            playerSelectInfos[i].currentSelectPlayerTypeItem.ItemUpdate();
         }
 
         //全員が選んだかどうか
@@ -73,4 +74,9 @@ public class PlayerSelectManager : SelectItemManager
             Debug.LogError("END");
         }
     }
+
+    //プレイヤーの種類
+    public enum PlayerTypeEnum { None };
+    static PlayerTypeEnum[] playerTypes = new PlayerTypeEnum[PlayerCount.MaxValue];
+    static public PlayerTypeEnum GetPlayerType(int index) { return playerTypes[index]; }
 }

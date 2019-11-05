@@ -7,20 +7,9 @@ public partial class PlayerController : MonoBehaviour
     /// </summary>
     class IntoBallState : PlayerStateBase
     {
-        //ボール
-        GameObject ball = null;
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        public IntoBallState(GameObject ballObject)
-        {
-            ball = ballObject;
-        }
-
         public override PlayerStateBase Update()
         {
-            return new InBallState(ball);
+            return new InBallState();
         }
     }
 }

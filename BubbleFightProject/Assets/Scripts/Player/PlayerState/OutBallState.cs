@@ -41,7 +41,7 @@ public partial class PlayerController : MonoBehaviour
             other.transform.childCount == 0)
             {
                 playerController.transform.parent = other.transform;
-                playerController.playerStateManager.TranslationState(new InBallState(other.gameObject));
+                playerController.playerStateManager.TranslationState(new IntoBallState());
             }
         }
     }
