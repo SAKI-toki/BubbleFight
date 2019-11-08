@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 1101312921015316693, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: m_Name
-      value: Knight
+      value: Knight Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1101312921015316699, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
@@ -92,7 +92,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400062, guid: c3a2ea7389f9ea447a42a712ba2e0f9d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 400062, guid: c3a2ea7389f9ea447a42a712ba2e0f9d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -132,15 +132,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400062, guid: c3a2ea7389f9ea447a42a712ba2e0f9d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.25
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 400062, guid: c3a2ea7389f9ea447a42a712ba2e0f9d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.25
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 400062, guid: c3a2ea7389f9ea447a42a712ba2e0f9d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.25
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 13700000, guid: c3a2ea7389f9ea447a42a712ba2e0f9d, type: 3}
       propertyPath: m_Materials.Array.data[0]

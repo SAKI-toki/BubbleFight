@@ -25,6 +25,8 @@ public partial class PlayerController : MonoBehaviour
 
         public override PlayerStateBase Update()
         {
+            //親オブジェクト(ボール)がなくなったらステート遷移
+            if (playerController.transform.parent == null) return new BreakBallState();
             ballController.Move();
             playerController.PlayerRotation(ballController.GetLookatDir());
             return this;

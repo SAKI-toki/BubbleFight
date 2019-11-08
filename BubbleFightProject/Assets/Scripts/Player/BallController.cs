@@ -16,9 +16,22 @@ public class BallController : MonoBehaviour
     //移動力
     float movePower = 0.0f;
 
+    [SerializeField, Tooltip("ボールの耐久値")]
+    float hitPoint = 100;
+
+    [SerializeField, Tooltip("ダメージ量(指数的に増加)")]
+    float damageWeight = 2.0f;
+
     void Start()
     {
         thisRigidbody = GetComponent<Rigidbody>();
+    }
+
+    Vector3 prevVelocity = Vector3.zero;
+
+    void Update()
+    {
+        prevVelocity = thisRigidbody.velocity;
     }
 
     /// <summary>
@@ -60,5 +73,34 @@ public class BallController : MonoBehaviour
     public Vector3 GetLookatDir()
     {
         return lookatDir;
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Ball")
+        {
+            hitPoint -= DamageCalculate(other.relativeVelocity.sqrMagnitude);
+            if (hitPoint <= 0) BreakBall();
+        }
+    }
+
+    /// <summary>
+    /// ボールが破壊された
+    /// </summary>
+    void BreakBall()
+    {
+        for (int i = transform.childCount - 1; i >= 0; --i)
+        {
+            transform.GetChild(i).transform.parent = null;
+        }
+        Destroy(this.gameObject);
+    }
+
+    /// <summary>
+    /// ダメージ計算
+    /// </summary>
+    float DamageCalculate(float collisionPower)
+    {
+        return Mathf.Pow(collisionPower, damageWeight / 10);
     }
 }
