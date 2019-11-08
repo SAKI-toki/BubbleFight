@@ -79,7 +79,8 @@ public class BallController : MonoBehaviour
     {
         if (other.gameObject.tag == "Ball")
         {
-            hitPoint -= DamageCalculate(other.relativeVelocity.sqrMagnitude);
+            hitPoint -= DamageCalculate(other.relativeVelocity.sqrMagnitude,
+                                        other.gameObject.GetComponent<BallController>().prevVelocity.sqrMagnitude);
             if (hitPoint <= 0) BreakBall();
         }
     }
@@ -99,8 +100,10 @@ public class BallController : MonoBehaviour
     /// <summary>
     /// ダメージ計算
     /// </summary>
-    float DamageCalculate(float collisionPower)
+    float DamageCalculate(float collisionPower, float hitObjectPower)
     {
-        return Mathf.Pow(collisionPower, damageWeight / 10);
+        float damageBase = collisionPower * hitObjectPower /
+        (prevVelocity.sqrMagnitude + hitObjectPower);
+        return Mathf.Pow(damageBase, damageWeight / 10);
     }
 }
