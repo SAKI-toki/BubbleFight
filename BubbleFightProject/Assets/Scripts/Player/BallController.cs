@@ -46,12 +46,23 @@ public class BallController : MonoBehaviour
     /// <summary>
     /// 移動
     /// </summary>
-    public void Move()
+    public void Move(float easyCurveWeight)
     {
         inputDir.x = SwitchInput.GetHorizontal(playerIndex);
         inputDir.z = SwitchInput.GetVertical(playerIndex);
+        //曲がりやすくする
+        var velocity = thisRigidbody.velocity;
+        velocity.y = 0;
+        /*
+        力の向きと入力の向きの内積
+        同じ向きなら1,反対向きなら-1,垂直なら0のため
+        (-dot + 1) / 2をすることで同じ向きなら0,反対向きなら1になるようにする
+        */
+        float angle = (-Vector3.Dot(velocity.normalized, inputDir.normalized) + 1) / 2;
+        //曲がるときの力
+        float curvePower = angle + 1;
         //入力方向に力を加える
-        thisRigidbody.AddForce(inputDir * movePower);
+        thisRigidbody.AddForce(inputDir * movePower * Mathf.Pow(curvePower, easyCurveWeight));
 
         if (inputDir.x == 0 && inputDir.z == 0)
         {

@@ -5,6 +5,12 @@ public partial class PlayerController : MonoBehaviour
     [SerializeField, Tooltip("ボールでの移動時の力")]
     float ballMovePower = 10.0f;
 
+    [SerializeField, Tooltip("ボールに付ける物理マテリアル")]
+    PhysicMaterial ballPhysicalMaterial = null;
+
+    [SerializeField, Tooltip("曲がりやすくする重み"), Range(1, 2)]
+    float easyCurveWeight = 1.0f;
+
     /// <summary>
     /// ボールの中にいるステート
     /// </summary>
@@ -18,6 +24,7 @@ public partial class PlayerController : MonoBehaviour
         protected override void Init()
         {
             ballController = playerController.transform.parent.GetComponent<BallController>();
+            ballController.GetComponent<SphereCollider>().material = playerController.ballPhysicalMaterial;
             ballController.Initialize(playerController.playerNumber, playerController.ballMovePower);
             playerController.transform.localPosition = Vector3.zero;
             PlayerPhysicsSet(false);
@@ -27,7 +34,7 @@ public partial class PlayerController : MonoBehaviour
         {
             //親オブジェクト(ボール)がなくなったらステート遷移
             if (playerController.transform.parent == null) return new BreakBallState();
-            ballController.Move();
+            ballController.Move(playerController.easyCurveWeight);
             playerController.PlayerRotation(ballController.GetLookatDir());
             return this;
         }

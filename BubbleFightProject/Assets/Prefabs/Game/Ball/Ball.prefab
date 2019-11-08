@@ -122,4 +122,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoint: 100
-  damageWeight: 5
+  damageWeight: 8
