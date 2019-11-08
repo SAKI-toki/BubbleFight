@@ -37,10 +37,11 @@ public class BallController : MonoBehaviour
     /// <summary>
     /// 初期化
     /// </summary>
-    public void Initialize(int index, float ballMovePower)
+    public void Initialize(int index, float ballMovePower, float ballMass)
     {
         playerIndex = index;
         movePower = ballMovePower;
+        thisRigidbody.mass = ballMass;
     }
 
     /// <summary>
@@ -62,7 +63,7 @@ public class BallController : MonoBehaviour
         //曲がるときの力
         float curvePower = angle + 1;
         //入力方向に力を加える
-        thisRigidbody.AddForce(inputDir * movePower * Mathf.Pow(curvePower, easyCurveWeight));
+        thisRigidbody.AddForce(inputDir * movePower * thisRigidbody.mass * Mathf.Pow(curvePower, easyCurveWeight));
 
         if (inputDir.x == 0 && inputDir.z == 0)
         {
@@ -90,8 +91,11 @@ public class BallController : MonoBehaviour
     {
         if (other.gameObject.tag == "Ball")
         {
+            var otherBallController = other.gameObject.GetComponent<BallController>();
+            //ダメージ
             hitPoint -= DamageCalculate(other.relativeVelocity.sqrMagnitude,
-                                        other.gameObject.GetComponent<BallController>().prevVelocity.sqrMagnitude);
+                                        otherBallController.prevVelocity.sqrMagnitude);
+
             if (hitPoint <= 0) BreakBall();
         }
     }

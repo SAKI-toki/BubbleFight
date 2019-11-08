@@ -9,7 +9,9 @@ public partial class PlayerController : MonoBehaviour
     PhysicMaterial ballPhysicalMaterial = null;
 
     [SerializeField, Tooltip("曲がりやすくする重み"), Range(1, 2)]
-    float easyCurveWeight = 1.0f;
+    float ballEasyCurveWeight = 1.0f;
+    [SerializeField, Tooltip("ボールの重さ")]
+    float ballMass = 1.0f;
 
     /// <summary>
     /// ボールの中にいるステート
@@ -25,7 +27,7 @@ public partial class PlayerController : MonoBehaviour
         {
             ballController = playerController.transform.parent.GetComponent<BallController>();
             ballController.GetComponent<SphereCollider>().material = playerController.ballPhysicalMaterial;
-            ballController.Initialize(playerController.playerNumber, playerController.ballMovePower);
+            ballController.Initialize(playerController.playerNumber, playerController.ballMovePower, playerController.ballMass);
             playerController.transform.localPosition = Vector3.zero;
             PlayerPhysicsSet(false);
         }
@@ -34,7 +36,7 @@ public partial class PlayerController : MonoBehaviour
         {
             //親オブジェクト(ボール)がなくなったらステート遷移
             if (playerController.transform.parent == null) return new BreakBallState();
-            ballController.Move(playerController.easyCurveWeight);
+            ballController.Move(playerController.ballEasyCurveWeight);
             playerController.PlayerRotation(ballController.GetLookatDir());
             return this;
         }
