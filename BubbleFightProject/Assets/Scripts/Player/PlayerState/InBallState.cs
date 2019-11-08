@@ -27,7 +27,7 @@ public partial class PlayerController : MonoBehaviour
         {
             ballController = playerController.transform.parent.GetComponent<BallController>();
             ballController.GetComponent<SphereCollider>().material = playerController.ballPhysicalMaterial;
-            ballController.Initialize(playerController.playerNumber, playerController.ballMovePower, playerController.ballMass);
+            ballController.InitializeOnPlayer(playerController.playerNumber, playerController.ballMovePower, playerController.ballMass);
             playerController.transform.localPosition = Vector3.zero;
             PlayerPhysicsSet(false);
         }

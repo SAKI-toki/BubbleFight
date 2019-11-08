@@ -51,7 +51,7 @@ MonoBehaviour:
   ballPhysicalMaterial: {fileID: 13400000, guid: 964bc9ebeb2b4ce4b869b2842562f40b,
     type: 2}
   ballEasyCurveWeight: 1
-  ballBouncePower: 1
+  ballMass: 1
   walkMoveSpeed: 4
 --- !u!54 &1395792898741096076
 Rigidbody:
@@ -67,7 +67,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!136 &2137016027539834921
 CapsuleCollider:

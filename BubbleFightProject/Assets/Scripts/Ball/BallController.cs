@@ -12,7 +12,7 @@ public class BallController : MonoBehaviour
     Vector3 lookatDir = Vector3.zero;
 
     //操作するプレイヤー
-    int playerIndex = 0;
+    int playerIndex = int.MaxValue;
     //移動力
     float movePower = 0.0f;
 
@@ -21,13 +21,16 @@ public class BallController : MonoBehaviour
 
     [SerializeField, Tooltip("ダメージ量(指数的に増加)")]
     float damageWeight = 2.0f;
+    //当たる前の力を保持する変数
+    Vector3 prevVelocity = Vector3.zero;
 
-    void Start()
+    public delegate void DestroyEventType();
+    DestroyEventType destroyEvent;
+
+    void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
     }
-
-    Vector3 prevVelocity = Vector3.zero;
 
     void Update()
     {
@@ -35,9 +38,9 @@ public class BallController : MonoBehaviour
     }
 
     /// <summary>
-    /// 初期化
+    /// プレイヤーによる初期化
     /// </summary>
-    public void Initialize(int index, float ballMovePower, float ballMass)
+    public void InitializeOnPlayer(int index, float ballMovePower, float ballMass)
     {
         playerIndex = index;
         movePower = ballMovePower;
@@ -89,26 +92,46 @@ public class BallController : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
+        //ボールと衝突
         if (other.gameObject.tag == "Ball")
         {
             var otherBallController = other.gameObject.GetComponent<BallController>();
-            //ダメージ
+            //ダメージ(空の場合は10分の1のダメージにする)
             hitPoint -= DamageCalculate(other.relativeVelocity.sqrMagnitude,
-                                        otherBallController.prevVelocity.sqrMagnitude);
+                                        otherBallController.prevVelocity.sqrMagnitude) *
+                                        (other.transform.childCount == 0 ? 0.1f : 1.0f);
 
-            if (hitPoint <= 0) BreakBall();
+            if (hitPoint <= 0)
+            {
+                PointManager.BreakBallPointCalculate(otherBallController, this);
+                BrokenBall();
+            }
+        }
+        //プレイヤーと衝突
+        if (other.gameObject.tag == "Player")
+        {
+            if (IsInPlayer() && transform.GetChild(0) != other.transform)
+            {
+                PointManager.BreakPlayerPointCalculate(this, other.gameObject.GetComponent<PlayerController>());
+            }
+        }
+        //マップ外に出た時の処理
+        if (other.gameObject.tag == "BreakArea")
+        {
+            BrokenBall();
         }
     }
 
     /// <summary>
     /// ボールが破壊された
     /// </summary>
-    void BreakBall()
+    void BrokenBall()
     {
         for (int i = transform.childCount - 1; i >= 0; --i)
         {
             transform.GetChild(i).transform.parent = null;
         }
+        destroyEvent();
         Destroy(this.gameObject);
     }
 
@@ -120,5 +143,26 @@ public class BallController : MonoBehaviour
         float damageBase = collisionPower * hitObjectPower /
         (prevVelocity.sqrMagnitude + hitObjectPower);
         return Mathf.Pow(damageBase, damageWeight / 10);
+    }
+
+    /// <summary>
+    /// プレイヤーが入っているかどうか
+    /// </summary>
+    public bool IsInPlayer()
+    { return playerIndex != int.MaxValue; }
+
+    /// <summary>
+    /// プレイヤーのインデックスを取得
+    /// </summary>
+    public int GetPlayerIndex()
+    { return playerIndex; }
+
+
+    /// <summary>
+    /// 壊れたときのイベントをセット
+    /// </summary>
+    public void SetDestroyEvent(DestroyEventType eventType)
+    {
+        destroyEvent = eventType;
     }
 }

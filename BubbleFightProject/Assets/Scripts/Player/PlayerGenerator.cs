@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーの生成器
+/// </summary>
 public class PlayerGenerator : MonoBehaviour
 {
     /// <summary>
