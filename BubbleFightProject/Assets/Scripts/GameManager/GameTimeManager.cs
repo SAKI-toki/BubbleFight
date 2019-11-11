@@ -29,6 +29,7 @@ public class GameTimeManager : MonoBehaviour
     void OnGUI()
     {
         Rect rect = new Rect(0, 0, 100, 100);
+        GUI.color = Color.red;
         const float interval = 100.0f;
         for (int i = 0; i < PlayerJoinManager.GetJoinPlayerCount(); ++i)
         {

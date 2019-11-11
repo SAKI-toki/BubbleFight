@@ -32,22 +32,38 @@ public class BallController : MonoBehaviour
     public delegate void DestroyEventType();
     DestroyEventType destroyEvent;
 
-    //最大の回転力(デフォルトは7)
-    const float MaxAngularVelocity = 10.0f;
-    //入力を受け付けなくする力
-    const float CantInputHitPower = 50.0f;
-    //力に対してどのくらい入力を受け付けなくするか
-    const float HitPowerPercenage = 0.001f;
+    [SerializeField, Tooltip("最大の回転力")]
+    float maxAngularVelocity = 10.0f;
+    [SerializeField, Tooltip("入力を受け付けなくする衝突力")]
+    float cantInputHitPower = 50.0f;
+    [SerializeField, Tooltip("入力を受け付けない最大時間")]
+    float maxCantInputTime = 1.0f;
+    [SerializeField, Tooltip("力1に対してどのくらい入力を受け付けなくするか(50で0.01なら0.5秒")]
+    float hitPowerPercenage = 0.003f;
+    //反発時の力の追加
+    [SerializeField, Tooltip("ボール同士でぶつかったときの反発の追加率(1で同じ)")]
+    float bounceAddPower = 1.2f;
+
+    bool destroyFlg = false;
 
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
-        thisRigidbody.maxAngularVelocity = MaxAngularVelocity;
+        thisRigidbody.maxAngularVelocity = maxAngularVelocity;
     }
 
     void Update()
     {
         prevVelocity = thisRigidbody.velocity;
+        thisRigidbody.AddForce(Vector3.up * -10);
+    }
+
+    void LateUpdate()
+    {
+        if (destroyFlg)
+        {
+            BrokenBall();
+        }
     }
 
     /// <summary>
@@ -85,16 +101,13 @@ public class BallController : MonoBehaviour
         (-dot + 1) / 2をすることで同じ向きなら0,反対向きなら1になるようにする
         */
         float angle = (-Vector3.Dot(velocity.normalized, inputDir.normalized) + 1) / 2;
-        //曲がるときの力
-        float curvePower = angle + 1;
         addTorque.x = inputDir.z;
         addTorque.z = -inputDir.x;
+        float power = movePower * thisRigidbody.mass * Mathf.Pow(angle + 1, easyCurveWeight);
         //入力方向に力を加える
-        thisRigidbody.AddForce(inputDir * movePower * thisRigidbody.mass * Mathf.Pow(curvePower, easyCurveWeight) *
-                                (1.0f - rotationPercentage));
+        thisRigidbody.AddForce(inputDir * power * (1.0f - rotationPercentage));
         //入力方向に回転の力を加える
-        thisRigidbody.AddTorque(addTorque * movePower * thisRigidbody.mass * Mathf.Pow(curvePower, easyCurveWeight) *
-                                rotationPercentage);
+        thisRigidbody.AddTorque(addTorque * power * rotationPercentage);
 
         if (inputDir.x == 0 && inputDir.z == 0)
         {
@@ -129,17 +142,23 @@ public class BallController : MonoBehaviour
                                         otherBallController.prevVelocity.sqrMagnitude, otherBallController.damageWeight) *
                                         (other.transform.childCount == 0 ? 0.1f : 1.0f);
 
+            var velocity = thisRigidbody.velocity;
+            velocity.x *= bounceAddPower;
+            velocity.z *= bounceAddPower;
+            thisRigidbody.velocity = velocity;
+
             //入っていて、力が一定以上なら入力不可時間を与える
-            if (other.transform.childCount != 0 && other.relativeVelocity.sqrMagnitude > CantInputHitPower)
+            if (other.transform.childCount != 0 && other.relativeVelocity.sqrMagnitude > cantInputHitPower)
             {
-                cantInputTime = other.relativeVelocity.sqrMagnitude * HitPowerPercenage;
+                cantInputTime = other.relativeVelocity.sqrMagnitude * hitPowerPercenage;
+                if (cantInputTime > maxCantInputTime) cantInputTime = maxCantInputTime;
             }
 
             //HPが0以下になったら破壊
             if (hitPoint <= 0)
             {
                 PointManager.BreakBallPointCalculate(otherBallController, this);
-                BrokenBall();
+                destroyFlg = true;
             }
         }
         //プレイヤーと衝突

@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Physics.Simulate(10.0f);
         PointManager.Reset();
     }
 
@@ -17,5 +18,7 @@ public class GameManager : MonoBehaviour
     {
         gameTimeManager.AddTime();
         if (!gameTimeManager.IsPlayGame()) PointManager.PointLock();
+        if (SwitchInput.GetButtonDown(0, SwitchButton.Pause))
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetSceneAt(0).name);
     }
 }
