@@ -19,7 +19,7 @@ public class BallController : MonoBehaviour
     [SerializeField, Tooltip("ボールの耐久値")]
     float hitPoint = 100;
 
-    [SerializeField, Tooltip("ダメージ量(指数的に増加)")]
+    [SerializeField, Tooltip("与えるダメージ量(指数的に増加)")]
     float damageWeight = 2.0f;
     //当たる前の力を保持する変数
     Vector3 prevVelocity = Vector3.zero;
@@ -98,7 +98,7 @@ public class BallController : MonoBehaviour
             var otherBallController = other.gameObject.GetComponent<BallController>();
             //ダメージ(空の場合は10分の1のダメージにする)
             hitPoint -= DamageCalculate(other.relativeVelocity.sqrMagnitude,
-                                        otherBallController.prevVelocity.sqrMagnitude) *
+                                        otherBallController.prevVelocity.sqrMagnitude, otherBallController.damageWeight) *
                                         (other.transform.childCount == 0 ? 0.1f : 1.0f);
 
             if (hitPoint <= 0)
@@ -138,11 +138,11 @@ public class BallController : MonoBehaviour
     /// <summary>
     /// ダメージ計算
     /// </summary>
-    float DamageCalculate(float collisionPower, float hitObjectPower)
+    float DamageCalculate(float collisionPower, float hitObjectPower, float hitBallDamageWeight)
     {
         float damageBase = collisionPower * hitObjectPower /
         (prevVelocity.sqrMagnitude + hitObjectPower);
-        return Mathf.Pow(damageBase, damageWeight / 10);
+        return Mathf.Pow(damageBase, hitBallDamageWeight / 10);
     }
 
     /// <summary>
