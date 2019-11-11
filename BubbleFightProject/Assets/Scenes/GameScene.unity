@@ -164,7 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 811919687}
   rectTransform: {fileID: 15229431}
-  globalOffsetY: 1
+  globalOffset: {x: 0, y: 1}
 --- !u!114 &15229433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -758,7 +758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 799315052}
   rectTransform: {fileID: 314764147}
-  globalOffsetY: 1
+  globalOffset: {x: 0, y: 1}
 --- !u!114 &314764149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1581,7 +1581,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 1354898246}
   rectTransform: {fileID: 1358808595}
-  globalOffsetY: 1
+  globalOffset: {x: 0, y: 1}
 --- !u!114 &1358808597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1676,7 +1676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 217941587}
   rectTransform: {fileID: 1361849340}
-  globalOffsetY: 1
+  globalOffset: {x: 0, y: 1}
 --- !u!114 &1361849342
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class TrackingUI : MonoBehaviour
     [SerializeField, Tooltip("追尾させるUIのRectTransform")]
     RectTransform rectTransform = null;
     [SerializeField, Tooltip("オフセット")]
-    float globalOffsetY = 0.0f;
+    Vector2 globalOffset = Vector2.zero;
 
     void LateUpdate()
     {
@@ -22,6 +22,7 @@ public class TrackingUI : MonoBehaviour
         //追尾
         rectTransform.position = RectTransformUtility.WorldToScreenPoint(
             Camera.main, targetTransform.position +
-            Vector3.Cross(Camera.main.transform.forward, Camera.main.transform.right) * globalOffsetY);
+            Camera.main.transform.right * globalOffset.x +
+            Camera.main.transform.up * globalOffset.y);
     }
 }
