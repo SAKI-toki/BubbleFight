@@ -340,6 +340,11 @@ PrefabInstance:
       propertyPath: initStateEnum
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7540667008540592948, guid: 2d585258c06156743a459c308fbc8218,
+        type: 3}
+      propertyPath: ballMass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8409250516567225710, guid: 2d585258c06156743a459c308fbc8218,
         type: 3}
       propertyPath: m_Constraints
@@ -898,6 +903,11 @@ PrefabInstance:
       propertyPath: initStateEnum
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7540667008540592948, guid: 2d585258c06156743a459c308fbc8218,
+        type: 3}
+      propertyPath: ballMass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8409250516567225710, guid: 2d585258c06156743a459c308fbc8218,
         type: 3}
       propertyPath: m_Constraints
@@ -1369,7 +1379,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1195718929}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ab3dc531146cf8044b169c35826a119f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -2499,34 +2509,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7540667008540592948, guid: 2d585258c06156743a459c308fbc8218,
         type: 3}
-      propertyPath: ballPhysicalMaterial
-      value: 
-      objectReference: {fileID: 13400000, guid: 964bc9ebeb2b4ce4b869b2842562f40b,
-        type: 2}
-    - target: {fileID: 7540667008540592948, guid: 2d585258c06156743a459c308fbc8218,
-        type: 3}
-      propertyPath: ballMass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7540667008540592948, guid: 2d585258c06156743a459c308fbc8218,
-        type: 3}
-      propertyPath: ballEasyCurveWeight
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7540667008540592948, guid: 2d585258c06156743a459c308fbc8218,
-        type: 3}
-      propertyPath: gameTimeManager
-      value: 
-      objectReference: {fileID: 1634335201}
-    - target: {fileID: 7540667008540592948, guid: 2d585258c06156743a459c308fbc8218,
-        type: 3}
       propertyPath: initStateEnum
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8409250516567225710, guid: 2d585258c06156743a459c308fbc8218,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d585258c06156743a459c308fbc8218, type: 3}
@@ -2657,6 +2641,11 @@ PrefabInstance:
       propertyPath: initStateEnum
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7540667008540592948, guid: 2d585258c06156743a459c308fbc8218,
+        type: 3}
+      propertyPath: ballMass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8409250516567225710, guid: 2d585258c06156743a459c308fbc8218,
         type: 3}
       propertyPath: m_Constraints
@@ -2729,16 +2718,6 @@ PrefabInstance:
     - target: {fileID: 4787434666529583315, guid: 4b0322c7a851d634db7102f5fb8e6d7a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7519834329787226258, guid: 4b0322c7a851d634db7102f5fb8e6d7a,
-        type: 3}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7519834329787226258, guid: 4b0322c7a851d634db7102f5fb8e6d7a,
-        type: 3}
-      propertyPath: m_Drag
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

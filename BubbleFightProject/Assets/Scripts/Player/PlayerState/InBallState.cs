@@ -4,6 +4,8 @@ public partial class PlayerController : MonoBehaviour
 {
     [SerializeField, Tooltip("ボールでの移動時の力")]
     float ballMovePower = 10.0f;
+    [SerializeField, Tooltip("ボールの回転に加える力の割合"), Range(0, 1)]
+    float ballRotationPercentage = 0.8f;
 
     [SerializeField, Tooltip("ボールに付ける物理マテリアル")]
     PhysicMaterial ballPhysicalMaterial = null;
@@ -27,7 +29,8 @@ public partial class PlayerController : MonoBehaviour
         {
             ballController = playerController.transform.parent.GetComponent<BallController>();
             ballController.GetComponent<SphereCollider>().material = playerController.ballPhysicalMaterial;
-            ballController.InitializeOnPlayer(playerController.playerNumber, playerController.ballMovePower, playerController.ballMass);
+            ballController.InitializeOnPlayer(playerController.playerNumber, playerController.ballMovePower,
+                                                playerController.ballRotationPercentage, playerController.ballMass);
             playerController.transform.localPosition = Vector3.zero;
             PlayerPhysicsSet(false);
         }

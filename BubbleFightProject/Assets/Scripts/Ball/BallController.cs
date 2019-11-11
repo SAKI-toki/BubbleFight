@@ -9,6 +9,7 @@ public class BallController : MonoBehaviour
 {
     Rigidbody thisRigidbody;
     Vector3 inputDir = Vector3.zero;
+    Vector3 addTorque = Vector3.zero;
     Vector3 lookatDir = Vector3.zero;
 
     //操作するプレイヤー
@@ -23,13 +24,25 @@ public class BallController : MonoBehaviour
     float damageWeight = 2.0f;
     //当たる前の力を保持する変数
     Vector3 prevVelocity = Vector3.zero;
+    //回転に加える力の割合
+    float rotationPercentage = 0.0f;
+    //入力を受け付けない時間
+    float cantInputTime = 0.0f;
 
     public delegate void DestroyEventType();
     DestroyEventType destroyEvent;
 
+    //最大の回転力(デフォルトは7)
+    const float MaxAngularVelocity = 10.0f;
+    //入力を受け付けなくする力
+    const float CantInputHitPower = 50.0f;
+    //力に対してどのくらい入力を受け付けなくするか
+    const float HitPowerPercenage = 0.001f;
+
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
+        thisRigidbody.maxAngularVelocity = MaxAngularVelocity;
     }
 
     void Update()
@@ -40,10 +53,12 @@ public class BallController : MonoBehaviour
     /// <summary>
     /// プレイヤーによる初期化
     /// </summary>
-    public void InitializeOnPlayer(int index, float ballMovePower, float ballMass)
+    public void InitializeOnPlayer(int index, float ballMovePower,
+                                        float ballRotationPowerPercentage, float ballMass)
     {
         playerIndex = index;
         movePower = ballMovePower;
+        rotationPercentage = ballRotationPowerPercentage;
         thisRigidbody.mass = ballMass;
     }
 
@@ -52,6 +67,13 @@ public class BallController : MonoBehaviour
     /// </summary>
     public void Move(float easyCurveWeight)
     {
+        //入力を受け付けない
+        if (cantInputTime > 0.0f)
+        {
+            cantInputTime -= Time.deltaTime;
+            return;
+        }
+
         inputDir.x = SwitchInput.GetHorizontal(playerIndex);
         inputDir.z = SwitchInput.GetVertical(playerIndex);
         //曲がりやすくする
@@ -65,8 +87,14 @@ public class BallController : MonoBehaviour
         float angle = (-Vector3.Dot(velocity.normalized, inputDir.normalized) + 1) / 2;
         //曲がるときの力
         float curvePower = angle + 1;
+        addTorque.x = inputDir.z;
+        addTorque.z = -inputDir.x;
         //入力方向に力を加える
-        thisRigidbody.AddForce(inputDir * movePower * thisRigidbody.mass * Mathf.Pow(curvePower, easyCurveWeight));
+        thisRigidbody.AddForce(inputDir * movePower * thisRigidbody.mass * Mathf.Pow(curvePower, easyCurveWeight) *
+                                (1.0f - rotationPercentage));
+        //入力方向に回転の力を加える
+        thisRigidbody.AddTorque(addTorque * movePower * thisRigidbody.mass * Mathf.Pow(curvePower, easyCurveWeight) *
+                                rotationPercentage);
 
         if (inputDir.x == 0 && inputDir.z == 0)
         {
@@ -101,6 +129,13 @@ public class BallController : MonoBehaviour
                                         otherBallController.prevVelocity.sqrMagnitude, otherBallController.damageWeight) *
                                         (other.transform.childCount == 0 ? 0.1f : 1.0f);
 
+            //入っていて、力が一定以上なら入力不可時間を与える
+            if (other.transform.childCount != 0 && other.relativeVelocity.sqrMagnitude > CantInputHitPower)
+            {
+                cantInputTime = other.relativeVelocity.sqrMagnitude * HitPowerPercenage;
+            }
+
+            //HPが0以下になったら破壊
             if (hitPoint <= 0)
             {
                 PointManager.BreakBallPointCalculate(otherBallController, this);

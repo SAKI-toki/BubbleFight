@@ -14,6 +14,8 @@ public partial class PlayerController : MonoBehaviour
     [SerializeField, Tooltip("プレイヤーの初期ステート")]
     PlayerStateEnum initStateEnum = PlayerStateEnum.In;
 
+    Quaternion rotation = Quaternion.identity;
+
     void Start()
     {
         PlayerStateBase initState = null;
@@ -32,6 +34,11 @@ public partial class PlayerController : MonoBehaviour
     void Update()
     {
         playerStateManager.Update();
+    }
+
+    void LateUpdate()
+    {
+        transform.rotation = rotation;
     }
 
     void OnDestroy()
@@ -61,10 +68,13 @@ public partial class PlayerController : MonoBehaviour
     {
         if (lookatDir == Vector3.zero) return;
         //プレイヤーの回転
-        var startQ = transform.rotation;
-        transform.LookAt(transform.position + lookatDir);
-        var endQ = transform.rotation;
-        transform.rotation = Quaternion.Lerp(startQ, endQ, 0.3f);
+        var obj = new GameObject("");
+        obj.transform.LookAt(Vector3.Cross(transform.right, Vector3.up));
+        var startQ = obj.transform.rotation;
+        obj.transform.LookAt(lookatDir);
+        var endQ = obj.transform.rotation;
+        rotation = Quaternion.Lerp(startQ, endQ, 0.3f);
+        Destroy(obj);
     }
 
     /// <summary>
