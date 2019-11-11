@@ -124,11 +124,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHitPoint: 100
   damageWeight: 5
-  maxAngularVelocity: 10
+  maxAngularVelocity: 12
   cantInputHitPower: 50
   maxCantInputTime: 0.5
   hitPowerPercenage: 0.003
-  bounceAddPower: 1.2
+  strongHitBounceAddPower: 2
+  weakHitBounceAddPower: 2.5
 --- !u!114 &3481246479687572610
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -44,8 +44,10 @@ public class BallController : MonoBehaviour
     [SerializeField, Tooltip("力1に対してどのくらい入力を受け付けなくするか(50で0.01なら0.5秒")]
     float hitPowerPercenage = 0.003f;
     //反発時の力の追加
-    [SerializeField, Tooltip("ボール同士でぶつかったときの反発の追加率(1で同じ)")]
-    float bounceAddPower = 1.2f;
+    [SerializeField, Tooltip("ボール同士でぶつかったときの反発の追加率(cantInputHitPower以上の力)")]
+    float strongHitBounceAddPower = 1.2f;
+    [SerializeField, Tooltip("ボール同士でぶつかったときの反発の追加率(cantInputHitPower以下の力)")]
+    float weakHitBounceAddPower = 1.2f;
 
     MaterialFlash materialFlash;
 
@@ -151,6 +153,9 @@ public class BallController : MonoBehaviour
                                         otherBallController.prevVelocity.sqrMagnitude, otherBallController.damageWeight) *
                                         (otherBallController.IsInPlayer() ? 1.0f : 0.1f);
 
+            //跳ね返りの強さ
+            float bounceAddPower = other.relativeVelocity.sqrMagnitude > cantInputHitPower ?
+                                    strongHitBounceAddPower : weakHitBounceAddPower;
             var velocity = thisRigidbody.velocity;
             velocity.x *= bounceAddPower;
             velocity.z *= bounceAddPower;
