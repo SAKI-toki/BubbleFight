@@ -5,6 +5,7 @@
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SphereCollider))]
+[RequireComponent(typeof(MaterialFlash))]
 public class BallController : MonoBehaviour
 {
     Rigidbody thisRigidbody;
@@ -17,8 +18,10 @@ public class BallController : MonoBehaviour
     //移動力
     float movePower = 0.0f;
 
-    [SerializeField, Tooltip("ボールの耐久値")]
-    float hitPoint = 100;
+    [SerializeField, Tooltip("ボールの耐久値(初期値)")]
+    float maxHitPoint = 100;
+
+    float hitPoint = 0.0f;
 
     [SerializeField, Tooltip("与えるダメージ量(指数的に増加)")]
     float damageWeight = 2.0f;
@@ -44,25 +47,31 @@ public class BallController : MonoBehaviour
     [SerializeField, Tooltip("ボール同士でぶつかったときの反発の追加率(1で同じ)")]
     float bounceAddPower = 1.2f;
 
-    bool destroyFlg = false;
+    MaterialFlash materialFlash;
 
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
+        materialFlash = GetComponent<MaterialFlash>();
+    }
+
+    void Start()
+    {
         thisRigidbody.maxAngularVelocity = maxAngularVelocity;
+        hitPoint = maxHitPoint;
+        materialFlash.SetMaterial(GetComponent<MeshRenderer>().material);
     }
 
     void Update()
     {
         prevVelocity = thisRigidbody.velocity;
         thisRigidbody.AddForce(Vector3.up * -10);
-    }
-
-    void LateUpdate()
-    {
-        if (destroyFlg)
+        //点滅する
+        if (IsInPlayer() && hitPoint * 2 < maxHitPoint)
         {
-            BrokenBall();
+            materialFlash.FlashStart();
+            float interval = hitPoint / maxHitPoint;
+            materialFlash.SetInterval(interval < 0.1f ? 0.1f : interval);
         }
     }
 
@@ -140,7 +149,7 @@ public class BallController : MonoBehaviour
             //ダメージ(空の場合は10分の1のダメージにする)
             hitPoint -= DamageCalculate(other.relativeVelocity.sqrMagnitude,
                                         otherBallController.prevVelocity.sqrMagnitude, otherBallController.damageWeight) *
-                                        (other.transform.childCount == 0 ? 0.1f : 1.0f);
+                                        (otherBallController.IsInPlayer() ? 1.0f : 0.1f);
 
             var velocity = thisRigidbody.velocity;
             velocity.x *= bounceAddPower;
@@ -148,7 +157,7 @@ public class BallController : MonoBehaviour
             thisRigidbody.velocity = velocity;
 
             //入っていて、力が一定以上なら入力不可時間を与える
-            if (other.transform.childCount != 0 && other.relativeVelocity.sqrMagnitude > cantInputHitPower)
+            if (otherBallController.IsInPlayer() && other.relativeVelocity.sqrMagnitude > cantInputHitPower)
             {
                 cantInputTime = other.relativeVelocity.sqrMagnitude * hitPowerPercenage;
                 if (cantInputTime > maxCantInputTime) cantInputTime = maxCantInputTime;
@@ -158,7 +167,7 @@ public class BallController : MonoBehaviour
             if (hitPoint <= 0)
             {
                 PointManager.BreakBallPointCalculate(otherBallController, this);
-                destroyFlg = true;
+                BrokenBall();
             }
         }
         //プレイヤーと衝突

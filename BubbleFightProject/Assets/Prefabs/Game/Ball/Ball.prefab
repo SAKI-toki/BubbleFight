@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7519834329787226258}
   - component: {fileID: 4063578691180799558}
   - component: {fileID: 8528367205499777321}
+  - component: {fileID: 3481246479687572610}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Ball
@@ -121,10 +122,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d160e7da0c4aac4aa7c01fe161802ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoint: 100
+  maxHitPoint: 100
   damageWeight: 5
   maxAngularVelocity: 10
   cantInputHitPower: 50
   maxCantInputTime: 0.5
   hitPowerPercenage: 0.003
   bounceAddPower: 1.2
+--- !u!114 &3481246479687572610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9115919894792072580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eb3cdd3fe461c14c8db1fca2361fa88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashColor: {r: 0, g: 0, b: 0, a: 1}
