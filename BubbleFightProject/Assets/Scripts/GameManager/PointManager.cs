@@ -1,12 +1,10 @@
-﻿using UnityEngine;
-
-/// <summary>
+﻿/// <summary>
 /// ポイントを管理するクラス
 /// </summary>
 static public class PointManager
 {
     //プレイヤーのポイント
-    static int[] playerPoint = new int[8];
+    static int[] playerPoint;
 
     static bool pointLock = false;
 
@@ -18,6 +16,10 @@ static public class PointManager
     const int BreakPlayerPoint = 2;
     //プレイヤーを壊された時のポイント
     const int BrokenPlayerPoint = -2;
+    //場外に落とした時のポイント
+    const int DropPoint = 3;
+    //場外に落とされた時のポイント
+    const int DroppedPoint = -3;
 
     /// <summary>
     /// ボールを壊した時のポイントの計算
@@ -46,6 +48,23 @@ static public class PointManager
         }
     }
 
+    /// <summary>
+    /// 場外に落とした時のポイントの計算
+    /// </summary>
+    static public void DropPlayerPointCalculate(int broken)
+    {
+
+        if (broken != int.MaxValue)
+        {
+            AddPoint(broken, DroppedPoint);
+            if (LastHitPlayerManager.IsValid(broken))
+            {
+                AddPoint(LastHitPlayerManager.GetLastHitPlayer(broken), DropPoint);
+                LastHitPlayerManager.UseLastHitPlayer(broken);
+            }
+        }
+    }
+
 
     /// <summary>
     /// ポイントの加算
@@ -66,7 +85,7 @@ static public class PointManager
     /// </summary>
     static public void Reset()
     {
-        playerPoint = new int[8];
+        playerPoint = new int[PlayerJoinManager.GetJoinPlayerCount()];
         pointLock = false;
     }
 
@@ -77,4 +96,5 @@ static public class PointManager
     {
         pointLock = true;
     }
+
 }

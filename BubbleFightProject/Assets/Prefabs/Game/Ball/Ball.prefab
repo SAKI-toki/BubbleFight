@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHitPoint: 100
-  damageWeight: 5
+  damageWeight: 2
   maxAngularVelocity: 12
   cantInputHitPower: 50
   maxCantInputTime: 0.5

@@ -9,8 +9,6 @@
 public class BallController : MonoBehaviour
 {
     Rigidbody thisRigidbody;
-    Vector3 inputDir = Vector3.zero;
-    Vector3 addTorque = Vector3.zero;
     Vector3 lookatDir = Vector3.zero;
 
     //操作するプレイヤー
@@ -21,10 +19,8 @@ public class BallController : MonoBehaviour
     [SerializeField, Tooltip("ボールの耐久値(初期値)")]
     float maxHitPoint = 100;
 
-    float hitPoint = 0.0f;
+    float currentHitPoint = 0.0f;
 
-    [SerializeField, Tooltip("与えるダメージ量(指数的に増加)")]
-    float damageWeight = 2.0f;
     //当たる前の力を保持する変数
     Vector3 prevVelocity = Vector3.zero;
     //回転に加える力の割合
@@ -48,7 +44,6 @@ public class BallController : MonoBehaviour
     float strongHitBounceAddPower = 1.2f;
     [SerializeField, Tooltip("ボール同士でぶつかったときの反発の追加率(cantInputHitPower以下の力)")]
     float weakHitBounceAddPower = 1.2f;
-
     MaterialFlash materialFlash;
 
     void Awake()
@@ -60,7 +55,7 @@ public class BallController : MonoBehaviour
     void Start()
     {
         thisRigidbody.maxAngularVelocity = maxAngularVelocity;
-        hitPoint = maxHitPoint;
+        currentHitPoint = maxHitPoint;
         materialFlash.SetMaterial(GetComponent<MeshRenderer>().material);
     }
 
@@ -69,10 +64,10 @@ public class BallController : MonoBehaviour
         prevVelocity = thisRigidbody.velocity;
         thisRigidbody.AddForce(Vector3.up * -10);
         //点滅する
-        if (IsInPlayer() && hitPoint * 2 < maxHitPoint)
+        if (IsInPlayer() && currentHitPoint * 2 < maxHitPoint)
         {
             materialFlash.FlashStart();
-            float interval = hitPoint / maxHitPoint;
+            float interval = currentHitPoint / maxHitPoint;
             materialFlash.SetInterval(interval < 0.1f ? 0.1f : interval);
         }
     }
@@ -100,7 +95,7 @@ public class BallController : MonoBehaviour
             cantInputTime -= Time.deltaTime;
             return;
         }
-
+        Vector3 inputDir = Vector3.zero;
         inputDir.x = SwitchInput.GetHorizontal(playerIndex);
         inputDir.z = SwitchInput.GetVertical(playerIndex);
         //曲がりやすくする
@@ -112,6 +107,8 @@ public class BallController : MonoBehaviour
         (-dot + 1) / 2をすることで同じ向きなら0,反対向きなら1になるようにする
         */
         float angle = (-Vector3.Dot(velocity.normalized, inputDir.normalized) + 1) / 2;
+        //加える回転力
+        Vector3 addTorque = Vector3.zero;
         addTorque.x = inputDir.z;
         addTorque.z = -inputDir.x;
         float power = movePower * thisRigidbody.mass * Mathf.Pow(angle + 1, easyCurveWeight);
@@ -134,14 +131,6 @@ public class BallController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 向く方向を返す
-    /// </summary>
-    public Vector3 GetLookatDir()
-    {
-        return lookatDir;
-    }
-
     void OnCollisionEnter(Collision other)
     {
         //ボールと衝突
@@ -149,9 +138,8 @@ public class BallController : MonoBehaviour
         {
             var otherBallController = other.gameObject.GetComponent<BallController>();
             //ダメージ(空の場合は10分の1のダメージにする)
-            hitPoint -= DamageCalculate(other.relativeVelocity.sqrMagnitude,
-                                        otherBallController.prevVelocity.sqrMagnitude, otherBallController.damageWeight) *
-                                        (otherBallController.IsInPlayer() ? 1.0f : 0.1f);
+            currentHitPoint -= DamageCalculate(other.relativeVelocity.sqrMagnitude, otherBallController.prevVelocity.sqrMagnitude)
+                                * (otherBallController.IsInPlayer() ? 1.0f : 0.1f);
 
             //跳ね返りの強さ
             float bounceAddPower = other.relativeVelocity.sqrMagnitude > cantInputHitPower ?
@@ -168,8 +156,11 @@ public class BallController : MonoBehaviour
                 if (cantInputTime > maxCantInputTime) cantInputTime = maxCantInputTime;
             }
 
+            //最後にぶつかったプレイヤーの更新
+            LastHitPlayerManager.SetLastHitPlayer(GetPlayerIndex(), otherBallController.GetPlayerIndex());
+
             //HPが0以下になったら破壊
-            if (hitPoint <= 0)
+            if (currentHitPoint <= 0)
             {
                 PointManager.BreakBallPointCalculate(otherBallController, this);
                 BrokenBall();
@@ -195,22 +186,17 @@ public class BallController : MonoBehaviour
     /// </summary>
     void BrokenBall()
     {
-        for (int i = transform.childCount - 1; i >= 0; --i)
-        {
-            transform.GetChild(i).transform.parent = null;
-        }
         destroyEvent();
         Destroy(this.gameObject);
     }
 
     /// <summary>
-    /// ダメージ計算
+    /// 受けるダメージを計算する
     /// </summary>
-    float DamageCalculate(float collisionPower, float hitObjectPower, float hitBallDamageWeight)
+    float DamageCalculate(float collisionPower, float hitObjectPower)
     {
-        float damageBase = collisionPower * hitObjectPower /
-        (prevVelocity.sqrMagnitude + hitObjectPower);
-        return Mathf.Pow(damageBase, hitBallDamageWeight / 10);
+        return DamageCalculator.Damage(collisionPower,
+                                        hitObjectPower / (prevVelocity.sqrMagnitude + hitObjectPower));
     }
 
     /// <summary>
@@ -231,6 +217,14 @@ public class BallController : MonoBehaviour
     /// </summary>
     public void SetDestroyEvent(DestroyEventType eventType)
     {
-        destroyEvent = eventType;
+        destroyEvent += eventType;
+    }
+
+    /// <summary>
+    /// 向く方向を返す
+    /// </summary>
+    public Vector3 GetLookatDir()
+    {
+        return lookatDir;
     }
 }

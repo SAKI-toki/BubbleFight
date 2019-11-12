@@ -10,8 +10,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Physics.Simulate(10.0f);
         PointManager.Reset();
+        LastHitPlayerManager.Reset();
     }
 
     void Update()

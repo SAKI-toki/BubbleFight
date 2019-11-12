@@ -31,6 +31,7 @@ public partial class PlayerController : MonoBehaviour
             ballController.GetComponent<SphereCollider>().material = playerController.ballPhysicalMaterial;
             ballController.InitializeOnPlayer(playerController.playerNumber, playerController.ballMovePower,
                                                 playerController.ballRotationPercentage, playerController.ballMass);
+            ballController.SetDestroyEvent(delegate { playerController.transform.parent = null; });
             playerController.transform.localPosition = Vector3.zero;
             PlayerPhysicsSet(false);
         }
@@ -71,7 +72,6 @@ public partial class PlayerController : MonoBehaviour
                 rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
                 rigidbody.isKinematic = true;
             }
-
         }
     }
 }

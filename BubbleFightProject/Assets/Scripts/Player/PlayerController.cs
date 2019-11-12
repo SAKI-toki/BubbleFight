@@ -51,8 +51,10 @@ public partial class PlayerController : MonoBehaviour
         //マップ外に出た時の処理
         if (other.gameObject.tag == "BreakArea")
         {
+            PointManager.DropPlayerPointCalculate(playerNumber);
+            transform.position = Vector3.zero;
             //Debug.LogError("プレイヤーが落ちたときの処理は未実装");
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetSceneAt(0).name);
+            //UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetSceneAt(0).name);
         }
         playerStateManager.OnCollisionEnter(other);
     }
