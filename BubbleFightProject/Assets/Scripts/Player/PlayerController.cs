@@ -3,18 +3,30 @@
 /// <summary>
 /// プレイヤーの制御クラス
 /// </summary>
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(MaterialFlash))]
 public partial class PlayerController : MonoBehaviour
 {
+    Rigidbody playerRigidbody = null;
+    MaterialFlash materialFlash = null;
     [SerializeField, Tooltip("プレイヤーの番号"), Range(0, 7)]
     int playerNumber = 0;
     PlayerStateManager playerStateManager = new PlayerStateManager();
-
     //ステートの列挙型(初期ステートをセットするためのもの)
     enum PlayerStateEnum { In, Out };
     [SerializeField, Tooltip("プレイヤーの初期ステート")]
     PlayerStateEnum initStateEnum = PlayerStateEnum.In;
 
     Quaternion rotation = Quaternion.identity;
+
+    float invincibleTimeCount = 0.0f;
+    const float InvincibleTime = 3.0f;
+
+    void Awake()
+    {
+        playerRigidbody = GetComponent<Rigidbody>();
+        materialFlash = GetComponent<MaterialFlash>();
+    }
 
     void Start()
     {
@@ -33,6 +45,15 @@ public partial class PlayerController : MonoBehaviour
 
     void Update()
     {
+        invincibleTimeCount -= Time.deltaTime;
+        if (IsInvincible())
+        {
+            materialFlash.FlashStart();
+        }
+        else
+        {
+            materialFlash.FlashEnd();
+        }
         playerStateManager.Update();
     }
 
@@ -53,8 +74,6 @@ public partial class PlayerController : MonoBehaviour
         {
             PointManager.DropPlayerPointCalculate(playerNumber);
             transform.position = Vector3.zero;
-            //Debug.LogError("プレイヤーが落ちたときの処理は未実装");
-            //UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetSceneAt(0).name);
         }
         playerStateManager.OnCollisionEnter(other);
     }
@@ -86,5 +105,21 @@ public partial class PlayerController : MonoBehaviour
     public int GetPlayerNumber()
     {
         return playerNumber;
+    }
+
+    /// <summary>
+    /// 無敵中かどうか
+    /// </summary>
+    public bool IsInvincible()
+    {
+        return invincibleTimeCount > 0.0f;
+    }
+
+    /// <summary>
+    /// プレイヤーが入っているボールにぶつかった
+    /// </summary>
+    public void HitInPlayerBall()
+    {
+        playerStateManager.TranslationState(new HitInPlayerBallState());
     }
 }

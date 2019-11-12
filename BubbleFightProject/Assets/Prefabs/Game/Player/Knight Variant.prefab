@@ -67,6 +67,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1611149538045425472, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: skinMeshRenderer
+      value: 
+      objectReference: {fileID: 7631055500822614968}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45f5450d91c0e374d94504861f784702, type: 3}
 --- !u!4 &7540667008540592953 stripped
@@ -467,6 +472,12 @@ Transform:
 --- !u!4 &7631055500809175774 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400070, guid: c3a2ea7389f9ea447a42a712ba2e0f9d,
+    type: 3}
+  m_PrefabInstance: {fileID: 7631055500809050136}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &7631055500822614968 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13700000, guid: c3a2ea7389f9ea447a42a712ba2e0f9d,
     type: 3}
   m_PrefabInstance: {fileID: 7631055500809050136}
   m_PrefabAsset: {fileID: 0}

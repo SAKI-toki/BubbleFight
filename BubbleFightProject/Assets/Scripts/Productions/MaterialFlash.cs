@@ -4,16 +4,26 @@ public class MaterialFlash : MonoBehaviour
 {
     [SerializeField, Tooltip("色")]
     Color flashColor = Color.white;
+    [SerializeField, Tooltip("点滅の間隔")]
+    float intervalTime = 0.0f;
+    [SerializeField, Header("どちらかしか機能しない(MeshRenderer優先)"), Tooltip("点滅させるメッシュ")]
+    MeshRenderer meshRenderer = null;
+    [SerializeField, Tooltip("点滅させるスキンメッシュ")]
+    SkinnedMeshRenderer skinMeshRenderer = null;
 
     Color defaultColor = Color.white;
 
     Material material = null;
 
-    float intervalTime = 0.0f;
-
     float timeCount = 0.0f;
     //スタートしたかどうか
     bool isStart = false;
+
+    void Start()
+    {
+        if (meshRenderer && meshRenderer.material) material = meshRenderer.material;
+        else if (skinMeshRenderer && skinMeshRenderer.material) material = skinMeshRenderer.material;
+    }
 
     void Update()
     {
@@ -51,6 +61,7 @@ public class MaterialFlash : MonoBehaviour
     {
         if (isStart) return;
         isStart = true;
+        if (!material) return;
         material.color = defaultColor;
     }
 
@@ -61,6 +72,7 @@ public class MaterialFlash : MonoBehaviour
     {
         if (!isStart) return;
         isStart = false;
+        if (!material) return;
         material.color = defaultColor;
     }
 
@@ -71,6 +83,7 @@ public class MaterialFlash : MonoBehaviour
     /// </summary>
     void Flash()
     {
+        if (!material) return;
         on = !on;
         if (on)
         {

@@ -11,9 +11,7 @@ static class DamageCalculator
     /// </summary>
     static public float Damage(float collisionPower, float damagePercent)
     {
-        float damage = Mathf.Pow(collisionPower * damagePercent, HitDamageWeight);
-        Debug.Log(damage);
-        return damage;
+        return Mathf.Pow(collisionPower * damagePercent, HitDamageWeight);
     }
 }
 

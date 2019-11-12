@@ -58,19 +58,17 @@ public partial class PlayerController : MonoBehaviour
             //コライダーのオンオフ
             foreach (var collider in playerController.gameObject.GetComponents<Collider>()) collider.enabled = enabled;
 
-            //Rigidbodyのオンオフ
-            var rigidbody = playerController.GetComponent<Rigidbody>();
             if (enabled)
             {
                 //この順番にしないと警告が出る
-                rigidbody.isKinematic = false;
-                rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+                playerController.playerRigidbody.isKinematic = false;
+                playerController.playerRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             }
             else
             {
                 //この順番にしないと警告が出る
-                rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-                rigidbody.isKinematic = true;
+                playerController.playerRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+                playerController.playerRigidbody.isKinematic = true;
             }
         }
     }

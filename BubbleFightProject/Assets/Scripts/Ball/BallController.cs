@@ -56,7 +56,6 @@ public class BallController : MonoBehaviour
     {
         thisRigidbody.maxAngularVelocity = maxAngularVelocity;
         currentHitPoint = maxHitPoint;
-        materialFlash.SetMaterial(GetComponent<MeshRenderer>().material);
     }
 
     void Update()
@@ -133,51 +132,60 @@ public class BallController : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        //ボールと衝突
-        if (other.gameObject.tag == "Ball")
+        switch (other.gameObject.tag)
         {
-            var otherBallController = other.gameObject.GetComponent<BallController>();
-            //ダメージ(空の場合は10分の1のダメージにする)
-            currentHitPoint -= DamageCalculate(other.relativeVelocity.sqrMagnitude, otherBallController.prevVelocity.sqrMagnitude)
-                                * (otherBallController.IsInPlayer() ? 1.0f : 0.1f);
+            case "Ball":
+                //ボールと衝突
+                {
+                    var otherBallController = other.gameObject.GetComponent<BallController>();
+                    //ダメージ(空の場合は10分の1のダメージにする)
+                    currentHitPoint -= DamageCalculate(other.relativeVelocity.sqrMagnitude, otherBallController.prevVelocity.sqrMagnitude)
+                                        * (otherBallController.IsInPlayer() ? 1.0f : 0.1f);
 
-            //跳ね返りの強さ
-            float bounceAddPower = other.relativeVelocity.sqrMagnitude > cantInputHitPower ?
-                                    strongHitBounceAddPower : weakHitBounceAddPower;
-            var velocity = thisRigidbody.velocity;
-            velocity.x *= bounceAddPower;
-            velocity.z *= bounceAddPower;
-            thisRigidbody.velocity = velocity;
+                    //跳ね返りの強さ
+                    float bounceAddPower = other.relativeVelocity.sqrMagnitude > cantInputHitPower ?
+                                            strongHitBounceAddPower : weakHitBounceAddPower;
+                    var velocity = thisRigidbody.velocity;
+                    velocity.x *= bounceAddPower;
+                    velocity.z *= bounceAddPower;
+                    thisRigidbody.velocity = velocity;
 
-            //入っていて、力が一定以上なら入力不可時間を与える
-            if (otherBallController.IsInPlayer() && other.relativeVelocity.sqrMagnitude > cantInputHitPower)
-            {
-                cantInputTime = other.relativeVelocity.sqrMagnitude * hitPowerPercenage;
-                if (cantInputTime > maxCantInputTime) cantInputTime = maxCantInputTime;
-            }
+                    //入っていて、力が一定以上なら入力不可時間を与える
+                    if (otherBallController.IsInPlayer() && other.relativeVelocity.sqrMagnitude > cantInputHitPower)
+                    {
+                        cantInputTime = other.relativeVelocity.sqrMagnitude * hitPowerPercenage;
+                        if (cantInputTime > maxCantInputTime) cantInputTime = maxCantInputTime;
+                    }
 
-            //最後にぶつかったプレイヤーの更新
-            LastHitPlayerManager.SetLastHitPlayer(GetPlayerIndex(), otherBallController.GetPlayerIndex());
+                    //最後にぶつかったプレイヤーの更新
+                    LastHitPlayerManager.SetLastHitPlayer(GetPlayerIndex(), otherBallController.GetPlayerIndex());
 
-            //HPが0以下になったら破壊
-            if (currentHitPoint <= 0)
-            {
-                PointManager.BreakBallPointCalculate(otherBallController, this);
-                BrokenBall();
-            }
-        }
-        //プレイヤーと衝突
-        if (other.gameObject.tag == "Player")
-        {
-            if (IsInPlayer() && transform.GetChild(0) != other.transform)
-            {
-                PointManager.BreakPlayerPointCalculate(this, other.gameObject.GetComponent<PlayerController>());
-            }
-        }
-        //マップ外に出た時の処理
-        if (other.gameObject.tag == "BreakArea")
-        {
-            BrokenBall();
+                    //HPが0以下になったら破壊
+                    if (currentHitPoint <= 0)
+                    {
+                        PointManager.BreakBallPointCalculate(otherBallController, this);
+                        BrokenBall();
+                    }
+                }
+                break;
+            case "Player":
+                //プレイヤーと衝突
+                {
+                    var otherPlayerController = other.gameObject.GetComponent<PlayerController>();
+                    if (IsInPlayer() && transform.GetChild(0) != other.transform &&
+                            !otherPlayerController.IsInvincible())
+                    {
+                        PointManager.BreakPlayerPointCalculate(this, otherPlayerController);
+                        otherPlayerController.HitInPlayerBall();
+                    }
+                }
+                break;
+            case "BreakArea":
+                //マップ外に出た時の処理
+                {
+                    BrokenBall();
+                }
+                break;
         }
     }
 
