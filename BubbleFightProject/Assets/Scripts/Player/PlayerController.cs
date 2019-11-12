@@ -73,7 +73,7 @@ public partial class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "BreakArea")
         {
             PointManager.DropPlayerPointCalculate(playerNumber);
-            transform.position = Vector3.zero;
+            playerStateManager.TranslationState(new RespawnState());
         }
         playerStateManager.OnCollisionEnter(other);
     }
