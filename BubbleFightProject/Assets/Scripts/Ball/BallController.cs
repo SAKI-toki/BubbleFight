@@ -44,6 +44,11 @@ public class BallController : MonoBehaviour
     float strongHitBounceAddPower = 1.2f;
     [SerializeField, Tooltip("ボール同士でぶつかったときの反発の追加率(cantInputHitPower以下の力)")]
     float weakHitBounceAddPower = 1.2f;
+    [SerializeField, Tooltip("ブースト時の力")]
+    float boostPower = 20.0f;
+    [SerializeField, Tooltip("ブーストを再使用できる間隔")]
+    float boostInterval = 1.0f;
+    float boostTimeCount = 0.0f;
     MaterialFlash materialFlash;
 
     void Awake()
@@ -127,6 +132,15 @@ public class BallController : MonoBehaviour
             //入力方向を向く
             lookatDir.x = inputDir.x;
             lookatDir.z = inputDir.z;
+        }
+
+        boostTimeCount -= Time.deltaTime;
+        if (SwitchInput.GetButtonDown(playerIndex, SwitchButton.Boost) &&
+            boostTimeCount <= 0.0f)
+        {
+            //入力方向に力を加える
+            thisRigidbody.AddForce(lookatDir.normalized * boostPower);
+            boostTimeCount = boostInterval;
         }
     }
 

@@ -129,6 +129,7 @@ MonoBehaviour:
   hitPowerPercenage: 0.003
   strongHitBounceAddPower: 2
   weakHitBounceAddPower: 2.5
+  boostPower: 1000
 --- !u!114 &3481246479687572610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,5 +143,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashColor: {r: 0, g: 0, b: 0, a: 1}
+  intervalTime: 0
   meshRenderer: {fileID: 1466357930766992116}
   skinMeshRenderer: {fileID: 0}
