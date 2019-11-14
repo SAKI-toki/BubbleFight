@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7519834329787226258}
   - component: {fileID: 4063578691180799558}
   - component: {fileID: 8528367205499777321}
+  - component: {fileID: 3481246479687572610}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Ball
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 9115919894792072580}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -90,7 +91,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -103,7 +104,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9115919894792072580}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 964bc9ebeb2b4ce4b869b2842562f40b, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -118,6 +119,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 9115919894792072580}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 609218b1a8a31df4183ee8d1723c0985, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d160e7da0c4aac4aa7c01fe161802ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHitPoint: 100
+  maxAngularVelocity: 12
+  cantInputHitPower: 50
+  maxCantInputTime: 0.5
+  hitPowerPercenage: 0.003
+  strongHitBounceAddPower: 2
+  weakHitBounceAddPower: 2.5
+  boostPower: 1000
+--- !u!114 &3481246479687572610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9115919894792072580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eb3cdd3fe461c14c8db1fca2361fa88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashColor: {r: 0, g: 0, b: 0, a: 1}
+  intervalTime: 0
+  meshRenderer: {fileID: 1466357930766992116}
+  skinMeshRenderer: {fileID: 0}

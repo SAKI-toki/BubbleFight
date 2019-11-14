@@ -10,7 +10,7 @@ public class PhysicsUnAutoSimulate : Singleton<PhysicsUnAutoSimulate>
         Physics.autoSimulation = false;
 
     }
-    void LateUpdate()
+    void Update()
     {
         Physics.Simulate(Time.deltaTime);
     }

@@ -4,6 +4,16 @@ public partial class PlayerController : MonoBehaviour
 {
     [SerializeField, Tooltip("ボールでの移動時の力")]
     float ballMovePower = 10.0f;
+    [SerializeField, Tooltip("ボールの回転に加える力の割合"), Range(0, 1)]
+    float ballRotationPercentage = 0.8f;
+
+    [SerializeField, Tooltip("ボールに付ける物理マテリアル")]
+    PhysicMaterial ballPhysicalMaterial = null;
+
+    [SerializeField, Tooltip("曲がりやすくする重み"), Range(1, 2)]
+    float ballEasyCurveWeight = 1.0f;
+    [SerializeField, Tooltip("ボールの重さ")]
+    float ballMass = 1.0f;
 
     /// <summary>
     /// ボールの中にいるステート
@@ -18,14 +28,19 @@ public partial class PlayerController : MonoBehaviour
         protected override void Init()
         {
             ballController = playerController.transform.parent.GetComponent<BallController>();
-            ballController.Initialize(playerController.playerNumber, playerController.ballMovePower);
+            ballController.GetComponent<SphereCollider>().material = playerController.ballPhysicalMaterial;
+            ballController.InitializeOnPlayer(playerController.playerNumber, playerController.ballMovePower,
+                                                playerController.ballRotationPercentage, playerController.ballMass);
+            ballController.SetDestroyEvent(delegate { playerController.transform.parent = null; });
             playerController.transform.localPosition = Vector3.zero;
             PlayerPhysicsSet(false);
         }
 
         public override PlayerStateBase Update()
         {
-            ballController.Move();
+            //親オブジェクト(ボール)がなくなったらステート遷移
+            if (playerController.transform.parent == null) return new BreakBallState();
+            ballController.Move(playerController.ballEasyCurveWeight);
             playerController.PlayerRotation(ballController.GetLookatDir());
             return this;
         }
@@ -43,21 +58,18 @@ public partial class PlayerController : MonoBehaviour
             //コライダーのオンオフ
             foreach (var collider in playerController.gameObject.GetComponents<Collider>()) collider.enabled = enabled;
 
-            //Rigidbodyのオンオフ
-            var rigidbody = playerController.GetComponent<Rigidbody>();
             if (enabled)
             {
                 //この順番にしないと警告が出る
-                rigidbody.isKinematic = false;
-                rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+                playerController.playerRigidbody.isKinematic = false;
+                playerController.playerRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             }
             else
             {
                 //この順番にしないと警告が出る
-                rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-                rigidbody.isKinematic = true;
+                playerController.playerRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+                playerController.playerRigidbody.isKinematic = true;
             }
-
         }
     }
 }

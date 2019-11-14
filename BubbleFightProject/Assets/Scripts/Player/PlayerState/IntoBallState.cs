@@ -11,5 +11,9 @@ public partial class PlayerController : MonoBehaviour
         {
             return new InBallState();
         }
+        public override void Destroy()
+        {
+            playerController.invincibleTimeCount = 0.0f;
+        }
     }
 }

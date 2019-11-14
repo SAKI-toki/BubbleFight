@@ -440,5 +440,6 @@ public enum SwitchButton : long
 #endif
     Ok = SwitchButton.Right,
     Cancel = SwitchButton.Down,
+    Boost = SwitchButton.Right,
     None = 0
 }

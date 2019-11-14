@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1101312921015316694}
   - component: {fileID: 1395792898741096076}
   - component: {fileID: 2137016027539834921}
+  - component: {fileID: 1611149538045425472}
   m_Layer: 0
   m_Name: PlayerBase
   m_TagString: Player
@@ -47,7 +48,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 0
   initStateEnum: 1
-  ballMovePower: 10
+  ballMovePower: 40
+  ballRotationPercentage: 0.9
+  ballPhysicalMaterial: {fileID: 13400000, guid: 964bc9ebeb2b4ce4b869b2842562f40b,
+    type: 2}
+  ballEasyCurveWeight: 1
+  ballMass: 1
   walkMoveSpeed: 4
 --- !u!54 &1395792898741096076
 Rigidbody:
@@ -63,7 +69,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!136 &2137016027539834921
 CapsuleCollider:
@@ -79,3 +85,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1611149538045425472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101312921015316693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eb3cdd3fe461c14c8db1fca2361fa88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashColor: {r: 0, g: 0, b: 0, a: 1}
+  intervalTime: 0.1
+  meshRenderer: {fileID: 0}
+  skinMeshRenderer: {fileID: 0}
