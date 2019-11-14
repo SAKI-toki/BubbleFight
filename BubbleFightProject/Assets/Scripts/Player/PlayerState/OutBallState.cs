@@ -10,8 +10,6 @@ public partial class PlayerController : MonoBehaviour
     /// </summary>
     class OutBallState : PlayerStateBase
     {
-        Vector3 inputDir = Vector3.zero;
-        Vector3 position = Vector3.zero;
 
         public override PlayerStateBase Update()
         {
@@ -24,12 +22,15 @@ public partial class PlayerController : MonoBehaviour
         /// </summary>
         void Move()
         {
-            inputDir.x = SwitchInput.GetHorizontal(playerController.playerNumber);
-            inputDir.z = SwitchInput.GetVertical(playerController.playerNumber);
+            var stickInput = SwitchInput.GetLeftStick(playerController.playerNumber);
+
+            Vector3 inputDir = Vector3.zero;
+            inputDir.x = stickInput.x;
+            inputDir.z = stickInput.y;
             //回転
             playerController.PlayerRotation(inputDir);
             //位置の更新
-            position = playerController.transform.position;
+            var position = playerController.transform.position;
             position += inputDir * playerController.walkMoveSpeed * Time.deltaTime;
             playerController.transform.position = position;
         }

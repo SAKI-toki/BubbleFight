@@ -51,10 +51,10 @@ public abstract class SelectItemManager : MonoBehaviour
     /// </summary>
     protected void CursorMove(int operationIndex, ref SelectItemBase currentSelectItem)
     {
-        bool up = SwitchInput.GetButtonDown(operationIndex, SwitchButton.StickUp);
-        bool down = SwitchInput.GetButtonDown(operationIndex, SwitchButton.StickDown);
-        bool right = SwitchInput.GetButtonDown(operationIndex, SwitchButton.StickRight);
-        bool left = SwitchInput.GetButtonDown(operationIndex, SwitchButton.StickLeft);
+        bool up = SwitchInput.GetButtonDown(operationIndex, SwitchButton.SelectUp);
+        bool down = SwitchInput.GetButtonDown(operationIndex, SwitchButton.SelectDown);
+        bool right = SwitchInput.GetButtonDown(operationIndex, SwitchButton.SelectRight);
+        bool left = SwitchInput.GetButtonDown(operationIndex, SwitchButton.SelectLeft);
 
         SelectItemBase nextSelectItem = currentSelectItem;
 
@@ -89,7 +89,7 @@ public abstract class SelectItemManager : MonoBehaviour
     /// </summary>
     protected bool ChoiceSelectItem(int operationIndex, SelectItemBase currentSelectItem)
     {
-        if (SwitchInput.GetButtonDown(operationIndex, SwitchButton.Ok))
+        if (SwitchInput.GetButtonDown(operationIndex, nn.hid.NpadButton.A))
         {
             return currentSelectItem.ChoiceThis();
         }

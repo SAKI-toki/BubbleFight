@@ -99,9 +99,10 @@ public class BallController : MonoBehaviour
             cantInputTime -= Time.deltaTime;
             return;
         }
+        var stickInput = SwitchInput.GetLeftStick(playerIndex);
         Vector3 inputDir = Vector3.zero;
-        inputDir.x = SwitchInput.GetHorizontal(playerIndex);
-        inputDir.z = SwitchInput.GetVertical(playerIndex);
+        inputDir.x = stickInput.x;
+        inputDir.z = stickInput.y;
         //曲がりやすくする
         var velocity = thisRigidbody.velocity;
         velocity.y = 0;

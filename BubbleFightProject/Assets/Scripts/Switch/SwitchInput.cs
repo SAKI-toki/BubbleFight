@@ -1,7 +1,18 @@
 ﻿using UnityEngine;
-#if UNITY_SWITCH  && !(UNITY_EDITOR)
 using nn.hid;
-#endif
+
+public enum SwitchButton : long
+{
+    Ok = NpadButton.A,
+    Cancel = NpadButton.B,
+    Boost = NpadButton.A,
+    Pause = NpadButton.Plus | NpadButton.Minus,
+    //項目選択
+    SelectUp = NpadButton.StickLUp,
+    SelectDown = NpadButton.StickLDown,
+    SelectRight = NpadButton.StickLRight,
+    SelectLeft = NpadButton.StickLLeft,
+}
 
 /// <summary>
 /// スイッチの入力情報
@@ -16,14 +27,13 @@ static public class SwitchInput
     //スティックの情報
     class StickInfo
     {
-        public float horizontal = 0.0f, vertical = 0.0f;
+        public Vector2 right, left;
     }
     //スティックの水平
     static StickInfo[] stickInfos;
-#if UNITY_SWITCH && !(UNITY_EDITOR)
     //コントローラーの状態
     static NpadState npadState = new NpadState();
-#endif
+
     /// <summary>
     /// 入力の初期化
     /// </summary>
@@ -35,11 +45,9 @@ static public class SwitchInput
         currentButtons = new long[npadIdsLength];
         stickInfos = new StickInfo[npadIdsLength];
         for (int i = 0; i < npadIdsLength; ++i)
+        {
             stickInfos[i] = new StickInfo();
-#if UNITY_EDITOR
-        xboxCurrentButtons = new bool[npadIdsLength, (int)XboxInput.None];
-        xboxPrevButtons = new bool[npadIdsLength, (int)XboxInput.None];
-#endif
+        }
     }
 
     /// <summary>
@@ -47,24 +55,13 @@ static public class SwitchInput
     /// </summary>
     /// <param name="index">コントローラーの番号</param>
     /// <param name="npadId">パッドのID</param>
-    static public void InputUpdate(int index
-#if UNITY_SWITCH  && !(UNITY_EDITOR)
-, NpadId npadId
-#endif
-)
+    static public void InputUpdate(int index, NpadId npadId)
     {
-#if UNITY_EDITOR || !(UNITY_SWITCH)
-        for (int i = 0; i < (int)XboxInput.None; ++i)
-        {
-            xboxPrevButtons[index, i] = xboxCurrentButtons[index, i];
-            xboxCurrentButtons[index, i] = InputXboxButton(index, (XboxInput)i);
-        }
-#endif
+        //#endif
         prevButtons[index] = currentButtons[index];
         //未接続
         if (!SwitchManager.GetInstance().IsConnect(index)) return;
 
-#if UNITY_SWITCH  && !(UNITY_EDITOR)
         //スタイルを取得
         NpadStyle npadStyle = Npad.GetStyleSet(npadId);
         //スタイルが合うかどうか
@@ -77,55 +74,88 @@ static public class SwitchInput
                                 NpadButton.StickLLeft | NpadButton.StickRLeft);
         //スティックの更新
         //右のジョイスティック
-        if (npadStyle == NpadStyle.JoyRight)
+        //デッドゾーンを超えているかどうか
+        if (Mathf.Abs(npadState.analogStickR.fx) > DeadZone)
         {
-            //デッドゾーンを超えているかどうか
-            if (Mathf.Abs(npadState.analogStickR.fx) > DeadZone)
-            {
-                stickInfos[index].vertical = -npadState.analogStickR.fx;
-                npadState.buttons |= (npadState.analogStickR.fx < 0) ? NpadButton.StickLRight : NpadButton.StickLLeft;
-            }
-            else
-            {
-                stickInfos[index].vertical = 0.0f;
-            }
-            //デッドゾーンを超えているかどうか
-            if (Mathf.Abs(npadState.analogStickR.fy) > DeadZone)
-            {
-                stickInfos[index].horizontal = npadState.analogStickR.fy;
-                npadState.buttons |= (npadState.analogStickR.fy < 0) ? NpadButton.StickLUp : NpadButton.StickLDown;
-            }
-            else
-            {
-                stickInfos[index].horizontal = 0.0f;
-            }
+            stickInfos[index].right.x = npadState.analogStickR.fx;
+            npadState.buttons |= (npadState.analogStickR.fx > 0) ? NpadButton.StickRRight : NpadButton.StickRLeft;
         }
-        //左のジョイスティック
         else
         {
-            //デッドゾーンを超えているかどうか
-            if (Mathf.Abs(npadState.analogStickL.fx) > DeadZone)
-            {
-                stickInfos[index].vertical = npadState.analogStickL.fx;
-                npadState.buttons |= (npadState.analogStickL.fx > 0) ? NpadButton.StickLRight : NpadButton.StickLLeft;
-            }
-            else
-            {
-                stickInfos[index].vertical = 0.0f;
-            }
-            //デッドゾーンを超えているかどうか
-            if (Mathf.Abs(npadState.analogStickL.fy) > DeadZone)
-            {
-                stickInfos[index].horizontal = -npadState.analogStickL.fy;
-                npadState.buttons |= (npadState.analogStickL.fy > 0) ? NpadButton.StickLUp : NpadButton.StickLDown;
-            }
-            else
-            {
-                stickInfos[index].horizontal = 0.0f;
-            }
+            stickInfos[index].right.x = 0.0f;
         }
+        //デッドゾーンを超えているかどうか
+        if (Mathf.Abs(npadState.analogStickR.fy) > DeadZone)
+        {
+            stickInfos[index].right.y = npadState.analogStickR.fy;
+            npadState.buttons |= (npadState.analogStickR.fy > 0) ? NpadButton.StickRUp : NpadButton.StickRDown;
+        }
+        else
+        {
+            stickInfos[index].right.y = 0.0f;
+        }
+        //左のジョイスティック
+        //デッドゾーンを超えているかどうか
+        if (Mathf.Abs(npadState.analogStickL.fx) > DeadZone)
+        {
+            stickInfos[index].left.x = npadState.analogStickL.fx;
+            npadState.buttons |= (npadState.analogStickL.fx > 0) ? NpadButton.StickLRight : NpadButton.StickLLeft;
+        }
+        else
+        {
+            stickInfos[index].left.x = 0.0f;
+        }
+        //デッドゾーンを超えているかどうか
+        if (Mathf.Abs(npadState.analogStickL.fy) > DeadZone)
+        {
+            stickInfos[index].left.y = npadState.analogStickL.fy;
+            npadState.buttons |= (npadState.analogStickL.fy > 0) ? NpadButton.StickLUp : NpadButton.StickLDown;
+        }
+        else
+        {
+            stickInfos[index].left.y = 0.0f;
+        }
+
         currentButtons[index] = (long)npadState.buttons;
-#endif
+    }
+
+    /// <summary>
+    /// ボタンを今のフレームに押したか
+    /// </summary>
+    /// <param name="index">コントローラーの番号</param>
+    /// <param name="button">取得するボタン</param>
+    /// <returns>押したならtrueを返す</returns>
+    static public bool GetButtonDown(int index, NpadButton button)
+    {
+        //未接続ならfalse
+        if (!SwitchManager.GetInstance().IsConnect(index)) return false;
+        return !IsPrevButton(index, (long)button) && IsCurrentButton(index, (long)button);
+    }
+
+    /// <summary>
+    /// 今のフレームにボタンを押しているか
+    /// </summary>
+    /// <param name="index">コントローラーの番号</param>
+    /// <param name="button">取得するボタン</param>
+    /// <returns>押しているならtrueを返す</returns>
+    static public bool GetButton(int index, NpadButton button)
+    {
+        //未接続ならfalse
+        if (!SwitchManager.GetInstance().IsConnect(index)) return false;
+        return IsCurrentButton(index, (long)button);
+    }
+
+    /// <summary>
+    /// 今のフレームにボタンを離したか
+    /// </summary>
+    /// <param name="index">コントローラーの番号</param>
+    /// <param name="button">取得するボタン</param>
+    /// <returns>離したならtrueを返す</returns>
+    static public bool GetButtonUp(int index, NpadButton button)
+    {
+        //未接続ならfalse
+        if (!SwitchManager.GetInstance().IsConnect(index)) return false;
+        return IsPrevButton(index, (long)button) && !IsCurrentButton(index, (long)button);
     }
 
     /// <summary>
@@ -136,13 +166,9 @@ static public class SwitchInput
     /// <returns>押したならtrueを返す</returns>
     static public bool GetButtonDown(int index, SwitchButton button)
     {
-#if AUTO_EXECUTE_DEBUG
-        if (index == 0 && button == SwitchButton.Ok) return true;
-        if (index == 0 && button == SwitchButton.StickRight) return true;
-#endif
         //未接続ならfalse
         if (!SwitchManager.GetInstance().IsConnect(index)) return false;
-        return !IsPrevButton(index, button) && IsCurrentButton(index, button);
+        return !IsPrevButton(index, (long)button) && IsCurrentButton(index, (long)button);
     }
 
     /// <summary>
@@ -155,7 +181,7 @@ static public class SwitchInput
     {
         //未接続ならfalse
         if (!SwitchManager.GetInstance().IsConnect(index)) return false;
-        return IsCurrentButton(index, button);
+        return IsCurrentButton(index, (long)button);
     }
 
     /// <summary>
@@ -168,42 +194,31 @@ static public class SwitchInput
     {
         //未接続ならfalse
         if (!SwitchManager.GetInstance().IsConnect(index)) return false;
-        return IsPrevButton(index, button) && !IsCurrentButton(index, button);
+        return IsPrevButton(index, (long)button) && !IsCurrentButton(index, (long)button);
     }
 
     /// <summary>
-    /// スティックの水平を取得
+    /// 右スティックの入力を取得
     /// </summary>
     /// <param name="index">コントローラーの番号</param>
-    /// <returns>スティックの垂直</returns>
-    static public float GetHorizontal(int index)
+    /// <returns>右スティックの入力</returns>
+    static public Vector2 GetRightStick(int index)
     {
-#if AUTO_EXECUTE_DEBUG
-        if (index == 0) return -1.0f;
-#endif
-        //未接続なら0.0f
-        if (!SwitchManager.GetInstance().IsConnect(index)) return 0.0f;
-#if UNITY_SWITCH  && !(UNITY_EDITOR)
-        return stickInfos[index].horizontal;
-#else
-        return ConvertSwitchHorizontalToXboxHorizontal(index);
-#endif
+        //未接続ならVector2.zero;
+        if (!SwitchManager.GetInstance().IsConnect(index)) return Vector2.zero;
+        return stickInfos[index].right;
     }
 
     /// <summary>
-    /// スティックの垂直を取得
+    /// 左スティックの入力を取得
     /// </summary>
     /// <param name="index">コントローラーの番号</param>
-    /// <returns>スティックの垂直</returns>
-    static public float GetVertical(int index)
+    /// <returns>左スティックの入力</returns>
+    static public Vector2 GetLeftStick(int index)
     {
-        //未接続なら0.0f
-        if (!SwitchManager.GetInstance().IsConnect(index)) return 0.0f;
-#if UNITY_SWITCH  && !(UNITY_EDITOR)
-        return stickInfos[index].vertical;
-#else
-        return ConvertSwitchVerticalToXboxVertical(index);
-#endif
+        //未接続ならVector2.zero;
+        if (!SwitchManager.GetInstance().IsConnect(index)) return Vector2.zero;
+        return stickInfos[index].left;
     }
 
     /// <summary>
@@ -212,13 +227,9 @@ static public class SwitchInput
     /// <param name="index">コントローラーの番号</param>
     /// <param name="button">取得するボタン</param>
     /// <returns>押しているならtrueを返す</returns>
-    static bool IsPrevButton(int index, SwitchButton button)
+    static bool IsPrevButton(int index, long button)
     {
-#if UNITY_SWITCH  && !(UNITY_EDITOR)
-        return (prevButtons[index] & (long)button) != 0;
-#else
-        return xboxPrevButtons[index, (int)SwitchConvertXbox(button)];
-#endif
+        return (prevButtons[index] & button) != 0;
     }
 
     /// <summary>
@@ -227,219 +238,8 @@ static public class SwitchInput
     /// <param name="index">コントローラーの番号</param>
     /// <param name="button">取得するボタン</param>
     /// <returns>押しているならtrueを返す</returns>
-    static bool IsCurrentButton(int index, SwitchButton button)
+    static bool IsCurrentButton(int index, long button)
     {
-#if UNITY_SWITCH  && !(UNITY_EDITOR)
-        return (currentButtons[index] & (long)button) != 0;
-#else
-        return xboxCurrentButtons[index, (int)SwitchConvertXbox(button)];
-#endif
+        return (currentButtons[index] & button) != 0;
     }
-
-#if UNITY_EDITOR || !(UNITY_SWITCH)
-
-    static bool[,] xboxCurrentButtons;
-    static bool[,] xboxPrevButtons;
-    enum XboxInput
-    {
-        Up, Down, Right, Left, SR, SL, StickUp, StickDown, StickRight, StickLeft, Pause, Stick, Trigger, ZTrigger, None
-    }
-
-    /// <summary>
-    /// Switchの入力からXboxの入力にコンバートする
-    /// </summary>
-    /// <param name="button">Switchの入力</param>
-    /// <returns>Xboxの入力</returns>
-    static XboxInput SwitchConvertXbox(SwitchButton button)
-    {
-        switch (button)
-        {
-            case SwitchButton.Up:
-                return XboxInput.Up;
-            case SwitchButton.Down:
-                return XboxInput.Down;
-            case SwitchButton.Right:
-                return XboxInput.Right;
-            case SwitchButton.Left:
-                return XboxInput.Left;
-            case SwitchButton.SR:
-                return XboxInput.SR;
-            case SwitchButton.SL:
-                return XboxInput.SL;
-            case SwitchButton.StickUp:
-                return XboxInput.StickUp;
-            case SwitchButton.StickDown:
-                return XboxInput.StickDown;
-            case SwitchButton.StickRight:
-                return XboxInput.StickRight;
-            case SwitchButton.StickLeft:
-                return XboxInput.StickLeft;
-            case SwitchButton.Pause:
-                return XboxInput.Pause;
-            case SwitchButton.Stick:
-                return XboxInput.Stick;
-            case SwitchButton.Trigger:
-                return XboxInput.Trigger;
-            case SwitchButton.ZTrigger:
-                return XboxInput.ZTrigger;
-            default:
-                return XboxInput.None;
-        }
-    }
-
-    /// <summary>
-    /// XBoxの入力
-    /// </summary>
-    /// <param name="index">コントローラーの番号</param>
-    /// <param name="button">ボタン</param>
-    /// <returns>入力されているかどうか</returns>
-    static bool InputXboxButton(int index, XboxInput button)
-    {
-        const int AddNum = KeyCode.Joystick2Button0 - KeyCode.Joystick1Button0;
-        switch (button)
-        {
-            case XboxInput.Up:
-                return Input.GetKey(KeyCode.Joystick1Button3 + index * AddNum) ||
-                (index == 0 && Input.GetKey(KeyCode.UpArrow));
-            case XboxInput.Down:
-                return Input.GetKey(KeyCode.Joystick1Button0 + index * AddNum) ||
-                (index == 0 && Input.GetKey(KeyCode.DownArrow));
-            case XboxInput.Right:
-                return Input.GetKey(KeyCode.Joystick1Button1 + index * AddNum) ||
-                (index == 0 && Input.GetKey(KeyCode.RightArrow));
-            case XboxInput.Left:
-                return Input.GetKey(KeyCode.Joystick1Button2 + index * AddNum) ||
-                (index == 0 && Input.GetKey(KeyCode.LeftArrow));
-            case XboxInput.SR:
-                return Input.GetKey(KeyCode.Joystick1Button5 + index * AddNum) ||
-                (index == 0 && Input.GetKey(KeyCode.E));
-            case XboxInput.SL:
-                return Input.GetKey(KeyCode.Joystick1Button4 + index * AddNum) ||
-                (index == 0 && Input.GetKey(KeyCode.Q));
-            case XboxInput.StickUp:
-                return Input.GetAxisRaw("Vertical" + (index + 1).ToString()) > DeadZone ||
-                (index == 0 && Input.GetKey(KeyCode.W));
-            case XboxInput.StickDown:
-                return Input.GetAxisRaw("Vertical" + (index + 1).ToString()) < -DeadZone ||
-                (index == 0 && Input.GetKey(KeyCode.S));
-            case XboxInput.StickRight:
-                return Input.GetAxisRaw("Horizontal" + (index + 1).ToString()) > DeadZone ||
-                (index == 0 && Input.GetKey(KeyCode.D));
-            case XboxInput.StickLeft:
-                return Input.GetAxisRaw("Horizontal" + (index + 1).ToString()) < -DeadZone ||
-                (index == 0 && Input.GetKey(KeyCode.A));
-            case XboxInput.Pause:
-                return Input.GetKey(KeyCode.Joystick1Button7 + index * AddNum) ||
-                (index == 0 && Input.GetKey(KeyCode.Alpha1));
-            case XboxInput.Stick:
-                return Input.GetKey(KeyCode.Joystick1Button8 + index * AddNum) ||
-                 Input.GetKey(KeyCode.Joystick1Button9 + index * AddNum) ||
-                 (index == 0 && Input.GetKey(KeyCode.Space));
-            case XboxInput.Trigger:
-                return Input.GetKey(KeyCode.JoystickButton4 + index * AddNum) ||
-                Input.GetKey(KeyCode.Joystick1Button5 + index * AddNum) ||
-                (index == 0 && Input.GetKey(KeyCode.T));
-            case XboxInput.ZTrigger:
-                return Mathf.Abs(Input.GetAxisRaw("Ztrigger" + (index + 1).ToString())) > DeadZone ||
-                (index == 0 && Input.GetKey(KeyCode.Z));
-            default:
-                return false;
-        }
-    }
-
-    /// <summary>
-    /// スティックの水平入力のコンバーター
-    /// </summary>
-    /// <param name="index">コントローラーの番号</param>
-    /// <returns>スティックの水平入力</returns>
-    static float ConvertSwitchHorizontalToXboxHorizontal(int index)
-    {
-        float stick = Input.GetAxisRaw("Horizontal" + (index + 1).ToString());
-        if (stick != 0) return stick;
-        //同時押しは0
-        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.A)) return 0;
-        if (Input.GetKey(KeyCode.D))
-        {
-            if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)) return 1;
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) return Mathf.Sqrt(0.5f);
-            return 1;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)) return -1;
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) return -Mathf.Sqrt(0.5f);
-            return -1;
-        }
-        return 0;
-    }
-
-    /// <summary>
-    /// スティックの垂直入力のコンバーター
-    /// </summary>
-    /// <param name="index">コントローラーの番号</param>
-    /// <returns>スティックの垂直入力</returns>
-    static float ConvertSwitchVerticalToXboxVertical(int index)
-    {
-        float stick = Input.GetAxisRaw("Vertical" + (index + 1).ToString());
-        if (stick != 0) return stick;
-        //同時押しは0
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)) return 0;
-        if (Input.GetKey(KeyCode.W))
-        {
-            if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.A)) return 1;
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) return Mathf.Sqrt(0.5f);
-            return 1;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.A)) return -1;
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) return -Mathf.Sqrt(0.5f);
-            return -1;
-        }
-        return 0;
-    }
-
-#endif
-}
-
-/// <summary>
-/// Switchでジョイコンを横持ちにした場合の入力
-/// </summary>
-public enum SwitchButton : long
-{
-#if UNITY_SWITCH  && !(UNITY_EDITOR)
-    Up = NpadButton.Y | NpadButton.Right,
-    Down = NpadButton.A | NpadButton.Left,
-    Right = NpadButton.X | NpadButton.Down,
-    Left = NpadButton.B | NpadButton.Up,
-    SR = NpadButton.RightSR | NpadButton.LeftSR,
-    SL = NpadButton.RightSL | NpadButton.LeftSL,
-    StickUp = NpadButton.StickRLeft | NpadButton.StickLRight,
-    StickDown = NpadButton.StickRRight | NpadButton.StickLLeft,
-    StickRight = NpadButton.StickRUp | NpadButton.StickLDown,
-    StickLeft = NpadButton.StickRDown | NpadButton.StickLUp,
-    Pause = NpadButton.Plus | NpadButton.Minus,
-    Stick = NpadButton.StickR | NpadButton.StickL,
-    Trigger = NpadButton.R | NpadButton.L,
-    ZTrigger = NpadButton.ZR | NpadButton.ZL,
-#else 
-    Up = 0x1 << 0,
-    Down = 0x1 << 1,
-    Right = 0x1 << 2,
-    Left = 0x1 << 3,
-    SR = 0x1 << 4,
-    SL = 0x1 << 5,
-    StickUp = 0x1 << 6,
-    StickDown = 0x1 << 7,
-    StickRight = 0x1 << 8,
-    StickLeft = 0x1 << 9,
-    Pause = 0x1 << 10,
-    Stick = 0x1 << 11,
-    Trigger = 0x1 << 12,
-    ZTrigger = 0x1 << 13,
-#endif
-    Ok = SwitchButton.Right,
-    Cancel = SwitchButton.Down,
-    Boost = SwitchButton.Right,
-    None = 0
 }

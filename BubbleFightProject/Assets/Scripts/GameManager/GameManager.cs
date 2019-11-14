@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// ゲームを管理するクラス
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour
         gameTimeManager.AddTime();
         if (!gameTimeManager.IsPlayGame()) PointManager.PointLock();
         if (SwitchInput.GetButtonDown(0, SwitchButton.Pause))
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetSceneAt(0).name);
+        {
+            SceneManager.LoadScene(SceneManager.GetSceneAt(0).name);
+        }
     }
 }

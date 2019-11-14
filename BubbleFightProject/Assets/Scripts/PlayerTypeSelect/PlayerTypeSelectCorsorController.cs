@@ -30,12 +30,11 @@ public class PlayerTypeSelectCorsorController : MonoBehaviour
     /// </summary>
     void Move()
     {
-        float hor = SwitchInput.GetHorizontal(playerNumber);
-        float ver = SwitchInput.GetVertical(playerNumber);
+        var right = SwitchInput.GetLeftStick(playerNumber);
 
         var position = transform.position;
-        position.x += hor * moveSpeed * Time.deltaTime;
-        position.y += ver * moveSpeed * Time.deltaTime;
+        position.x += right.x * moveSpeed * Time.deltaTime;
+        position.y += right.y * moveSpeed * Time.deltaTime;
         transform.position = position;
     }
 

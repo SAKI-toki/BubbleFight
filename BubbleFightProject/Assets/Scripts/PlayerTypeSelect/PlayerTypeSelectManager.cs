@@ -38,7 +38,7 @@ public class PlayerTypeSelectManager : MonoBehaviour
         }
 
         //シーン遷移
-        if (SwitchInput.GetButtonDown(0, SwitchButton.Pause) &&
+        if ((SwitchInput.GetButtonDown(0, SwitchButton.Pause)) &&
             AlreadyAllPlayerSelect())
         {
             SceneManager.LoadScene("StageSelectScene");
