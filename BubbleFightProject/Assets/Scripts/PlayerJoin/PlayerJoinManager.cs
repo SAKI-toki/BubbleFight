@@ -91,6 +91,20 @@ public class PlayerJoinManager : MonoBehaviour
     static public int GetJoinPlayerCount() { return joinPlayerCount; }
     static public bool IsJoin(int index) { return isJoins[index]; }
 
+    /// <summary>
+    /// プレイしているプレイヤーの中で何番目か
+    /// </summary>
+    static public int GetNumberInPlayer(int index)
+    {
+        int count = 0;
+        for (int i = 0; i < PlayerCount.MaxValue; ++i)
+        {
+            if (i == index) break;
+            if (IsJoin(i)) ++count;
+        }
+        return count;
+    }
+
 #if UNITY_EDITOR
     /// <summary>
     /// デバッグ用にどこからでもプレイヤーの人数をいじれるようにする

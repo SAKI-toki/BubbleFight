@@ -91,7 +91,7 @@ public class BallController : MonoBehaviour
     /// <summary>
     /// 移動
     /// </summary>
-    public void Move(float easyCurveWeight)
+    public void Move(float easyCurveWeight, Vector3 forward, Vector3 right)
     {
         //入力を受け付けない
         if (cantInputTime > 0.0f)
@@ -100,9 +100,7 @@ public class BallController : MonoBehaviour
             return;
         }
         var stickInput = SwitchInput.GetLeftStick(playerIndex);
-        Vector3 inputDir = Vector3.zero;
-        inputDir.x = stickInput.x;
-        inputDir.z = stickInput.y;
+        Vector3 addPower = PlayerMath.ForwardAndRightMove(stickInput, forward, right);
         //曲がりやすくする
         var velocity = thisRigidbody.velocity;
         velocity.y = 0;
@@ -111,18 +109,18 @@ public class BallController : MonoBehaviour
         同じ向きなら1,反対向きなら-1,垂直なら0のため
         (-dot + 1) / 2をすることで同じ向きなら0,反対向きなら1になるようにする
         */
-        float angle = (-Vector3.Dot(velocity.normalized, inputDir.normalized) + 1) / 2;
+        float angle = (-Vector3.Dot(velocity.normalized, addPower.normalized) + 1) / 2;
         //加える回転力
         Vector3 addTorque = Vector3.zero;
-        addTorque.x = inputDir.z;
-        addTorque.z = -inputDir.x;
+        addTorque.x = addPower.z;
+        addTorque.z = -addPower.x;
         float power = movePower * thisRigidbody.mass * Mathf.Pow(angle + 1, easyCurveWeight);
         //入力方向に力を加える
-        thisRigidbody.AddForce(inputDir * power * (1.0f - rotationPercentage));
+        thisRigidbody.AddForce(addPower * power * (1.0f - rotationPercentage));
         //入力方向に回転の力を加える
         thisRigidbody.AddTorque(addTorque * power * rotationPercentage);
 
-        if (inputDir.x == 0 && inputDir.z == 0)
+        if (addPower.x == 0 && addPower.z == 0)
         {
             //力のかかっている方向を向く
             lookatDir.x = thisRigidbody.velocity.x;
@@ -131,8 +129,8 @@ public class BallController : MonoBehaviour
         else
         {
             //入力方向を向く
-            lookatDir.x = inputDir.x;
-            lookatDir.z = inputDir.z;
+            lookatDir.x = addPower.x;
+            lookatDir.z = addPower.z;
         }
 
         boostTimeCount -= Time.deltaTime;
