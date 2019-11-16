@@ -53,7 +53,6 @@ static public class PointManager
     /// </summary>
     static public void DropPlayerPointCalculate(int broken)
     {
-
         if (broken != int.MaxValue)
         {
             AddPoint(broken, DroppedPoint);

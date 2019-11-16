@@ -133,6 +133,7 @@ public class BallController : MonoBehaviour
             lookatDir.z = addPower.z;
         }
 
+        //ブースト
         boostTimeCount -= Time.deltaTime;
         if (SwitchInput.GetButtonDown(playerIndex, SwitchButton.Boost) &&
             boostTimeCount <= 0.0f)

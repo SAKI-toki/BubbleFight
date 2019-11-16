@@ -21,7 +21,10 @@ public partial class PlayerController : MonoBehaviour
     //無敵時間
     const float InvincibleTime = 3.0f;
 
-    [SerializeField, Tooltip("TPSカメラ")]
+    [SerializeField, Tooltip("三人称視点カメラ")]
+    GameObject cameraObject = null;
+    [SerializeField, Tooltip("カメラの注視点")]
+    Transform cameraLookat = null;
     TpsCamera cameraController = null;
 
     void Awake()
@@ -32,7 +35,8 @@ public partial class PlayerController : MonoBehaviour
 
     void Start()
     {
-        cameraController.CameraInit(playerNumber);
+        cameraController = Instantiate(cameraObject).GetComponent<TpsCamera>();
+        cameraController.CameraInit(playerNumber, cameraLookat);
         PlayerStateBase initState = null;
         switch (initStateEnum)
         {

@@ -5,30 +5,43 @@
 /// </summary>
 public class TpsCamera : MonoBehaviour
 {
-    [SerializeField, Tooltip("ターゲットとの距離")]
-    float distance = 5.0f;
-    [SerializeField, Tooltip("回転速度")]
-    float rotationSpeed = 10.0f;
+    [SerializeField, Tooltip("ターゲットとのデフォルトの距離")]
+    float defaultTargetDistance = 5.0f;
+    [SerializeField, Tooltip("ターゲットとの最大のズレ")]
+    float maxTargetSlip = 3.0f;
+    [SerializeField, Tooltip("左右の回転速度")]
+    float horizontalRotationSpeed = 10.0f;
+    [SerializeField, Tooltip("上下の回転速度")]
+    float verticalRotationSpeed = 10.0f;
+    [SerializeField, Tooltip("補間速度")]
+    float lerpSpeed = 10.0f;
     [SerializeField, Tooltip("上下の最大角度"), Range(0, 89)]
     float maxAngle = 80;
     [SerializeField, Tooltip("上下の最小角度"), Range(-89, 0)]
     float minAngle = -80;
-    [SerializeField, Tooltip("追尾するオブジェクト")]
-    Transform targetTransform = null;
-    //[SerializeField, Tooltip("カメラとターゲットの間に入ってはいけないレイヤー")]
-    //LayerMask 
+    [SerializeField, Tooltip("カメラとターゲットの間に入ってはいけないレイヤー")]
+    LayerMask rayHitLayerMask = default(LayerMask);
     [SerializeField, Tooltip("カメラ")]
     Camera tpsCamera = null;
+    [SerializeField, Tooltip("親オブジェクト")]
+    Transform parentTransform = null;
+    [SerializeField, Tooltip("子オブジェクト")]
+    Transform childTransform = null;
+    [SerializeField, Tooltip("カメラオブジェクト")]
+    Transform cameraTransform = null;
     int index = 0;
-
+    //追尾するターゲット
+    Transform targetTransform = null;
     Vector3 rotation = Vector3.zero;
 
     /// <summary>
     /// カメラの初期化
     /// </summary>
-    public void CameraInit(int playerIndex)
+    public void CameraInit(int playerIndex, Transform target)
     {
+        targetTransform = target;
         index = playerIndex;
+        parentTransform.position = targetTransform.position;
         SetViewportRect();
     }
 
@@ -38,7 +51,7 @@ public class TpsCamera : MonoBehaviour
     public void CameraUpdate()
     {
         CameraRotation();
-        AdjustDistance();
+        Interpolation();
     }
 
     /// <summary>
@@ -46,32 +59,78 @@ public class TpsCamera : MonoBehaviour
     /// </summary>
     void CameraRotation()
     {
+
         var rightStick = SwitchInput.GetRightStick(index);
-        rotation.x -= rightStick.y * Time.deltaTime * rotationSpeed;
-        rotation.y += rightStick.x * Time.deltaTime * rotationSpeed;
+        rotation.x -= ApplyCurveStrength(rightStick.y) * Time.deltaTime * verticalRotationSpeed;
+        rotation.y += ApplyCurveStrength(rightStick.x) * Time.deltaTime * horizontalRotationSpeed;
         //縦方向の回転は制限を付ける
         rotation.x = Mathf.Clamp(rotation.x, minAngle, maxAngle);
-        transform.eulerAngles = rotation;
+        parentTransform.eulerAngles = rotation;
     }
 
     /// <summary>
-    /// ターゲットとの距離を調整する
+    /// 回転速度の曲線を適応
     /// </summary>
-    void AdjustDistance()
+    float ApplyCurveStrength(float value)
+    {
+        //視点移動の曲線の
+        const float RotationSpeedCurveStrength = 2.0f;
+
+        return Mathf.Sin(value) * Mathf.Pow(Mathf.Abs(value), RotationSpeedCurveStrength);
+    }
+
+    /// <summary>
+    /// 各値の補間
+    /// </summary>
+    void Interpolation()
+    {
+        DistanceInterpolation();
+        PositionInterpolation();
+        ShakeInterpolation();
+    }
+
+    /// <summary>
+    /// ターゲットとの距離を補間する
+    /// </summary>
+    void DistanceInterpolation()
     {
         //レイを飛ばしてターゲットが隠れないようにする
-        Vector3 rayDir = (tpsCamera.transform.position - transform.position).normalized;
-        Ray ray = new Ray(transform.position, rayDir);
+        Ray ray = new Ray(parentTransform.position, (childTransform.position - parentTransform.position).normalized);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, distance, LayerMask.GetMask("CameraRayHitObject")))
+        //何かにぶつかったらそれが隠れないように近くに寄る
+        if (Physics.Raycast(ray, out hit, defaultTargetDistance, rayHitLayerMask))
         {
-            tpsCamera.transform.localPosition = new Vector3(0, 0, -hit.distance + 1);
+            childTransform.localPosition = new Vector3(0, 0, -hit.distance + 1);
         }
+        //ぶつからなかったらデフォルトの距離まで離す
         else
         {
-            tpsCamera.transform.localPosition =
-                new Vector3(0, 0, Mathf.Lerp(tpsCamera.transform.localPosition.z, -distance, Time.deltaTime * 10));
+            childTransform.localPosition =
+                new Vector3(0, 0, Mathf.Lerp(childTransform.localPosition.z, -defaultTargetDistance, Time.deltaTime * 10));
         }
+    }
+
+    /// <summary>
+    /// 位置を補間する
+    /// </summary>
+    void PositionInterpolation()
+    {
+        parentTransform.position = Vector3.Lerp(parentTransform.position, targetTransform.position, lerpSpeed * Time.deltaTime);
+        float slip = Vector3.Distance(parentTransform.position, targetTransform.position);
+        //離れすぎている場合近くに寄せる
+        if (slip > maxTargetSlip)
+        {
+            parentTransform.position = Vector3.Lerp(parentTransform.position, targetTransform.position,
+                (slip - maxTargetSlip) / maxTargetSlip);
+        }
+    }
+
+    /// <summary>
+    /// カメラの揺れを補間する
+    /// </summary>
+    void ShakeInterpolation()
+    {
+
     }
 
     /// <summary>
@@ -97,22 +156,20 @@ public class TpsCamera : MonoBehaviour
         //三人以上の時は「Z」のように二段で分割する(奇数の時の最後の枠は今のところ真っ暗)
         else
         {
+            //横のプレイヤーの数
             int horizonCount = Mathf.CeilToInt(joinPlayerCount / 2.0f);
-
+            //一人あたりの画面占有率(幅)
             float width = 1.0f / horizonCount;
-
+            //セットする矩形
             Rect cameraRect = new Rect(0, 0, width, 0.5f);
-
             //上の段かどうか判定している
             if (playNumber < horizonCount)
             {
                 cameraRect.y = 0.5f;
             }
-
+            //右から何番目か
             var horizonNumber = (playNumber < horizonCount) ? playNumber : playNumber - horizonCount;
-
             cameraRect.x = horizonNumber * width;
-
             tpsCamera.rect = cameraRect;
         }
     }
@@ -123,7 +180,7 @@ public class TpsCamera : MonoBehaviour
     public Vector3 GetMoveForwardDirection()
     {
         //y軸を考慮しない
-        return Vector3.Scale(transform.forward, new Vector3(1, 0, 1)).normalized;
+        return Vector3.Scale(parentTransform.forward, new Vector3(1, 0, 1)).normalized;
     }
 
     /// <summary>
@@ -132,6 +189,6 @@ public class TpsCamera : MonoBehaviour
     public Vector3 GetMoveRightDirection()
     {
         //y軸を考慮しない
-        return Vector3.Scale(transform.right, new Vector3(1, 0, 1)).normalized;
+        return Vector3.Scale(parentTransform.right, new Vector3(1, 0, 1)).normalized;
     }
 }
