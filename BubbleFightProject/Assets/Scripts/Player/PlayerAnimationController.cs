@@ -1,19 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class PlayerAnimation : MonoBehaviour
+/// <summary>
+/// プレイヤーのアニメーションを制御するクラス
+/// </summary>
+public class PlayerAnimationController : MonoBehaviour
 {
+    [SerializeField, Tooltip("アニメーター")]
     Animator animator = null;
 
     AnimatorStateInfo animatorStateInfo;
 
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();
-    }
-
-    private void Update()
+    void Update()
     {
         NoLoopAnimationSwitch();
     }
