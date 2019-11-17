@@ -69,6 +69,7 @@ public class PlayerAnimationController : MonoBehaviour
     /// </summary>
     public void NoLoopAnimationSwitch()
     {
+        if (!animator) return;
         animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         // ループしないアニメーションだったら

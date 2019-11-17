@@ -5,6 +5,7 @@
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(MaterialFlash))]
+[RequireComponent(typeof(PlayerAnimationController))]
 public partial class PlayerController : MonoBehaviour
 {
     Rigidbody playerRigidbody = null;
