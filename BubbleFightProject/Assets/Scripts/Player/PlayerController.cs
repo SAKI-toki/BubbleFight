@@ -67,6 +67,7 @@ public partial class PlayerController : MonoBehaviour
     void LateUpdate()
     {
         transform.rotation = rotation;
+        playerStateManager.LateUpdate();
         //回転をセットした後に実行しなければならない
         cameraController.CameraUpdate();
     }

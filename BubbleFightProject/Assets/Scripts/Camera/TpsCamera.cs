@@ -13,8 +13,10 @@ public class TpsCamera : MonoBehaviour
     float horizontalRotationSpeed = 10.0f;
     [SerializeField, Tooltip("上下の回転速度")]
     float verticalRotationSpeed = 10.0f;
-    [SerializeField, Tooltip("補間速度")]
-    float lerpSpeed = 10.0f;
+    [SerializeField, Tooltip("位置の補間速度")]
+    float positionLerpSpeed = 10.0f;
+    [SerializeField, Tooltip("カメラの回転の曲線")]
+    AnimationCurve rotationCurve = new AnimationCurve();
     [SerializeField, Tooltip("上下の最大角度"), Range(0, 89)]
     float maxAngle = 80;
     [SerializeField, Tooltip("上下の最小角度"), Range(-89, 0)]
@@ -29,10 +31,17 @@ public class TpsCamera : MonoBehaviour
     Transform childTransform = null;
     [SerializeField, Tooltip("カメラオブジェクト")]
     Transform cameraTransform = null;
+
     int index = 0;
     //追尾するターゲット
     Transform targetTransform = null;
     Vector3 rotation = Vector3.zero;
+    //揺れる時間を測る
+    [SerializeField]
+    float shakeTimeCount = 0.0f;
+    [SerializeField]
+    //揺れる力
+    float shakePower = 0.0f;
 
     /// <summary>
     /// カメラの初期化
@@ -59,7 +68,6 @@ public class TpsCamera : MonoBehaviour
     /// </summary>
     void CameraRotation()
     {
-
         var rightStick = SwitchInput.GetRightStick(index);
         rotation.x -= ApplyCurveStrength(rightStick.y) * Time.deltaTime * verticalRotationSpeed;
         rotation.y += ApplyCurveStrength(rightStick.x) * Time.deltaTime * horizontalRotationSpeed;
@@ -73,10 +81,10 @@ public class TpsCamera : MonoBehaviour
     /// </summary>
     float ApplyCurveStrength(float value)
     {
-        //視点移動の曲線の
-        const float RotationSpeedCurveStrength = 2.0f;
-
-        return Mathf.Sin(value) * Mathf.Pow(Mathf.Abs(value), RotationSpeedCurveStrength);
+        float evaluteValue = rotationCurve.Evaluate(Mathf.Abs(value));
+        //0~1の範囲に収める
+        evaluteValue = Mathf.Clamp(evaluteValue, 0, 1);
+        return Mathf.Sign(value) * evaluteValue;
     }
 
     /// <summary>
@@ -115,7 +123,7 @@ public class TpsCamera : MonoBehaviour
     /// </summary>
     void PositionInterpolation()
     {
-        parentTransform.position = Vector3.Lerp(parentTransform.position, targetTransform.position, lerpSpeed * Time.deltaTime);
+        parentTransform.position = Vector3.Lerp(parentTransform.position, targetTransform.position, positionLerpSpeed * Time.deltaTime);
         float slip = Vector3.Distance(parentTransform.position, targetTransform.position);
         //離れすぎている場合近くに寄せる
         if (slip > maxTargetSlip)
@@ -130,7 +138,20 @@ public class TpsCamera : MonoBehaviour
     /// </summary>
     void ShakeInterpolation()
     {
-
+        //揺れる
+        if (shakeTimeCount > 0.0f)
+        {
+            shakeTimeCount -= Time.deltaTime;
+            cameraTransform.localPosition =
+                new Vector3(Random.Range(-shakePower, shakePower),
+                    Random.Range(-shakePower, shakePower),
+                    Random.Range(-shakePower, shakePower));
+        }
+        //元の位置に戻す({0,0,0})
+        else
+        {
+            cameraTransform.localPosition = Vector3.zero;
+        }
     }
 
     /// <summary>
@@ -190,5 +211,14 @@ public class TpsCamera : MonoBehaviour
     {
         //y軸を考慮しない
         return Vector3.Scale(parentTransform.right, new Vector3(1, 0, 1)).normalized;
+    }
+
+    /// <summary>
+    /// カメラを揺らす
+    /// </summary>
+    public void CameraShake(float time, float power)
+    {
+        shakeTimeCount = time;
+        shakePower = power;
     }
 }

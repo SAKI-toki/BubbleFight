@@ -19,9 +19,6 @@ public class StageSelectVoting : MonoBehaviour
 
     void Start()
     {
-#if UNITY_EDITOR
-        PlayerJoinManager.DebugSetPlayerJoinCount(4);
-#endif
         //全ての番号があるか確認する
         if (!HasAllNumber()) return;
         //配列の要素数の確保

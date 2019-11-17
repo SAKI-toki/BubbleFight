@@ -23,9 +23,6 @@ public class BallGenerator : MonoBehaviour
 
     void Start()
     {
-#if UNITY_EDITOR
-        PlayerJoinManager.DebugSetPlayerJoinCount(4);
-#endif
         foreach (var ballController in (BallController[])GameObject.FindObjectsOfType(typeof(BallController)))
         {
             ++ballCount;

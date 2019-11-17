@@ -104,32 +104,6 @@ public class PlayerJoinManager : MonoBehaviour
         }
         return count;
     }
-
-#if UNITY_EDITOR
-    /// <summary>
-    /// デバッグ用にどこからでもプレイヤーの人数をいじれるようにする
-    /// </summary>
-    static public void DebugSetPlayerJoinCount(int PlayerCount)
-    {
-        joinPlayerCount = PlayerCount;
-        for (int i = 0; i < PlayerCount; ++i)
-        {
-            isJoins[i] = true;
-        }
-    }
-    [SerializeField, Tooltip("デバッグ用のオンオフを実行するプレイヤー")]
-    int debugPlayerNumber = 0;
-    [SerializeField, Tooltip("デバッグ用のオンオフ")]
-    bool debugOnOff = false;
-    /// <summary>
-    /// デバッグ用のオンオフの実行
-    /// </summary>
-    [ContextMenu("デバッグ用のオンオフの実行")]
-    void DebugOnOff()
-    {
-        JoinUnJoinExecute(debugPlayerNumber, debugOnOff);
-    }
-#endif
 }
 
 /// <summary>

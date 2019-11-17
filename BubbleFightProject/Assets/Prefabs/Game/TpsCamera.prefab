@@ -152,7 +152,31 @@ MonoBehaviour:
   maxTargetSlip: 3
   horizontalRotationSpeed: 100
   verticalRotationSpeed: 50
-  lerpSpeed: 10
+  positionLerpSpeed: 8
+  rotationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.002357483
+      inSlope: 0.9976425
+      outSlope: 0.9976425
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.9976425
+      outSlope: 0.9976425
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   maxAngle: 80
   minAngle: -80
   rayHitLayerMask:
@@ -162,3 +186,5 @@ MonoBehaviour:
   parentTransform: {fileID: 6522284076813312951}
   childTransform: {fileID: 4045971621378858561}
   cameraTransform: {fileID: 6522284076556145289}
+  shakeTimeCount: 0
+  shakePower: 0
