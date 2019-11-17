@@ -91,31 +91,19 @@ public class PlayerJoinManager : MonoBehaviour
     static public int GetJoinPlayerCount() { return joinPlayerCount; }
     static public bool IsJoin(int index) { return isJoins[index]; }
 
-#if UNITY_EDITOR
     /// <summary>
-    /// デバッグ用にどこからでもプレイヤーの人数をいじれるようにする
+    /// プレイしているプレイヤーの中で何番目か
     /// </summary>
-    static public void DebugSetPlayerJoinCount(int PlayerCount)
+    static public int GetNumberInPlayer(int index)
     {
-        joinPlayerCount = PlayerCount;
-        for (int i = 0; i < PlayerCount; ++i)
+        int count = 0;
+        for (int i = 0; i < PlayerCount.MaxValue; ++i)
         {
-            isJoins[i] = true;
+            if (i == index) break;
+            if (IsJoin(i)) ++count;
         }
+        return count;
     }
-    [SerializeField, Tooltip("デバッグ用のオンオフを実行するプレイヤー")]
-    int debugPlayerNumber = 0;
-    [SerializeField, Tooltip("デバッグ用のオンオフ")]
-    bool debugOnOff = false;
-    /// <summary>
-    /// デバッグ用のオンオフの実行
-    /// </summary>
-    [ContextMenu("デバッグ用のオンオフの実行")]
-    void DebugOnOff()
-    {
-        JoinUnJoinExecute(debugPlayerNumber, debugOnOff);
-    }
-#endif
 }
 
 /// <summary>

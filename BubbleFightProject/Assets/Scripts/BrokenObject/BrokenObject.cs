@@ -5,7 +5,7 @@
 /// </summary>
 static class DamageCalculator
 {
-    const float HitDamageWeight = 0.65f;
+    const float HitDamageWeight = 0.3f;
     /// <summary>
     /// ダメージを計算し返す
     /// </summary>

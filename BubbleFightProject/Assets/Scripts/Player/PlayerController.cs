@@ -16,11 +16,16 @@ public partial class PlayerController : MonoBehaviour
     enum PlayerStateEnum { In, Out };
     [SerializeField, Tooltip("プレイヤーの初期ステート")]
     PlayerStateEnum initStateEnum = PlayerStateEnum.In;
-
     Quaternion rotation = Quaternion.identity;
-
     float invincibleTimeCount = 0.0f;
+    //無敵時間
     const float InvincibleTime = 3.0f;
+
+    [SerializeField, Tooltip("三人称視点カメラ")]
+    GameObject cameraObject = null;
+    [SerializeField, Tooltip("カメラの注視点")]
+    Transform cameraLookat = null;
+    TpsCamera cameraController = null;
 
     void Awake()
     {
@@ -30,6 +35,8 @@ public partial class PlayerController : MonoBehaviour
 
     void Start()
     {
+        cameraController = Instantiate(cameraObject).GetComponent<TpsCamera>();
+        cameraController.CameraInit(playerNumber, cameraLookat);
         PlayerStateBase initState = null;
         switch (initStateEnum)
         {
@@ -60,6 +67,9 @@ public partial class PlayerController : MonoBehaviour
     void LateUpdate()
     {
         transform.rotation = rotation;
+        playerStateManager.LateUpdate();
+        //回転をセットした後に実行しなければならない
+        cameraController.CameraUpdate();
     }
 
     void OnDestroy()
@@ -95,8 +105,25 @@ public partial class PlayerController : MonoBehaviour
         var startQ = obj.transform.rotation;
         obj.transform.LookAt(lookatDir);
         var endQ = obj.transform.rotation;
-        rotation = Quaternion.Lerp(startQ, endQ, 0.3f);
+        rotation = Quaternion.Lerp(startQ, endQ, 10 * Time.deltaTime);
         Destroy(obj);
+    }
+
+    /// <summary>
+    /// 前移動の方向をカメラから取得
+    /// </summary>
+    Vector3 GetMoveForwardDirection()
+    {
+        return cameraController.GetMoveForwardDirection();
+    }
+
+
+    /// <summary>
+    /// 右移動の方向をカメラから取得
+    /// </summary>
+    Vector3 GetMoveRightDirection()
+    {
+        return cameraController.GetMoveRightDirection();
     }
 
     /// <summary>
@@ -121,5 +148,27 @@ public partial class PlayerController : MonoBehaviour
     public void HitInPlayerBall()
     {
         playerStateManager.TranslationState(new HitInPlayerBallState());
+    }
+}
+
+/// <summary>
+/// プレイヤーの計算
+/// </summary>
+static public class PlayerMath
+{
+    /// <summary>
+    /// 前方向と右方向のベクトルから移動する向きを出力する
+    /// </summary>
+    static public Vector3 ForwardAndRightMove(Vector2 globalDir, Vector3 forward, Vector3 right)
+    {
+        return globalDir.y * forward + globalDir.x * right;
+    }
+
+    /// <summary>
+    /// 前方向と右方向のベクトルから移動する向きを出力する
+    /// </summary>
+    static public Vector3 ForwardAndRightMove(Vector3 globalDir, Vector3 forward, Vector3 right)
+    {
+        return globalDir.y * forward + globalDir.x * right;
     }
 }

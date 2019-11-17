@@ -24,14 +24,13 @@ public partial class PlayerController : MonoBehaviour
         {
             var stickInput = SwitchInput.GetLeftStick(playerController.playerNumber);
 
-            Vector3 inputDir = Vector3.zero;
-            inputDir.x = stickInput.x;
-            inputDir.z = stickInput.y;
+            Vector3 moveDir = PlayerMath.ForwardAndRightMove(stickInput,
+                playerController.GetMoveForwardDirection(), playerController.GetMoveRightDirection());
             //回転
-            playerController.PlayerRotation(inputDir);
+            playerController.PlayerRotation(moveDir);
             //位置の更新
             var position = playerController.transform.position;
-            position += inputDir * playerController.walkMoveSpeed * Time.deltaTime;
+            position += moveDir * playerController.walkMoveSpeed * Time.deltaTime;
             playerController.transform.position = position;
         }
 

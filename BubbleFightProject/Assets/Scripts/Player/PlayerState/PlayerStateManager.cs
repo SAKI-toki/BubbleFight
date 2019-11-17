@@ -21,6 +21,7 @@ public partial class PlayerController : MonoBehaviour
         //継承先で定義する
         virtual protected void Init() { }
         virtual public PlayerStateBase Update() { return this; }
+        virtual public void LateUpdate() { }
         virtual public void Destroy() { }
         virtual public void OnCollisionEnter(Collision other) { }
         virtual public void OnCollisionStay(Collision other) { }
@@ -59,6 +60,14 @@ public partial class PlayerController : MonoBehaviour
                 //ステートの更新
                 TranslationState(currentPlayerState.Update());
             }
+        }
+
+        /// <summary>
+        /// 物理演算後に実行する
+        /// </summary>
+        public void LateUpdate()
+        {
+            if (IsValidState()) currentPlayerState.LateUpdate();
         }
 
         /// <summary>

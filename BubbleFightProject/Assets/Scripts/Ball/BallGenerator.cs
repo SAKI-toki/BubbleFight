@@ -18,14 +18,11 @@ public class BallGenerator : MonoBehaviour
 
     //最大のボールの数
     readonly int[] MaxBallCount =
-    { 1 + 2, 2 + 2, 3 + 2, 4 + 2,
-      5 + 3, 6 + 3, 7 + 4, 8 + 4 };
+    { 1 + 4, 2 + 4, 3 + 4, 4 + 5,
+      5 + 5, 6 + 5, 7 + 6, 8 + 6 };
 
     void Start()
     {
-#if UNITY_EDITOR
-        PlayerJoinManager.DebugSetPlayerJoinCount(4);
-#endif
         foreach (var ballController in (BallController[])GameObject.FindObjectsOfType(typeof(BallController)))
         {
             ++ballCount;
@@ -49,7 +46,10 @@ public class BallGenerator : MonoBehaviour
     GameObject BallGenerate(Vector3 position)
     {
         ++ballCount;
+        position.x += Random.Range(-1.0f, 1.0f);
+        position.y += Random.Range(-1.0f, 1.0f);
         GameObject instantiateBall = Instantiate(ballPrefab, position, Quaternion.identity);
+        instantiateBall.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)) * Random.Range(5, 20));
         SetDestroyEventToBallController(instantiateBall.GetComponent<BallController>());
         return instantiateBall;
     }

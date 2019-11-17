@@ -14,9 +14,6 @@ public class PlayerTypeSelectManager : MonoBehaviour
 
     void Start()
     {
-#if UNITY_EDITOR
-        PlayerJoinManager.DebugSetPlayerJoinCount(1);
-#endif
         for (int i = 0; i < PlayerCount.MaxValue; ++i)
         {
             if (PlayerJoinManager.IsJoin(i))

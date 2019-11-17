@@ -40,7 +40,8 @@ public partial class PlayerController : MonoBehaviour
         {
             //親オブジェクト(ボール)がなくなったらステート遷移
             if (playerController.transform.parent == null) return new BreakBallState();
-            ballController.Move(playerController.ballEasyCurveWeight);
+            ballController.UpdateOnPlayer(playerController.ballEasyCurveWeight,
+                playerController.GetMoveForwardDirection(), playerController.GetMoveRightDirection());
             playerController.PlayerRotation(ballController.GetLookatDir());
             return this;
         }
