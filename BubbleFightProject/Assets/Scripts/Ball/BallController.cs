@@ -15,6 +15,10 @@ public class BallController : MonoBehaviour
     int playerIndex = int.MaxValue;
     //移動力
     float movePower = 0.0f;
+    //曲がりやすさ
+    float easyCurveWeight = 0.0f;
+    //プレイヤーのアニメーションを制御するクラス
+    PlayerAnimationController playerAnimation = null;
 
     [SerializeField, Tooltip("ボールの耐久値(初期値)")]
     float maxHitPoint = 100;
@@ -80,32 +84,36 @@ public class BallController : MonoBehaviour
     /// <summary>
     /// プレイヤーによる初期化
     /// </summary>
-    public void InitializeOnPlayer(int index, float ballMovePower,
-                                        float ballRotationPowerPercentage, float ballMass)
+    public void InitializeOnPlayer(int index, float ballMovePower, float ballEasyCurveWeight,
+                                        float ballRotationPowerPercentage, float ballMass,
+                                        PlayerAnimationController playerAnimationController)
     {
         playerIndex = index;
         movePower = ballMovePower;
+        easyCurveWeight = ballEasyCurveWeight;
         rotationPercentage = ballRotationPowerPercentage;
         thisRigidbody.mass = ballMass;
+        playerAnimation = playerAnimationController;
     }
 
     /// <summary>
     /// プレイヤーによる更新
     /// </summary>
-    public void UpdateOnPlayer(float easyCurveWeight, Vector3 forward, Vector3 right)
+    public void UpdateOnPlayer(Vector3 forward, Vector3 right)
     {
-        Move(easyCurveWeight, forward, right);
+        Move(forward, right);
         UpdateBoost();
     }
 
     /// <summary>
     /// 移動
     /// </summary>
-    void Move(float easyCurveWeight, Vector3 forward, Vector3 right)
+    void Move(Vector3 forward, Vector3 right)
     {
         //入力を受け付けない
         if (cantInputTime > 0.0f)
         {
+            playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Rest);
             cantInputTime -= Time.deltaTime;
             return;
         }
@@ -113,15 +121,30 @@ public class BallController : MonoBehaviour
         var stickInput = SwitchInput.GetLeftStick(playerIndex);
         Vector3 addPower = PlayerMath.ForwardAndRightMove(stickInput, forward, right);
 
-        AddForceAndTorque(addPower, easyCurveWeight);
+        AddForceAndTorque(addPower);
         UpdateLookatDirection(addPower);
 
+        if (stickInput.sqrMagnitude == 0)
+        {
+            playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Idle);
+        }
+        else
+        {
+            if (stickInput.magnitude > 0.9f)
+            {
+                playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Run);
+            }
+            else
+            {
+                playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Walk);
+            }
+        }
     }
 
     /// <summary>
     /// 力と回転を加える
     /// </summary>
-    void AddForceAndTorque(Vector3 addPower, float easyCurveWeight)
+    void AddForceAndTorque(Vector3 addPower)
     {
         //曲がりやすくする
         var velocity = thisRigidbody.velocity;

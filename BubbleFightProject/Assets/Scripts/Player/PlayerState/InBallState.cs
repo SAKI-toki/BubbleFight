@@ -29,8 +29,10 @@ public partial class PlayerController : MonoBehaviour
         {
             ballController = playerController.transform.parent.GetComponent<BallController>();
             ballController.GetComponent<SphereCollider>().material = playerController.ballPhysicalMaterial;
+            //ボールの初期化
             ballController.InitializeOnPlayer(playerController.playerNumber, playerController.ballMovePower,
-                                                playerController.ballRotationPercentage, playerController.ballMass);
+                                                playerController.ballEasyCurveWeight, playerController.ballRotationPercentage,
+                                                playerController.ballMass, playerController.playerAnimation);
             ballController.SetDestroyEvent(delegate { playerController.transform.parent = null; });
             playerController.transform.localPosition = Vector3.zero;
             PlayerPhysicsSet(false);
@@ -40,8 +42,7 @@ public partial class PlayerController : MonoBehaviour
         {
             //親オブジェクト(ボール)がなくなったらステート遷移
             if (playerController.transform.parent == null) return new BreakBallState();
-            ballController.UpdateOnPlayer(playerController.ballEasyCurveWeight,
-                playerController.GetMoveForwardDirection(), playerController.GetMoveRightDirection());
+            ballController.UpdateOnPlayer(playerController.GetMoveForwardDirection(), playerController.GetMoveRightDirection());
             playerController.PlayerRotation(ballController.GetLookatDir());
             return this;
         }
