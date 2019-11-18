@@ -34,12 +34,17 @@ public partial class PlayerController : MonoBehaviour
             playerController.transform.position = position;
             if (moveDir.sqrMagnitude != 0)
             {
-                playerController.playerAnimation.AnimationSpeed(moveDir.magnitude * 2);
-                playerController.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Walk);
+                if (moveDir.magnitude > 0.9f)
+                {
+                    playerController.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Run);
+                }
+                else
+                {
+                    playerController.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Walk);
+                }
             }
             else
             {
-                playerController.playerAnimation.AnimationSpeed(1.0f);
                 playerController.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Idle);
             }
         }
