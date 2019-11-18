@@ -32,7 +32,8 @@ public partial class PlayerController : MonoBehaviour
             //ボールの初期化
             ballController.InitializeOnPlayer(playerController.playerNumber, playerController.ballMovePower,
                                                 playerController.ballEasyCurveWeight, playerController.ballRotationPercentage,
-                                                playerController.ballMass, playerController.playerAnimation);
+                                                playerController.ballMass, playerController.playerAnimation,
+                                                playerController.cameraController);
             ballController.SetDestroyEvent(delegate { playerController.transform.parent = null; });
             playerController.transform.localPosition = Vector3.zero;
             PlayerPhysicsSet(false);

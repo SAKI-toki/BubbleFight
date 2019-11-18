@@ -22,9 +22,18 @@ public class BrokenObject : MonoBehaviour
 {
     [SerializeField, Tooltip("耐久値")]
     float maxHitPoint = 100.0f;
+    [SerializeField, Tooltip("リスポーンするかどうか")]
+    bool isRespawn = false;
+    [SerializeField, Tooltip("リスポーンの間隔")]
+    float respawnIntervalTime = 0.0f;
+    [SerializeField, Tooltip("リスポーンする場合、レンダラーをオフにする")]
+    Renderer[] renderers = null;
+    float respawnTimeCount = 0.0f;
 
     //現在の耐久値
     float currentHitPoint;
+
+    bool alreadyBroken = false;
 
     void Start()
     {
@@ -33,9 +42,27 @@ public class BrokenObject : MonoBehaviour
 
     void Update()
     {
-        if (IsBreak())
+        if (!alreadyBroken && IsBreak())
         {
+            alreadyBroken = true;
             Broken();
+        }
+        if (alreadyBroken && isRespawn)
+        {
+            respawnTimeCount -= Time.deltaTime;
+            if (respawnTimeCount < 0.0f)
+            {
+                alreadyBroken = false;
+                foreach (var renderer in renderers)
+                {
+                    renderer.enabled = true;
+                }
+                foreach (var collider in GetComponents<Collider>())
+                {
+                    collider.enabled = true;
+                }
+                currentHitPoint = maxHitPoint;
+            }
         }
     }
 
@@ -68,7 +95,22 @@ public class BrokenObject : MonoBehaviour
     /// </summary>
     public void Broken()
     {
-        Destroy(this.gameObject);
+        if (isRespawn)
+        {
+            foreach (var renderer in renderers)
+            {
+                renderer.enabled = false;
+            }
+            foreach (var collider in GetComponents<Collider>())
+            {
+                collider.enabled = false;
+            }
+            respawnTimeCount = respawnIntervalTime;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     void OnCollisionEnter(Collision other)

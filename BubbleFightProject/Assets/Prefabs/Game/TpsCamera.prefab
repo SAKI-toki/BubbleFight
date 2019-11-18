@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultTargetDistance: 5
   maxTargetSlip: 3
-  horizontalRotationSpeed: 150
+  horizontalRotationSpeed: 200
   verticalRotationSpeed: 100
   positionLerpSpeed: 15
   rotationCurve:

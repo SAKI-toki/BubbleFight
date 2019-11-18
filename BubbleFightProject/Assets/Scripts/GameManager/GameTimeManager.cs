@@ -10,12 +10,17 @@ public class GameTimeManager : MonoBehaviour
 
     float playTimeCount = 0.0f;
 
+    void Start()
+    {
+        playTimeCount = playTime;
+    }
+
     /// <summary>
     /// 時間の加算
     /// </summary>
     public void AddTime()
     {
-        playTimeCount += Time.deltaTime;
+        playTimeCount -= Time.deltaTime;
     }
 
     /// <summary>
@@ -23,13 +28,15 @@ public class GameTimeManager : MonoBehaviour
     /// </summary>
     public bool IsPlayGame()
     {
-        return playTimeCount < playTime;
+        return playTimeCount > 0;
     }
 
     void OnGUI()
     {
         Rect rect = new Rect(0, 0, 100, 100);
         GUI.color = Color.red;
+        GUIStyle style = new GUIStyle();
+        style.fontSize = 50;
         const float interval = 100.0f;
         for (int i = 0; i < PlayerJoinManager.GetJoinPlayerCount(); ++i)
         {
@@ -38,7 +45,11 @@ public class GameTimeManager : MonoBehaviour
         }
         if (!IsPlayGame())
         {
-            GUI.Label(rect, "END GAME");
+            GUI.Label(rect, "END GAME", style);
+        }
+        else
+        {
+            GUI.Label(rect, ((int)playTimeCount).ToString(), style);
         }
     }
 }

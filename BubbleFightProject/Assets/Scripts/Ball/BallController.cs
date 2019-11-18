@@ -52,9 +52,13 @@ public class BallController : MonoBehaviour
     float boostPower = 20.0f;
     [SerializeField, Tooltip("ブーストを再使用できる間隔")]
     float boostInterval = 1.0f;
+    [SerializeField, Tooltip("最大の力")]
+    float maxVelocityMagnitude = 100.0f;
     //ブーストの間隔の時間を測る
     float boostIntervalTimeCount = 0.0f;
     MaterialFlash materialFlash;
+
+    TpsCamera tpsCamera = null;
 
     void Awake()
     {
@@ -81,12 +85,23 @@ public class BallController : MonoBehaviour
         }
     }
 
+    void LateUpdate()
+    {
+        var velocity = thisRigidbody.velocity;
+        float magnitude = velocity.magnitude;
+        if (magnitude > maxVelocityMagnitude)
+        {
+            velocity = velocity / magnitude * maxVelocityMagnitude;
+        }
+        thisRigidbody.velocity = velocity;
+    }
+
     /// <summary>
     /// プレイヤーによる初期化
     /// </summary>
     public void InitializeOnPlayer(int index, float ballMovePower, float ballEasyCurveWeight,
                                         float ballRotationPowerPercentage, float ballMass,
-                                        PlayerAnimationController playerAnimationController)
+                                        PlayerAnimationController playerAnimationController, TpsCamera playerTpsCamera)
     {
         playerIndex = index;
         movePower = ballMovePower;
@@ -94,6 +109,7 @@ public class BallController : MonoBehaviour
         rotationPercentage = ballRotationPowerPercentage;
         thisRigidbody.mass = ballMass;
         playerAnimation = playerAnimationController;
+        tpsCamera = playerTpsCamera;
     }
 
     /// <summary>
@@ -226,8 +242,9 @@ public class BallController : MonoBehaviour
     {
         var otherBallController = other.gameObject.GetComponent<BallController>();
         //ダメージ(空の場合は10分の1のダメージにする)
-        currentHitPoint -= DamageCalculate(other.relativeVelocity.sqrMagnitude, otherBallController.prevVelocity.sqrMagnitude)
+        float damage = DamageCalculate(other.relativeVelocity.sqrMagnitude, otherBallController.prevVelocity.sqrMagnitude)
                             * (otherBallController.IsInPlayer() ? 1.0f : 0.1f);
+        currentHitPoint -= damage;
 
         //跳ね返りの強さ
         float bounceAddPower = other.relativeVelocity.sqrMagnitude > cantInputHitPower ?
@@ -238,10 +255,11 @@ public class BallController : MonoBehaviour
         thisRigidbody.velocity = velocity;
 
         //入っていて、力が一定以上なら入力不可時間を与える
-        if (otherBallController.IsInPlayer() && other.relativeVelocity.sqrMagnitude > cantInputHitPower)
+        if (IsInPlayer() && otherBallController.IsInPlayer() && other.relativeVelocity.sqrMagnitude > cantInputHitPower)
         {
             cantInputTime = other.relativeVelocity.sqrMagnitude * hitPowerPercenage;
             if (cantInputTime > maxCantInputTime) cantInputTime = maxCantInputTime;
+            tpsCamera.CameraShake(cantInputTime / 2, damage / 30);
         }
 
         //最後にぶつかったプレイヤーの更新
