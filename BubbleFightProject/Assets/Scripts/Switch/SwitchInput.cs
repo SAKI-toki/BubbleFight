@@ -19,7 +19,7 @@ public enum SwitchButton : long
 /// </summary>
 static public class SwitchInput
 {
-    const float DeadZone = 0.4f;
+    const float DeadZone = 0.2f;
     //1フレーム前のボタンの状態
     static long[] prevButtons;
     //現在のボタンの状態
