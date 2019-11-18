@@ -38,6 +38,7 @@ public partial class PlayerController : MonoBehaviour
 
     void Start()
     {
+        rotation = transform.rotation;
         cameraController = Instantiate(cameraObject).GetComponent<TpsCamera>();
         cameraController.CameraInit(playerNumber, cameraLookat);
         PlayerStateBase initState = null;

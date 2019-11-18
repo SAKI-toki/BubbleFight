@@ -113,7 +113,6 @@ public class BallController : MonoBehaviour
         //入力を受け付けない
         if (cantInputTime > 0.0f)
         {
-            playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Rest);
             cantInputTime -= Time.deltaTime;
             return;
         }

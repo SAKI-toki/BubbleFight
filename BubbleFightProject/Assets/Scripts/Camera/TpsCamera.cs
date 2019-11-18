@@ -51,6 +51,7 @@ public class TpsCamera : MonoBehaviour
         targetTransform = target;
         index = playerIndex;
         parentTransform.position = targetTransform.position;
+        rotation = target.transform.eulerAngles;
         SetViewportRect();
     }
 
