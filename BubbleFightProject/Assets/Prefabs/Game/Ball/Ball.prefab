@@ -127,9 +127,11 @@ MonoBehaviour:
   cantInputHitPower: 50
   maxCantInputTime: 0.5
   hitPowerPercenage: 0.003
-  strongHitBounceAddPower: 2
-  weakHitBounceAddPower: 2.5
+  strongHitBounceAddPower: 1.5
+  weakHitBounceAddPower: 1.7
   boostPower: 1000
+  boostInterval: 1
+  maxVelocityMagnitude: 40
 --- !u!114 &3481246479687572610
 MonoBehaviour:
   m_ObjectHideFlags: 0
