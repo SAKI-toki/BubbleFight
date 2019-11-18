@@ -32,6 +32,16 @@ public partial class PlayerController : MonoBehaviour
             var position = playerController.transform.position;
             position += moveDir * playerController.walkMoveSpeed * Time.deltaTime;
             playerController.transform.position = position;
+            if (moveDir.sqrMagnitude != 0)
+            {
+                playerController.playerAnimation.AnimationSpeed(moveDir.magnitude * 2);
+                playerController.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Walk);
+            }
+            else
+            {
+                playerController.playerAnimation.AnimationSpeed(1.0f);
+                playerController.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Idle);
+            }
         }
 
         public override void OnCollisionEnter(Collision other)
