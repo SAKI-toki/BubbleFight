@@ -21,6 +21,9 @@ static public class PointManager
     //場外に落とされた時のポイント
     const int DroppedPoint = -3;
 
+    public delegate void AddPointFunctionType(int point, int addPoint);
+    public static AddPointFunctionType AddPointFunction;
+
     /// <summary>
     /// ボールを壊した時のポイントの計算
     /// </summary>
@@ -72,6 +75,7 @@ static public class PointManager
     {
         if (pointLock) return;
         playerPoint[index] += addPoint;
+        if (AddPointFunction != null) AddPointFunction(index, addPoint);
     }
 
     //ポイントの取得
