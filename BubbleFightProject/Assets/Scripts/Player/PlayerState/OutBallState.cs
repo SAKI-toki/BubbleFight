@@ -32,6 +32,33 @@ public partial class PlayerController : MonoBehaviour
             var position = playerController.transform.position;
             position += moveDir * playerController.walkMoveSpeed * Time.deltaTime;
             playerController.transform.position = position;
+
+            UpdateAnimation(stickInput);
+        }
+
+        /// <summary>
+        /// アニメーションの更新
+        /// </summary>
+        void UpdateAnimation(Vector2 inputDir)
+        {
+            //移動しないならIdle
+            if (inputDir.sqrMagnitude == 0)
+            {
+                playerController.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Idle);
+            }
+            else
+            {
+                //0.9以下の移動なら歩き
+                if (inputDir.magnitude < 0.9f)
+                {
+                    playerController.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Walk);
+                }
+                //0.9以上の移動なら走り
+                else
+                {
+                    playerController.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Run);
+                }
+            }
         }
 
         public override void OnCollisionEnter(Collision other)

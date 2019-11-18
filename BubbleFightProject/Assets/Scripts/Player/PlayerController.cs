@@ -10,6 +10,7 @@ public partial class PlayerController : MonoBehaviour
 {
     Rigidbody playerRigidbody = null;
     MaterialFlash materialFlash = null;
+    PlayerAnimationController playerAnimation = null;
     [SerializeField, Tooltip("プレイヤーの番号"), Range(0, 7)]
     int playerNumber = 0;
     PlayerStateManager playerStateManager = new PlayerStateManager();
@@ -32,10 +33,12 @@ public partial class PlayerController : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody>();
         materialFlash = GetComponent<MaterialFlash>();
+        playerAnimation = GetComponent<PlayerAnimationController>();
     }
 
     void Start()
     {
+        rotation = transform.rotation;
         cameraController = Instantiate(cameraObject).GetComponent<TpsCamera>();
         cameraController.CameraInit(playerNumber, cameraLookat);
         PlayerStateBase initState = null;

@@ -9,7 +9,15 @@ public partial class PlayerController : MonoBehaviour
     {
         protected override void Init()
         {
-            playerController.transform.position = Vector3.zero;
+            Ray ray = new Ray(Vector3.zero, -Vector3.up);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, float.MaxValue))
+            {
+                var position = playerController.transform.position;
+                position = hit.point;
+                position.y += 1;
+                playerController.transform.position = position;
+            }
             playerController.invincibleTimeCount = float.MaxValue;
         }
 

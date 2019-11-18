@@ -51,6 +51,7 @@ public class TpsCamera : MonoBehaviour
         targetTransform = target;
         index = playerIndex;
         parentTransform.position = targetTransform.position;
+        rotation = target.transform.eulerAngles;
         SetViewportRect();
     }
 
@@ -69,22 +70,14 @@ public class TpsCamera : MonoBehaviour
     void CameraRotation()
     {
         var rightStick = SwitchInput.GetRightStick(index);
-        rotation.x -= ApplyCurveStrength(rightStick.y) * Time.deltaTime * verticalRotationSpeed;
-        rotation.y += ApplyCurveStrength(rightStick.x) * Time.deltaTime * horizontalRotationSpeed;
+        //曲線を適応する値
+        float evaluateValue = rotationCurve.Evaluate(rightStick.magnitude);
+        rightStick *= Mathf.Clamp(evaluateValue, 0, 1);
+        rotation.x -= rightStick.y * Time.deltaTime * verticalRotationSpeed;
+        rotation.y += rightStick.x * Time.deltaTime * horizontalRotationSpeed;
         //縦方向の回転は制限を付ける
         rotation.x = Mathf.Clamp(rotation.x, minAngle, maxAngle);
         parentTransform.eulerAngles = rotation;
-    }
-
-    /// <summary>
-    /// 回転速度の曲線を適応
-    /// </summary>
-    float ApplyCurveStrength(float value)
-    {
-        float evaluteValue = rotationCurve.Evaluate(Mathf.Abs(value));
-        //0~1の範囲に収める
-        evaluteValue = Mathf.Clamp(evaluteValue, 0, 1);
-        return Mathf.Sign(value) * evaluteValue;
     }
 
     /// <summary>
