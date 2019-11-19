@@ -53,6 +53,7 @@ public class TpsCamera : MonoBehaviour
         parentTransform.position = targetTransform.position;
         rotation = target.transform.eulerAngles;
         SetViewportRect();
+        CameraManager.SetCamera(playerIndex, tpsCamera);
     }
 
     /// <summary>

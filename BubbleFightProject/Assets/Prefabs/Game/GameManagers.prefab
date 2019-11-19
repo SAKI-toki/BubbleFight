@@ -1,5 +1,56 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &337275404998502580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8732810766353116278}
+  - component: {fileID: 5240159306781551587}
+  m_Layer: 0
+  m_Name: AddPointUIGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8732810766353116278
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337275404998502580}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1301506771522333165}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5240159306781551587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337275404998502580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4015308f3a83d8548aabe5a03d7ca956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlusUIList:
+  - {fileID: 9175148090861374118, guid: 14c1442b779598b4784e9925480337ab, type: 3}
+  - {fileID: 77825358268734807, guid: 8f9f142bf2b40d2438c3ad5949611352, type: 3}
+  - {fileID: 9075269268911183870, guid: 21716bc7826b57545a7e6740f15fbe6a, type: 3}
+  MinusUIList:
+  - {fileID: 939068836372229974, guid: 6cb2eeaef5e11754b9219710fbdd285b, type: 3}
+  - {fileID: 1214381724461250849, guid: 31736a8671eece848ae39990d80d95eb, type: 3}
+  - {fileID: 8051783662712529615, guid: a828455e992bfcd48826463b0ea79236, type: 3}
 --- !u!1 &1301506770797703528
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameTimeManager: {fileID: 1301506771713847203}
+  addPointUIGenerator: {fileID: 5240159306781551587}
 --- !u!1 &1301506771522333164
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,6 +173,7 @@ Transform:
   - {fileID: 1301506770797703534}
   - {fileID: 1301506771093890504}
   - {fileID: 1301506771713847202}
+  - {fileID: 8732810766353116278}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
