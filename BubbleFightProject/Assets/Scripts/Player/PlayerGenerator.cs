@@ -1,48 +1,96 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// プレイヤーの生成器
 /// </summary>
 public class PlayerGenerator : MonoBehaviour
 {
-    /// <summary>
-    /// プレイヤーを生成しリストで返す
-    /// </summary>
-    public List<GameObject> GenerateAllJoinPlayerReturnList()
+    [SerializeField, Tooltip("プレイヤーの生成位置")]
+    Transform[] generateTransforms = null;
+
+    [SerializeField, Tooltip("ボール")]
+    GameObject ballPrefab = null;
+
+    List<PositionAndRotation> generatePositionAndRotations = new List<PositionAndRotation>();
+
+    void Start()
     {
-        List<GameObject> playerList = new List<GameObject>();
-        for (int i = 0; i < PlayerCount.MaxValue; ++i)
-        {
-            if (PlayerJoinManager.IsJoin(i))
-            {
-                playerList.Add(GeneratePlayer(i));
-            }
-        }
-        return playerList;
+#if UNITY_EDITOR
+        var playerTypeManager = PlayerTypeManager.GetInstance();
+        playerTypeManager.SetPlayerType(0, PlayerType.Chicken);
+        playerTypeManager.SetPlayerType(1, PlayerType.Chicken);
+        playerTypeManager.SetPlayerType(2, PlayerType.Chicken);
+        playerTypeManager.SetPlayerType(3, PlayerType.Chicken);
+#endif // UNITY_EDITOR
+        GenerateAllJoinPlayer();
+        Physics.Simulate(5.0f);
     }
 
     /// <summary>
-    /// プレイヤーを生成し配列で返す
+    /// 参加するプレイヤーを生成
     /// </summary>
-    public GameObject[] GenerateAllJoinPlayerReturnArray()
+    void GenerateAllJoinPlayer()
     {
-        GameObject[] playerList = new GameObject[PlayerCount.MaxValue];
+        if (generateTransforms.Length < PlayerJoinManager.GetJoinPlayerCount())
+        {
+            Debug.LogError("生成位置が参加人数より少ないです");
+        }
+        generatePositionAndRotations.Clear();
+        foreach (var generateTransform in generateTransforms)
+        {
+            generatePositionAndRotations.Add(new PositionAndRotation(generateTransform.position, generateTransform.rotation));
+        }
         for (int i = 0; i < PlayerCount.MaxValue; ++i)
         {
             if (PlayerJoinManager.IsJoin(i))
             {
-                playerList[i] = GeneratePlayer(i);
+                GeneratePlayer(i);
             }
         }
-        return playerList;
     }
 
     /// <summary>
     /// プレイヤーを生成
     /// </summary>
-    public GameObject GeneratePlayer(int index)
+    void GeneratePlayer(int index)
     {
-        return null;
+        var player = PlayerTypeManager.GetInstance().GeneratePlayer(index);
+        var playerController = player.GetComponent<PlayerController>();
+        //番号をセット
+        playerController.SetPlayerNumber(index);
+        //ボールの中からのスタートなのでステートを変更
+        playerController.SetInitState(PlayerController.PlayerStateEnum.In);
+        //ランダムな生成位置
+        int rand = Random.Range(0, generatePositionAndRotations.Count);
+        //ボールの生成
+        var ball = Instantiate(ballPrefab);
+        ball.transform.SetPositionAndRotation(generatePositionAndRotations[rand].position,
+                                                generatePositionAndRotations[rand].rotation);
+        player.transform.parent = ball.transform;
+        player.transform.localPosition = Vector3.zero;
+        player.transform.localRotation = Quaternion.identity;
+        //かぶらないように削除
+        generatePositionAndRotations.RemoveAt(rand);
+    }
+
+    /// <summary>
+    /// ランダムな生成位置を返す
+    /// </summary>
+    public PositionAndRotation GetRandomGenerateTransform()
+    {
+        int rand = Random.Range(0, generateTransforms.Length);
+        return new PositionAndRotation(generateTransforms[rand].position, generateTransforms[rand].rotation);
+    }
+}
+
+public class PositionAndRotation
+{
+    public Vector3 position;
+    public Quaternion rotation;
+    public PositionAndRotation(Vector3 pos, Quaternion rot)
+    {
+        position = pos;
+        rotation = rot;
     }
 }

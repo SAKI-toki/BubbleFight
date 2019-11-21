@@ -11,13 +11,14 @@ public partial class PlayerController : MonoBehaviour
     Rigidbody playerRigidbody = null;
     MaterialFlash materialFlash = null;
     PlayerAnimationController playerAnimation = null;
-    [SerializeField, Tooltip("プレイヤーの番号"), Range(0, 7)]
+    //プレイヤーの番号
     int playerNumber = 0;
+    [SerializeField, Tooltip("プレイヤーのタイプ")]
+    PlayerType playerType = PlayerType.Alpaca;
     PlayerStateManager playerStateManager = new PlayerStateManager();
     //ステートの列挙型(初期ステートをセットするためのもの)
-    enum PlayerStateEnum { In, Out };
-    [SerializeField, Tooltip("プレイヤーの初期ステート")]
-    PlayerStateEnum initStateEnum = PlayerStateEnum.In;
+    public enum PlayerStateEnum { In, Out };
+    PlayerStateEnum initStateEnum = PlayerStateEnum.Out;
     Quaternion rotation = Quaternion.identity;
     float invincibleTimeCount = 0.0f;
     //無敵時間
@@ -131,11 +132,35 @@ public partial class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーの番号を取得
+    /// /// プレイヤーの番号を取得
     /// </summary>
     public int GetPlayerNumber()
     {
         return playerNumber;
+    }
+
+    /// <summary>
+    /// プレイヤーの番号をセット
+    /// </summary>
+    public void SetPlayerNumber(int number)
+    {
+        playerNumber = number;
+    }
+
+    /// <summary>
+    /// 初期ステートをボールの中からにする
+    /// </summary>
+    public void SetInitState(PlayerStateEnum state)
+    {
+        initStateEnum = state;
+    }
+
+    /// <summary>
+    /// プレイヤーのタイプを取得
+    /// </summary>
+    public PlayerType GetPlayerType()
+    {
+        return playerType;
     }
 
     /// <summary>

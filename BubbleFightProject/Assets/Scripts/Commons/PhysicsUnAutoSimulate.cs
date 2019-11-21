@@ -8,9 +8,9 @@ public class PhysicsUnAutoSimulate : Singleton<PhysicsUnAutoSimulate>
     void Awake()
     {
         Physics.autoSimulation = false;
-
     }
-    void Update()
+
+    public override void MyUpdate()
     {
         Physics.Simulate(Time.deltaTime);
     }
