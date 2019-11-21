@@ -215,4 +215,12 @@ public class TpsCamera : MonoBehaviour
         shakeTimeCount = time;
         shakePower = power;
     }
+
+    /// <summary>
+    /// 回転を直接セット
+    /// </summary>
+    public void SetRotation(Vector3 rot)
+    {
+        rotation = rot;
+    }
 }

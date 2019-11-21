@@ -11,6 +11,7 @@ public partial class PlayerController : MonoBehaviour
     Rigidbody playerRigidbody = null;
     MaterialFlash materialFlash = null;
     PlayerAnimationController playerAnimation = null;
+    PlayerGenerator playerGenerator = null;
     //プレイヤーの番号
     int playerNumber = 0;
     [SerializeField, Tooltip("プレイヤーのタイプ")]
@@ -153,6 +154,14 @@ public partial class PlayerController : MonoBehaviour
     public void SetInitState(PlayerStateEnum state)
     {
         initStateEnum = state;
+    }
+
+    /// <summary>
+    /// プレイヤーの生成器をセット
+    /// </summary>
+    public void SetPlayerGenerator(PlayerGenerator generator)
+    {
+        playerGenerator = generator;
     }
 
     /// <summary>

@@ -61,6 +61,8 @@ public class PlayerGenerator : MonoBehaviour
         playerController.SetPlayerNumber(index);
         //ボールの中からのスタートなのでステートを変更
         playerController.SetInitState(PlayerController.PlayerStateEnum.In);
+        //プレイヤーにセットする
+        playerController.SetPlayerGenerator(this);
         //ランダムな生成位置
         int rand = Random.Range(0, generatePositionAndRotations.Count);
         //ボールの生成
