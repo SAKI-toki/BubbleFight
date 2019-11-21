@@ -67,11 +67,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: b14a36c4895cd0e4fbd4ff360394c0de, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 22100000, guid: cf1c4fcba12a3da47ac9d514bac99892,
-        type: 2}
     - target: {fileID: 13700000, guid: b14a36c4895cd0e4fbd4ff360394c0de, type: 3}
       propertyPath: m_Bones.Array.data[0]
       value: 
@@ -108,6 +103,11 @@ PrefabInstance:
       propertyPath: m_RootBone
       value: 
       objectReference: {fileID: 7526563309936984826}
+    - target: {fileID: 9500000, guid: b14a36c4895cd0e4fbd4ff360394c0de, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: cf1c4fcba12a3da47ac9d514bac99892,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b14a36c4895cd0e4fbd4ff360394c0de, type: 3}
 --- !u!95 &7526563309946842376 stripped
@@ -180,13 +180,18 @@ PrefabInstance:
     - target: {fileID: 1101312921015316693, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: m_Name
-      value: Chick
+      value: Chick Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: cameraLookat
       value: 
       objectReference: {fileID: 3406918911542663967}
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: playerType
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1101312921015316699, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: m_LocalPosition.x

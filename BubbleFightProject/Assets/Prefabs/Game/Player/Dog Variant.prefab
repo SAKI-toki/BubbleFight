@@ -10,13 +10,18 @@ PrefabInstance:
     - target: {fileID: 1101312921015316693, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: m_Name
-      value: Dog
+      value: Dog Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: cameraLookat
       value: 
       objectReference: {fileID: 6761806739591328055}
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: playerType
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1101312921015316699, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -163,10 +168,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: 97eb1615ee8dc8049b38af9c2d8778c5, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: d52904111a69c20409faa2074af4d694, type: 2}
     - target: {fileID: 13700002, guid: 97eb1615ee8dc8049b38af9c2d8778c5, type: 3}
       propertyPath: m_Bones.Array.data[0]
       value: 
@@ -275,6 +276,10 @@ PrefabInstance:
       propertyPath: m_RootBone
       value: 
       objectReference: {fileID: 7953095898714169919}
+    - target: {fileID: 9500000, guid: 97eb1615ee8dc8049b38af9c2d8778c5, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d52904111a69c20409faa2074af4d694, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97eb1615ee8dc8049b38af9c2d8778c5, type: 3}
 --- !u!95 &7953095898721914365 stripped

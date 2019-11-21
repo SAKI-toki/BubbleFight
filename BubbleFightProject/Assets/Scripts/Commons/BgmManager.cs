@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum BgmEnum { NONE };
+public enum BgmEnum { None };
 
 /// <summary>
 /// BGMの管理クラス
@@ -12,12 +12,15 @@ public class BgmManager : Singleton<BgmManager>
     AudioSource aud = null;
 
     //現在のBGM
-    BgmEnum currentBgm = BgmEnum.NONE;
+    BgmEnum currentBgm = BgmEnum.None;
 
-    void Start()
+    public override void MyStart()
     {
         aud = GetComponent<AudioSource>();
     }
+
+    public override void MyUpdate()
+    { }
 
     /// <summary>
     /// BGMを流す
@@ -36,7 +39,7 @@ public class BgmManager : Singleton<BgmManager>
         }
         switch (bgm)
         {
-            case BgmEnum.NONE:
+            case BgmEnum.None:
                 aud.clip = null;
                 break;
         }
