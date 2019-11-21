@@ -257,8 +257,7 @@ public class BallController : MonoBehaviour
         //入っていて、力が一定以上なら入力不可時間を与える
         if (IsInPlayer() && otherBallController.IsInPlayer() && other.relativeVelocity.sqrMagnitude > cantInputHitPower)
         {
-            cantInputTime = other.relativeVelocity.sqrMagnitude * hitPowerPercenage;
-            if (cantInputTime > maxCantInputTime) cantInputTime = maxCantInputTime;
+            SetCantInputTime(other.relativeVelocity.sqrMagnitude * hitPowerPercenage);
             tpsCamera.CameraShake(cantInputTime / 2, damage / 30);
         }
 
@@ -332,5 +331,19 @@ public class BallController : MonoBehaviour
     public Vector3 GetLookatDir()
     {
         return lookatDir;
+    }
+
+    /// <summary>
+    /// Rigidbodyを取得
+    /// </summary>
+    public Rigidbody GetRigidbody()
+    {
+        return thisRigidbody;
+    }
+
+    public void SetCantInputTime(float time)
+    {
+        cantInputTime = time;
+        if (cantInputTime > maxCantInputTime) cantInputTime = maxCantInputTime;
     }
 }
