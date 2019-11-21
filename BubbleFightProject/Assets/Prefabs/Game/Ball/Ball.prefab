@@ -129,9 +129,9 @@ MonoBehaviour:
   hitPowerPercenage: 0.003
   strongHitBounceAddPower: 1.5
   weakHitBounceAddPower: 1.7
-  boostPower: 1000
+  boostPower: 1500
   boostInterval: 1
-  maxVelocityMagnitude: 40
+  maxVelocityMagnitude: 50
 --- !u!114 &3481246479687572610
 MonoBehaviour:
   m_ObjectHideFlags: 0

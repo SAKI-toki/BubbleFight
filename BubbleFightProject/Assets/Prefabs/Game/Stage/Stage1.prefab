@@ -104,9 +104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &215627789630118625
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,9 +472,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &1263458513951235105
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,9 +579,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &1271654083264715510
 GameObject:
   m_ObjectHideFlags: 0
@@ -686,9 +686,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &1292067296423253902
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,9 +793,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &1428980687409417853
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,9 +900,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &1677312544164043669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1007,9 +1007,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &1709389107864581958
 GameObject:
   m_ObjectHideFlags: 0
@@ -1181,9 +1181,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &2032545804741138912
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,9 +1288,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &2052977736613485721
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,9 +1395,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &2074907584172457815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1658,9 +1658,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &2434827270824887359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1765,9 +1765,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &2561038429181235822
 GameObject:
   m_ObjectHideFlags: 0
@@ -1872,9 +1872,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &2633621393512020117
 GameObject:
   m_ObjectHideFlags: 0
@@ -1979,9 +1979,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &2754738428313965660
 GameObject:
   m_ObjectHideFlags: 0
@@ -2086,9 +2086,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &2915750341097342438
 GameObject:
   m_ObjectHideFlags: 0
@@ -2193,9 +2193,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &3084557795820599443
 GameObject:
   m_ObjectHideFlags: 0
@@ -2300,9 +2300,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &3162444060449421380
 GameObject:
   m_ObjectHideFlags: 0
@@ -2407,9 +2407,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &3172676491299158245
 GameObject:
   m_ObjectHideFlags: 0
@@ -2514,9 +2514,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &3284036669068906779
 GameObject:
   m_ObjectHideFlags: 0
@@ -2621,9 +2621,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &3417123838285318669
 GameObject:
   m_ObjectHideFlags: 0
@@ -2762,9 +2762,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &3707263368875684354
 GameObject:
   m_ObjectHideFlags: 0
@@ -2869,9 +2869,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &3813645445903431383
 GameObject:
   m_ObjectHideFlags: 0
@@ -2976,9 +2976,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &3939238120335712268
 GameObject:
   m_ObjectHideFlags: 0
@@ -3083,9 +3083,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &3946910614441747053
 GameObject:
   m_ObjectHideFlags: 0
@@ -3224,9 +3224,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &4197084717406708299
 GameObject:
   m_ObjectHideFlags: 0
@@ -3331,9 +3331,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &4275601914458033899
 GameObject:
   m_ObjectHideFlags: 0
@@ -3468,9 +3468,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &4391463430449285384
 GameObject:
   m_ObjectHideFlags: 0
@@ -3575,9 +3575,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &4560952683483746663
 GameObject:
   m_ObjectHideFlags: 0
@@ -3682,9 +3682,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &4627137519610702671
 GameObject:
   m_ObjectHideFlags: 0
@@ -3789,9 +3789,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &4651505141587609123
 GameObject:
   m_ObjectHideFlags: 0
@@ -3929,9 +3929,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &4830886131071661601
 GameObject:
   m_ObjectHideFlags: 0
@@ -4066,9 +4066,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &5138836647547459751
 GameObject:
   m_ObjectHideFlags: 0
@@ -4173,9 +4173,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &5165235318205163346
 GameObject:
   m_ObjectHideFlags: 0
@@ -4280,9 +4280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &5274460144545790950
 GameObject:
   m_ObjectHideFlags: 0
@@ -4420,9 +4420,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &5564255168380774858
 GameObject:
   m_ObjectHideFlags: 0
@@ -4560,9 +4560,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &6151892657316221585
 GameObject:
   m_ObjectHideFlags: 0
@@ -4697,9 +4697,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &6565930573920081691
 GameObject:
   m_ObjectHideFlags: 0
@@ -4876,9 +4876,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &6775178229097264270
 GameObject:
   m_ObjectHideFlags: 0
@@ -4983,9 +4983,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &7182738092249740475
 GameObject:
   m_ObjectHideFlags: 0
@@ -5090,9 +5090,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &7232386121057612892
 GameObject:
   m_ObjectHideFlags: 0
@@ -5261,9 +5261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &7692355383457035666
 GameObject:
   m_ObjectHideFlags: 0
@@ -5432,9 +5432,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &8288537808755826952
 GameObject:
   m_ObjectHideFlags: 0
@@ -5539,9 +5539,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &8408658638786103483
 GameObject:
   m_ObjectHideFlags: 0
@@ -5835,9 +5835,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &8732827266859435819
 GameObject:
   m_ObjectHideFlags: 0
@@ -5942,9 +5942,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &8774275041285210022
 GameObject:
   m_ObjectHideFlags: 0
@@ -6049,9 +6049,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &9016742000538543183
 GameObject:
   m_ObjectHideFlags: 0
@@ -6156,9 +6156,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1 &9031830091794315067
 GameObject:
   m_ObjectHideFlags: 0
@@ -6297,9 +6297,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5343047be13194e9565b1c14f75c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 10
   debugDestroy: 0
-  respawnIntervalTime: 10
+  respawnIntervalTime: 20
 --- !u!1001 &8671787033461734285
 PrefabInstance:
   m_ObjectHideFlags: 0
