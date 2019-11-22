@@ -189,20 +189,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 1718711354309908497}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f2f3f5000b851b41bdec7e294c210a2, type: 3}
+  m_Script: {fileID: 11500000, guid: ace2e3bd75569c443ac3acae9c16ee58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerList:
-  - {fileID: 6442439259992693596, guid: be2c0006fe212644c8abd65f79f4aed9, type: 3}
-  - {fileID: 3871489426069160697, guid: b416fcc0e22d46a4891bcd30e32da471, type: 3}
-  - {fileID: 2976813791787136340, guid: 81d64c1302f7bca41956b5e36dbe2808, type: 3}
-  - {fileID: 9176822481703410358, guid: 0dde7c1dc0125364c85d5f2e82069f04, type: 3}
-  - {fileID: 6562706030190358724, guid: 2c4f7a34436b71e448bc8379965d0c23, type: 3}
-  - {fileID: 6988346205482189137, guid: 57ca5446137a8da4c86f33ecfeafed51, type: 3}
-  - {fileID: 1590331690352731148, guid: c74504d1d4fe93a49b5be4cea5f3d6eb, type: 3}
-  - {fileID: 994049467657318558, guid: ea1c8c95d0f5777489dc7f72ffd2eab5, type: 3}
-  - {fileID: 3268000826183285692, guid: 5f8bb96945966aa42b3fc90ef17eb295, type: 3}
-  - {fileID: 839860894276271748, guid: 611ace6b072e9674990d07a2569b561f, type: 3}
-  - {fileID: 6558627802078184912, guid: db8b61ece0fb0be4c93c235a8b4a9cde, type: 3}
-  - {fileID: 3622763933441127073, guid: a46ca49ff6f88e04b867180a068c3658, type: 3}
-  - {fileID: 1403238586233359515, guid: a95b2d810e60d5649924913dd983d71a, type: 3}
+  playerTypeInfoList:
+  - player: {fileID: 6442439259992693596, guid: be2c0006fe212644c8abd65f79f4aed9,
+      type: 3}
+    statusObject: {fileID: 11400000, guid: a0101bdd3ab29794fbdd03e9d42172aa, type: 2}
+  - player: {fileID: 3871489426069160697, guid: b416fcc0e22d46a4891bcd30e32da471,
+      type: 3}
+    statusObject: {fileID: 11400000, guid: f264463e0e4350d4cb0884cb810e2c1f, type: 2}
+  - player: {fileID: 2976813791787136340, guid: 81d64c1302f7bca41956b5e36dbe2808,
+      type: 3}
+    statusObject: {fileID: 11400000, guid: 09632758c6e34fe40b1cde14dc45a17f, type: 2}
+  - player: {fileID: 9176822481703410358, guid: 0dde7c1dc0125364c85d5f2e82069f04,
+      type: 3}
+    statusObject: {fileID: 11400000, guid: e6c8e75717b753a4f93f80c0155555ed, type: 2}
+  - player: {fileID: 6562706030190358724, guid: 2c4f7a34436b71e448bc8379965d0c23,
+      type: 3}
+    statusObject: {fileID: 11400000, guid: 8e522e007eb33e049978a38c6578ce7a, type: 2}
+  - player: {fileID: 6988346205482189137, guid: 57ca5446137a8da4c86f33ecfeafed51,
+      type: 3}
+    statusObject: {fileID: 11400000, guid: bc79bc9be75c03e499c9e8a19876a5f4, type: 2}
+  - player: {fileID: 1590331690352731148, guid: c74504d1d4fe93a49b5be4cea5f3d6eb,
+      type: 3}
+    statusObject: {fileID: 11400000, guid: 30fb09666ea6cf54e8c1d62e58fdbf2d, type: 2}
+  - player: {fileID: 994049467657318558, guid: ea1c8c95d0f5777489dc7f72ffd2eab5, type: 3}
+    statusObject: {fileID: 11400000, guid: f6300e6dbbc961a41ab077c1c484930d, type: 2}
+  - player: {fileID: 3268000826183285692, guid: 5f8bb96945966aa42b3fc90ef17eb295,
+      type: 3}
+    statusObject: {fileID: 11400000, guid: 30f5ad047f298634abda961e9b7ebc4f, type: 2}
+  - player: {fileID: 839860894276271748, guid: 611ace6b072e9674990d07a2569b561f, type: 3}
+    statusObject: {fileID: 11400000, guid: 468369b6ab7d44a4dab966183fd129ec, type: 2}
+  - player: {fileID: 6558627802078184912, guid: db8b61ece0fb0be4c93c235a8b4a9cde,
+      type: 3}
+    statusObject: {fileID: 11400000, guid: 550c8435245b0ff4582ac305103684af, type: 2}
+  - player: {fileID: 3622763933441127073, guid: a46ca49ff6f88e04b867180a068c3658,
+      type: 3}
+    statusObject: {fileID: 11400000, guid: 6856a8e3960432d49b83714d01afce7d, type: 2}
+  - player: {fileID: 1403238586233359515, guid: a95b2d810e60d5649924913dd983d71a,
+      type: 3}
+    statusObject: {fileID: 11400000, guid: 19ee7edd10cc578458576ae4a7378d1d, type: 2}

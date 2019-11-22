@@ -2,9 +2,6 @@
 
 public partial class PlayerController : MonoBehaviour
 {
-    [SerializeField, Tooltip("歩行時の速度")]
-    float walkMoveSpeed = 10.0f;
-
     /// <summary>
     /// ボールの外にいるときのステート
     /// </summary>
@@ -30,7 +27,7 @@ public partial class PlayerController : MonoBehaviour
             playerController.PlayerRotation(moveDir);
             //位置の更新
             var position = playerController.transform.position;
-            position += moveDir * playerController.walkMoveSpeed * Time.deltaTime;
+            position += moveDir * playerController.status.WalkSpeed * Time.deltaTime;
             playerController.transform.position = position;
 
             UpdateAnimation(stickInput);

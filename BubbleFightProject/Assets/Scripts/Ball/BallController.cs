@@ -6,19 +6,14 @@
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SphereCollider))]
 [RequireComponent(typeof(MaterialFlash))]
-public class BallController : MonoBehaviour
+public partial class BallController : MonoBehaviour
 {
+    MaterialFlash materialFlash;
     Rigidbody thisRigidbody;
     Vector3 lookatDir = Vector3.zero;
 
     //操作するプレイヤー
     int playerIndex = int.MaxValue;
-    //移動力
-    float movePower = 0.0f;
-    //曲がりやすさ
-    float easyCurveWeight = 0.0f;
-    //プレイヤーのアニメーションを制御するクラス
-    PlayerAnimationController playerAnimation = null;
 
     [SerializeField, Tooltip("ボールの耐久値(初期値)")]
     float maxHitPoint = 100;
@@ -27,38 +22,22 @@ public class BallController : MonoBehaviour
 
     //当たる前の力を保持する変数
     Vector3 prevVelocity = Vector3.zero;
-    //回転に加える力の割合
-    float rotationPercentage = 0.0f;
-    //入力を受け付けない時間
-    float cantInputTime = 0.0f;
+    TpsCamera tpsCamera = null;
 
     public delegate void DestroyEventType();
     DestroyEventType destroyEvent;
 
     [SerializeField, Tooltip("最大の回転力")]
     float maxAngularVelocity = 10.0f;
-    [SerializeField, Tooltip("入力を受け付けなくする衝突力")]
-    float cantInputHitPower = 50.0f;
-    [SerializeField, Tooltip("入力を受け付けない最大時間")]
-    float maxCantInputTime = 1.0f;
-    [SerializeField, Tooltip("力1に対してどのくらい入力を受け付けなくするか(50で0.01なら0.5秒")]
-    float hitPowerPercenage = 0.003f;
     //反発時の力の追加
     [SerializeField, Tooltip("ボール同士でぶつかったときの反発の追加率(cantInputHitPower以上の力)")]
     float strongHitBounceAddPower = 1.2f;
     [SerializeField, Tooltip("ボール同士でぶつかったときの反発の追加率(cantInputHitPower以下の力)")]
     float weakHitBounceAddPower = 1.2f;
-    [SerializeField, Tooltip("ブースト時の力")]
-    float boostPower = 20.0f;
-    [SerializeField, Tooltip("ブーストを再使用できる間隔")]
-    float boostInterval = 1.0f;
     [SerializeField, Tooltip("最大の力")]
     float maxVelocityMagnitude = 100.0f;
-    //ブーストの間隔の時間を測る
-    float boostIntervalTimeCount = 0.0f;
-    MaterialFlash materialFlash;
 
-    TpsCamera tpsCamera = null;
+    BallStateManager ballStateManager = new BallStateManager();
 
     void Awake()
     {
@@ -70,22 +49,31 @@ public class BallController : MonoBehaviour
     {
         thisRigidbody.maxAngularVelocity = maxAngularVelocity;
         currentHitPoint = maxHitPoint;
+        ballStateManager.Init(this, new NotHasPlayerState());
     }
 
     void Update()
     {
         prevVelocity = thisRigidbody.velocity;
         thisRigidbody.AddForce(Vector3.up * -10);
-        //点滅する
-        if (IsInPlayer() && currentHitPoint * 2 < maxHitPoint)
-        {
-            materialFlash.FlashStart();
-            float interval = currentHitPoint / maxHitPoint;
-            materialFlash.SetInterval(interval < 0.1f ? 0.1f : interval);
-        }
+        ballStateManager.Update();
     }
 
     void LateUpdate()
+    {
+        RestrictVelocity();
+        ballStateManager.LateUpdate();
+    }
+
+    void OnDestroy()
+    {
+        ballStateManager.Destroy();
+    }
+
+    /// <summary>
+    /// 力を制限する
+    /// </summary>
+    void RestrictVelocity()
     {
         var velocity = thisRigidbody.velocity;
         float magnitude = velocity.magnitude;
@@ -97,88 +85,22 @@ public class BallController : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーによる初期化
+    /// プレイヤーが入り始めたと同時に必要な情報を与える
     /// </summary>
-    public void InitializeOnPlayer(int index, float ballMovePower, float ballEasyCurveWeight,
-                                        float ballRotationPowerPercentage, float ballMass,
-                                        PlayerAnimationController playerAnimationController, TpsCamera playerTpsCamera)
+    public void StartIntoPlayer(int index, PlayerAnimationController playerAnimationController, TpsCamera playerTpsCamera)
     {
         playerIndex = index;
-        movePower = ballMovePower;
-        easyCurveWeight = ballEasyCurveWeight;
-        rotationPercentage = ballRotationPowerPercentage;
-        thisRigidbody.mass = ballMass;
         playerAnimation = playerAnimationController;
         tpsCamera = playerTpsCamera;
+        ballStateManager.TranslationState(new PlayerIntoBallState());
     }
 
     /// <summary>
-    /// プレイヤーによる更新
+    /// プレイヤーが入り終わった
     /// </summary>
-    public void UpdateOnPlayer(Vector3 forward, Vector3 right)
+    public void EndIntoPlayer()
     {
-        Move(forward, right);
-        UpdateBoost();
-    }
-
-    /// <summary>
-    /// 移動
-    /// </summary>
-    void Move(Vector3 forward, Vector3 right)
-    {
-        //入力を受け付けない
-        if (cantInputTime > 0.0f)
-        {
-            cantInputTime -= Time.deltaTime;
-            return;
-        }
-
-        var stickInput = SwitchInput.GetLeftStick(playerIndex);
-        Vector3 addPower = PlayerMath.ForwardAndRightMove(stickInput, forward, right);
-
-        AddForceAndTorque(addPower);
-        UpdateLookatDirection(addPower);
-
-        if (stickInput.sqrMagnitude == 0)
-        {
-            playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Idle);
-        }
-        else
-        {
-            if (stickInput.magnitude > 0.9f)
-            {
-                playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Run);
-            }
-            else
-            {
-                playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Walk);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 力と回転を加える
-    /// </summary>
-    void AddForceAndTorque(Vector3 addPower)
-    {
-        //曲がりやすくする
-        var velocity = thisRigidbody.velocity;
-        velocity.y = 0;
-        /*
-        力の向きと入力の向きの内積
-        同じ向きなら1,反対向きなら-1,垂直なら0のため
-        (-dot + 1) / 2をすることで同じ向きなら0,反対向きなら1になるようにする
-        */
-        float angle = (-Vector3.Dot(velocity.normalized, addPower.normalized) + 1) / 2;
-        //加える回転力
-        Vector3 addTorque = Vector3.zero;
-        addTorque.x = addPower.z;
-        addTorque.z = -addPower.x;
-        float power = movePower * thisRigidbody.mass * Mathf.Pow(angle + 1, easyCurveWeight);
-        //入力方向に力を加える
-        thisRigidbody.AddForce(addPower * power * (1.0f - rotationPercentage));
-        //入力方向に回転の力を加える
-        thisRigidbody.AddTorque(addTorque * power * rotationPercentage);
+        ballStateManager.TranslationState(new HasPlayerState());
     }
 
     /// <summary>
@@ -200,21 +122,6 @@ public class BallController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// ブーストの更新
-    /// </summary>
-    void UpdateBoost()
-    {
-        //ブースト
-        boostIntervalTimeCount -= Time.deltaTime;
-        if (SwitchInput.GetButtonDown(playerIndex, SwitchButton.Boost) &&
-            boostIntervalTimeCount <= 0.0f)
-        {
-            //入力方向に力を加える
-            thisRigidbody.AddForce(lookatDir.normalized * boostPower);
-            boostIntervalTimeCount = boostInterval;
-        }
-    }
 
     void OnCollisionEnter(Collision other)
     {
@@ -223,9 +130,6 @@ public class BallController : MonoBehaviour
             case "Ball":
                 CollisionBall(other);
                 break;
-            case "Player":
-                CollisionPlayer(other);
-                break;
             case "BreakArea":
                 //マップ外に出た時の処理
                 {
@@ -233,7 +137,13 @@ public class BallController : MonoBehaviour
                 }
                 break;
         }
+        ballStateManager.OnCollisionEnter(other);
     }
+    void OnCollisionStay(Collision other) { ballStateManager.OnCollisionStay(other); }
+    void OnCollisionExit(Collision other) { ballStateManager.OnCollisionExit(other); }
+    void OnTriggerEnter(Collider other) { ballStateManager.OnTriggerEnter(other); }
+    void OnTriggerStay(Collider other) { ballStateManager.OnTriggerStay(other); }
+    void OnTriggerExit(Collider other) { ballStateManager.OnTriggerExit(other); }
 
     /// <summary>
     /// ボールとの衝突
@@ -242,9 +152,8 @@ public class BallController : MonoBehaviour
     {
         var otherBallController = other.gameObject.GetComponent<BallController>();
         //ダメージ(空の場合は10分の1のダメージにする)
-        float damage = DamageCalculate(other.relativeVelocity.sqrMagnitude, otherBallController.prevVelocity.sqrMagnitude)
+        currentHitPoint -= DamageCalculate(other.relativeVelocity.sqrMagnitude, otherBallController.prevVelocity.sqrMagnitude)
                             * (otherBallController.IsInPlayer() ? 1.0f : 0.1f);
-        currentHitPoint -= damage;
 
         //跳ね返りの強さ
         float bounceAddPower = other.relativeVelocity.sqrMagnitude > cantInputHitPower ?
@@ -254,13 +163,6 @@ public class BallController : MonoBehaviour
         velocity.z *= bounceAddPower;
         thisRigidbody.velocity = velocity;
 
-        //入っていて、力が一定以上なら入力不可時間を与える
-        if (IsInPlayer() && otherBallController.IsInPlayer() && other.relativeVelocity.sqrMagnitude > cantInputHitPower)
-        {
-            SetCantInputTime(other.relativeVelocity.sqrMagnitude * hitPowerPercenage);
-            tpsCamera.CameraShake(cantInputTime / 2, damage / 30);
-        }
-
         //最後にぶつかったプレイヤーの更新
         LastHitPlayerManager.SetLastHitPlayer(GetPlayerIndex(), otherBallController.GetPlayerIndex());
 
@@ -269,20 +171,6 @@ public class BallController : MonoBehaviour
         {
             PointManager.BreakBallPointCalculate(otherBallController, this);
             BrokenBall();
-        }
-    }
-
-    /// <summary>
-    /// プレイヤーとの衝突
-    /// </summary>
-    void CollisionPlayer(Collision other)
-    {
-        var otherPlayerController = other.gameObject.GetComponent<PlayerController>();
-        if (IsInPlayer() && transform.GetChild(0) != other.transform &&
-                !otherPlayerController.IsInvincible())
-        {
-            PointManager.BreakPlayerPointCalculate(this, otherPlayerController);
-            otherPlayerController.HitInPlayerBall();
         }
     }
 
@@ -341,9 +229,4 @@ public class BallController : MonoBehaviour
         return thisRigidbody;
     }
 
-    public void SetCantInputTime(float time)
-    {
-        cantInputTime = time;
-        if (cantInputTime > maxCantInputTime) cantInputTime = maxCantInputTime;
-    }
 }

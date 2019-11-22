@@ -14,8 +14,6 @@ public partial class PlayerController : MonoBehaviour
     PlayerGenerator playerGenerator = null;
     //プレイヤーの番号
     int playerNumber = 0;
-    [SerializeField, Tooltip("プレイヤーのタイプ")]
-    PlayerType playerType = PlayerType.Alpaca;
     PlayerStateManager playerStateManager = new PlayerStateManager();
     //ステートの列挙型(初期ステートをセットするためのもの)
     public enum PlayerStateEnum { In, Out };
@@ -31,6 +29,8 @@ public partial class PlayerController : MonoBehaviour
     Transform cameraLookat = null;
     TpsCamera cameraController = null;
 
+    PlayerTypeStatusScriptableObject status;
+
     void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
@@ -40,6 +40,8 @@ public partial class PlayerController : MonoBehaviour
 
     void Start()
     {
+        //ステータスを取得
+        status = PlayerTypeManager.GetInstance().GetPlayerStatus(playerNumber);
         rotation = transform.rotation;
         cameraController = Instantiate(cameraObject).GetComponent<TpsCamera>();
         cameraController.CameraInit(playerNumber, cameraLookat);
@@ -47,7 +49,7 @@ public partial class PlayerController : MonoBehaviour
         switch (initStateEnum)
         {
             case PlayerStateEnum.In:
-                initState = new InBallState();
+                initState = new IntoBallState();
                 break;
             case PlayerStateEnum.Out:
                 initState = new OutBallState();
@@ -162,14 +164,6 @@ public partial class PlayerController : MonoBehaviour
     public void SetPlayerGenerator(PlayerGenerator generator)
     {
         playerGenerator = generator;
-    }
-
-    /// <summary>
-    /// プレイヤーのタイプを取得
-    /// </summary>
-    public PlayerType GetPlayerType()
-    {
-        return playerType;
     }
 
     /// <summary>

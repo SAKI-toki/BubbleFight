@@ -2,19 +2,6 @@
 
 public partial class PlayerController : MonoBehaviour
 {
-    [SerializeField, Tooltip("ボールでの移動時の力")]
-    float ballMovePower = 10.0f;
-    [SerializeField, Tooltip("ボールの回転に加える力の割合"), Range(0, 1)]
-    float ballRotationPercentage = 0.8f;
-
-    [SerializeField, Tooltip("ボールに付ける物理マテリアル")]
-    PhysicMaterial ballPhysicalMaterial = null;
-
-    [SerializeField, Tooltip("曲がりやすくする重み"), Range(1, 2)]
-    float ballEasyCurveWeight = 1.0f;
-    [SerializeField, Tooltip("ボールの重さ")]
-    float ballMass = 1.0f;
-
     /// <summary>
     /// ボールの中にいるステート
     /// </summary>
@@ -28,13 +15,6 @@ public partial class PlayerController : MonoBehaviour
         protected override void Init()
         {
             ballController = playerController.transform.parent.GetComponent<BallController>();
-            ballController.GetComponent<SphereCollider>().material = playerController.ballPhysicalMaterial;
-            //ボールの初期化
-            ballController.InitializeOnPlayer(playerController.playerNumber, playerController.ballMovePower,
-                                                playerController.ballEasyCurveWeight, playerController.ballRotationPercentage,
-                                                playerController.ballMass, playerController.playerAnimation,
-                                                playerController.cameraController);
-            ballController.SetDestroyEvent(delegate { playerController.transform.parent = null; });
             playerController.transform.localPosition = Vector3.zero;
             PlayerPhysicsSet(false);
         }
@@ -43,7 +23,7 @@ public partial class PlayerController : MonoBehaviour
         {
             //親オブジェクト(ボール)がなくなったらステート遷移
             if (playerController.transform.parent == null) return new BreakBallState();
-            ballController.UpdateOnPlayer(playerController.GetMoveForwardDirection(), playerController.GetMoveRightDirection());
+            ballController.SetPlayerForwardRight(playerController.GetMoveForwardDirection(), playerController.GetMoveRightDirection());
             playerController.PlayerRotation(ballController.GetLookatDir());
             return this;
         }
