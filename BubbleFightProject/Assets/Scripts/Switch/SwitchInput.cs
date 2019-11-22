@@ -5,7 +5,7 @@ public enum SwitchButton : long
 {
     Ok = NpadButton.A,
     Cancel = NpadButton.B,
-    Boost = NpadButton.A,
+    Boost = NpadButton.ZR | NpadButton.ZL,
     Pause = NpadButton.Plus | NpadButton.Minus,
     //項目選択
     SelectUp = NpadButton.StickLUp,
