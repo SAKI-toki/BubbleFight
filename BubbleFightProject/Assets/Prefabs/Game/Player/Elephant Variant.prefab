@@ -12,16 +12,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Elephant Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+    - target: {fileID: 1611149538045425472, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
-      propertyPath: cameraLookat
+      propertyPath: skinMeshRenderer
       value: 
-      objectReference: {fileID: 9027206731810863637}
-    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
-        type: 3}
-      propertyPath: playerType
-      value: 8
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6087898590980684236}
     - target: {fileID: 1101312921015316699, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -77,11 +72,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1611149538045425472, guid: 45f5450d91c0e374d94504861f784702,
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
-      propertyPath: skinMeshRenderer
+      propertyPath: cameraLookat
       value: 
-      objectReference: {fileID: 6087898590980684236}
+      objectReference: {fileID: 9027206731810863637}
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: playerType
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: modelTransform
+      value: 
+      objectReference: {fileID: 6087898590994639086}
     - target: {fileID: 5925106816674347540, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: animator
@@ -266,6 +271,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66a3dd8b4de6a12479ab3a6c2375b565, type: 3}
+--- !u!4 &6087898590994639086 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400002, guid: 66a3dd8b4de6a12479ab3a6c2375b565,
+    type: 3}
+  m_PrefabInstance: {fileID: 6087898590994248300}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &6087898590984849164 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: 66a3dd8b4de6a12479ab3a6c2375b565,

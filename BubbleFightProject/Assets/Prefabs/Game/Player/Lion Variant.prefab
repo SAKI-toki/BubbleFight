@@ -181,6 +181,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a0b6f8d9d164dc4a8123147d6489430, type: 3}
+--- !u!4 &1503427685951788611 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400048, guid: 1a0b6f8d9d164dc4a8123147d6489430,
+    type: 3}
+  m_PrefabInstance: {fileID: 1503427685951655155}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1503427685951788655 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400028, guid: 1a0b6f8d9d164dc4a8123147d6489430,
+    type: 3}
+  m_PrefabInstance: {fileID: 1503427685951655155}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &1503427685944277395 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: 1a0b6f8d9d164dc4a8123147d6489430,
@@ -343,12 +355,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1503427685951655155}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1503427685951788611 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400048, guid: 1a0b6f8d9d164dc4a8123147d6489430,
-    type: 3}
-  m_PrefabInstance: {fileID: 1503427685951655155}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4399457039272673908
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -361,16 +367,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lion Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+    - target: {fileID: 1611149538045425472, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
-      propertyPath: cameraLookat
+      propertyPath: skinMeshRenderer
       value: 
-      objectReference: {fileID: 7087528113085969160}
-    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
-        type: 3}
-      propertyPath: playerType
-      value: 11
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1503427685948573523}
     - target: {fileID: 1101312921015316699, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -426,11 +427,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1611149538045425472, guid: 45f5450d91c0e374d94504861f784702,
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
-      propertyPath: skinMeshRenderer
+      propertyPath: cameraLookat
       value: 
-      objectReference: {fileID: 1503427685948573523}
+      objectReference: {fileID: 7087528113085969160}
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: playerType
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: modelTransform
+      value: 
+      objectReference: {fileID: 1503427685951788655}
     - target: {fileID: 5925106816674347540, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: animator
@@ -438,15 +449,15 @@ PrefabInstance:
       objectReference: {fileID: 1503427685944277395}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45f5450d91c0e374d94504861f784702, type: 3}
---- !u!4 &3622763933441127087 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1101312921015316699, guid: 45f5450d91c0e374d94504861f784702,
-    type: 3}
-  m_PrefabInstance: {fileID: 4399457039272673908}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7087528113085969160 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6869669048802996604, guid: 45f5450d91c0e374d94504861f784702,
+    type: 3}
+  m_PrefabInstance: {fileID: 4399457039272673908}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3622763933441127087 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1101312921015316699, guid: 45f5450d91c0e374d94504861f784702,
     type: 3}
   m_PrefabInstance: {fileID: 4399457039272673908}
   m_PrefabAsset: {fileID: 0}

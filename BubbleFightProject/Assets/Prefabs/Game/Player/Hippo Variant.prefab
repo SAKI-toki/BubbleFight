@@ -12,16 +12,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hippo Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+    - target: {fileID: 1611149538045425472, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
-      propertyPath: cameraLookat
+      propertyPath: skinMeshRenderer
       value: 
-      objectReference: {fileID: 6609763450322927405}
-    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
-        type: 3}
-      propertyPath: playerType
-      value: 9
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6960353660021027199}
     - target: {fileID: 1101312921015316699, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -77,11 +72,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1611149538045425472, guid: 45f5450d91c0e374d94504861f784702,
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
-      propertyPath: skinMeshRenderer
+      propertyPath: cameraLookat
       value: 
-      objectReference: {fileID: 6960353660021027199}
+      objectReference: {fileID: 6609763450322927405}
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: playerType
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: modelTransform
+      value: 
+      objectReference: {fileID: 6960353660017811529}
     - target: {fileID: 5925106816674347540, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: animator
@@ -266,6 +271,12 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: d52904111a69c20409faa2074af4d694, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4306444386c8a7e458d6e61c4633ccfa, type: 3}
+--- !u!4 &6960353660017811529 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400022, guid: 4306444386c8a7e458d6e61c4633ccfa,
+    type: 3}
+  m_PrefabInstance: {fileID: 6960353660017949407}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &6960353660025262015 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: 4306444386c8a7e458d6e61c4633ccfa,

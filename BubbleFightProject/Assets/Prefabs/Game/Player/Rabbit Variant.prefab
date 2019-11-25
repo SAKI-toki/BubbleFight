@@ -165,6 +165,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b7d9308ac2a2f24a9b976e342ffd7bd, type: 3}
+--- !u!4 &1347913809376186392 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400030, guid: 0b7d9308ac2a2f24a9b976e342ffd7bd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1347913809375791750}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &1347913809366417382 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: 0b7d9308ac2a2f24a9b976e342ffd7bd,
@@ -321,16 +327,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rabbit Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+    - target: {fileID: 1611149538045425472, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
-      propertyPath: cameraLookat
+      propertyPath: skinMeshRenderer
       value: 
-      objectReference: {fileID: 4856041281429703986}
-    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
-        type: 3}
-      propertyPath: playerType
-      value: 12
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1347913809370612006}
     - target: {fileID: 1101312921015316699, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -386,11 +387,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1611149538045425472, guid: 45f5450d91c0e374d94504861f784702,
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
-      propertyPath: skinMeshRenderer
+      propertyPath: cameraLookat
       value: 
-      objectReference: {fileID: 1347913809370612006}
+      objectReference: {fileID: 4856041281429703986}
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: playerType
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: modelTransform
+      value: 
+      objectReference: {fileID: 1347913809376186392}
     - target: {fileID: 5925106816674347540, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: animator

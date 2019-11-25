@@ -12,16 +12,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dog Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+    - target: {fileID: 1611149538045425472, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
-      propertyPath: cameraLookat
+      propertyPath: skinMeshRenderer
       value: 
-      objectReference: {fileID: 6761806739591328055}
-    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
-        type: 3}
-      propertyPath: playerType
-      value: 7
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7953095898717647679}
     - target: {fileID: 1101312921015316699, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -77,11 +72,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1611149538045425472, guid: 45f5450d91c0e374d94504861f784702,
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
-      propertyPath: skinMeshRenderer
+      propertyPath: cameraLookat
       value: 
-      objectReference: {fileID: 7953095898717647679}
+      objectReference: {fileID: 6761806739591328055}
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: playerType
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: modelTransform
+      value: 
+      objectReference: {fileID: 7953095898714169885}
     - target: {fileID: 5925106816674347540, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: animator
@@ -282,6 +287,12 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: d52904111a69c20409faa2074af4d694, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97eb1615ee8dc8049b38af9c2d8778c5, type: 3}
+--- !u!4 &7953095898714169885 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 97eb1615ee8dc8049b38af9c2d8778c5,
+    type: 3}
+  m_PrefabInstance: {fileID: 7953095898714568861}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &7953095898721914365 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: 97eb1615ee8dc8049b38af9c2d8778c5,
@@ -351,18 +362,6 @@ Transform:
 --- !u!4 &7953095898714169913 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400036, guid: 97eb1615ee8dc8049b38af9c2d8778c5,
-    type: 3}
-  m_PrefabInstance: {fileID: 7953095898714568861}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7953095898714169915 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400038, guid: 97eb1615ee8dc8049b38af9c2d8778c5,
-    type: 3}
-  m_PrefabInstance: {fileID: 7953095898714568861}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7953095898714169869 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400016, guid: 97eb1615ee8dc8049b38af9c2d8778c5,
     type: 3}
   m_PrefabInstance: {fileID: 7953095898714568861}
   m_PrefabAsset: {fileID: 0}
@@ -447,6 +446,18 @@ Transform:
 --- !u!4 &7953095898714169901 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400048, guid: 97eb1615ee8dc8049b38af9c2d8778c5,
+    type: 3}
+  m_PrefabInstance: {fileID: 7953095898714568861}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7953095898714169915 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400038, guid: 97eb1615ee8dc8049b38af9c2d8778c5,
+    type: 3}
+  m_PrefabInstance: {fileID: 7953095898714568861}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7953095898714169869 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400016, guid: 97eb1615ee8dc8049b38af9c2d8778c5,
     type: 3}
   m_PrefabInstance: {fileID: 7953095898714568861}
   m_PrefabAsset: {fileID: 0}

@@ -110,6 +110,12 @@ PrefabInstance:
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b14a36c4895cd0e4fbd4ff360394c0de, type: 3}
+--- !u!4 &7526563309936984808 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: b14a36c4895cd0e4fbd4ff360394c0de,
+    type: 3}
+  m_PrefabInstance: {fileID: 7526563309937383528}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &7526563309946842376 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: b14a36c4895cd0e4fbd4ff360394c0de,
@@ -182,16 +188,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chick Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+    - target: {fileID: 1611149538045425472, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
-      propertyPath: cameraLookat
+      propertyPath: skinMeshRenderer
       value: 
-      objectReference: {fileID: 3406918911542663967}
-    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
-        type: 3}
-      propertyPath: playerType
-      value: 3
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7526563309942690760}
     - target: {fileID: 1101312921015316699, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -247,11 +248,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1611149538045425472, guid: 45f5450d91c0e374d94504861f784702,
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
-      propertyPath: skinMeshRenderer
+      propertyPath: cameraLookat
       value: 
-      objectReference: {fileID: 7526563309942690760}
+      objectReference: {fileID: 3406918911542663967}
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: playerType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1101312921015316694, guid: 45f5450d91c0e374d94504861f784702,
+        type: 3}
+      propertyPath: modelTransform
+      value: 
+      objectReference: {fileID: 7526563309936984808}
     - target: {fileID: 5925106816674347540, guid: 45f5450d91c0e374d94504861f784702,
         type: 3}
       propertyPath: animator
