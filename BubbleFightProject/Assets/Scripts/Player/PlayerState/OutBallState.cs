@@ -7,7 +7,6 @@ public partial class PlayerController : MonoBehaviour
     /// </summary>
     class OutBallState : PlayerStateBase
     {
-
         public override PlayerStateBase Update()
         {
             Move();

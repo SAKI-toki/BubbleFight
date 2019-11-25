@@ -31,6 +31,7 @@ public partial class PlayerController : MonoBehaviour
         public override void Destroy()
         {
             PlayerPhysicsSet(true);
+            playerController.invincibleTimeCount = float.MaxValue;
         }
 
         /// <summary>
