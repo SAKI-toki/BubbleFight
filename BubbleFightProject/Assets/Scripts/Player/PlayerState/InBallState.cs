@@ -32,6 +32,10 @@ public partial class PlayerController : MonoBehaviour
         {
             playerController.PhysicsSet(true);
             playerController.invincibleTimeCount = float.MaxValue;
+
+            var localPosition = playerController.modelTransform.localPosition;
+            localPosition.y = -1;
+            playerController.modelTransform.localPosition = localPosition;
         }
     }
 }

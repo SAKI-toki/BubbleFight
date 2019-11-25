@@ -28,6 +28,9 @@ public partial class PlayerController : MonoBehaviour
     [SerializeField, Tooltip("カメラの注視点")]
     Transform cameraLookat = null;
     TpsCamera cameraController = null;
+    [SerializeField, Tooltip("モデルのローカルTransform")]
+    Transform modelTransform = null;
+    float inBallModelLocalPositionY = 0.0f;
 
     PlayerTypeStatusScriptableObject status;
 
@@ -36,6 +39,7 @@ public partial class PlayerController : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody>();
         materialFlash = GetComponent<MaterialFlash>();
         playerAnimation = GetComponent<PlayerAnimationController>();
+        inBallModelLocalPositionY = modelTransform.localPosition.y;
     }
 
     void Start()
