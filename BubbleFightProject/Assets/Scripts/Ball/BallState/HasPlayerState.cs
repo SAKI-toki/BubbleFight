@@ -40,6 +40,13 @@ public partial class BallController : MonoBehaviour
             playerStatus = PlayerTypeManager.GetInstance().GetPlayerStatus(ballController.playerIndex);
             ballController.transform.GetComponent<SphereCollider>().material = playerStatus.BallPhysicalMaterial;
             ballController.thisRigidbody.mass = playerStatus.BallMass;
+            var mat = ballController.transform.GetComponent<MeshRenderer>().material;
+            var color = PlayerColor.GetColor(ballController.playerIndex);
+            color.a = 0.8f;
+            mat.color = color;
+            ballController.materialFlash.SetMaterial(mat);
+            color.r = color.g = color.b = 0;
+            ballController.materialFlash.SetFlashColor(color);
         }
 
         public override BallStateBase Update()

@@ -204,3 +204,24 @@ static public class PlayerMath
         return globalDir.y * forward + globalDir.x * right;
     }
 }
+
+/// <summary>
+/// プレイヤーの色
+/// </summary>
+static public class PlayerColor
+{
+    static Color[] color = new Color[8]
+{
+    Color.red,Color.blue,Color.yellow,Color.green,
+    Color.magenta,Color.cyan,Color.gray,Color.grey
+};
+
+    /// <summary>
+    /// 色の取得
+    /// </summary>
+    static public Color GetColor(int index)
+    {
+        return color[index];
+    }
+
+}

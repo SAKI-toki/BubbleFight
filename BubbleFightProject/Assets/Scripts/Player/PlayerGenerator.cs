@@ -86,10 +86,17 @@ public class PlayerGenerator : MonoBehaviour
     }
 }
 
+/// <summary>
+/// 位置と回転を保持するクラス
+/// </summary>
 public class PositionAndRotation
 {
     public Vector3 position;
     public Quaternion rotation;
+
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
     public PositionAndRotation(Vector3 pos, Quaternion rot)
     {
         position = pos;
