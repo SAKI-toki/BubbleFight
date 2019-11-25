@@ -60,11 +60,22 @@ public partial class PlayerController : MonoBehaviour
         public override void OnCollisionEnter(Collision other)
         {
             //タグがBallで、プレイヤーを持っていなかったらそのボールに入る
-            if (other.gameObject.tag == "Ball" &&
-            other.transform.childCount == 0)
+            if (other.gameObject.tag == "Ball")
             {
-                playerController.transform.parent = other.transform;
-                playerController.playerStateManager.TranslationState(new IntoBallState());
+                var ballController = other.gameObject.GetComponent<BallController>();
+                if (ballController.IsInPlayer())
+                {
+                    if (!playerController.IsInvincible())
+                    {
+                        PointManager.BreakPlayerPointCalculate(ballController, playerController);
+                        playerController.playerStateManager.TranslationState(new HitInPlayerBallState());
+                    }
+                }
+                else
+                {
+                    playerController.transform.parent = other.transform;
+                    playerController.playerStateManager.TranslationState(new IntoBallState());
+                }
             }
         }
     }

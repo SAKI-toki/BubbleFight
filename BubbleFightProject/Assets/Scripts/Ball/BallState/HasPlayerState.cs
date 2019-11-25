@@ -168,17 +168,6 @@ public partial class BallController : MonoBehaviour
                         }
                     }
                     break;
-                case "Player":
-                    {
-                        var otherPlayerController = other.gameObject.GetComponent<PlayerController>();
-                        if (ballController.transform.GetChild(0) != other.transform &&
-                                !otherPlayerController.IsInvincible())
-                        {
-                            PointManager.BreakPlayerPointCalculate(ballController, otherPlayerController);
-                            otherPlayerController.HitInPlayerBall();
-                        }
-                    }
-                    break;
             }
         }
     }

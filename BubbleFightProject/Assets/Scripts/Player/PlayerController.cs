@@ -78,6 +78,10 @@ public partial class PlayerController : MonoBehaviour
         playerStateManager.LateUpdate();
         //回転をセットした後に実行しなければならない
         cameraController.CameraUpdate();
+
+        var velocity = playerRigidbody.velocity;
+        velocity.x = velocity.z = 0;
+        playerRigidbody.velocity = velocity;
     }
 
     void OnDestroy()
@@ -115,6 +119,29 @@ public partial class PlayerController : MonoBehaviour
         var endQ = obj.transform.rotation;
         rotation = Quaternion.Lerp(startQ, endQ, 10 * Time.deltaTime);
         Destroy(obj);
+    }
+
+    /// <summary>
+    /// プレイヤーの物理演算のオンオフ
+    /// </summary>
+    void PhysicsSet(bool enabled)
+    {
+        //コライダーのオンオフ
+        foreach (var collider in GetComponents<Collider>()) collider.enabled = enabled;
+        foreach (var collider in GetComponentsInChildren<Collider>()) collider.enabled = enabled;
+
+        if (enabled)
+        {
+            //この順番にしないと警告が出る
+            playerRigidbody.isKinematic = false;
+            playerRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        }
+        else
+        {
+            //この順番にしないと警告が出る
+            playerRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            playerRigidbody.isKinematic = true;
+        }
     }
 
     /// <summary>
@@ -172,14 +199,6 @@ public partial class PlayerController : MonoBehaviour
     public bool IsInvincible()
     {
         return invincibleTimeCount > 0.0f;
-    }
-
-    /// <summary>
-    /// プレイヤーが入っているボールにぶつかった
-    /// </summary>
-    public void HitInPlayerBall()
-    {
-        playerStateManager.TranslationState(new HitInPlayerBallState());
     }
 }
 

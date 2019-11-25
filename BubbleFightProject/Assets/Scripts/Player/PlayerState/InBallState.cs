@@ -16,7 +16,7 @@ public partial class PlayerController : MonoBehaviour
         {
             ballController = playerController.transform.parent.GetComponent<BallController>();
             playerController.transform.localPosition = Vector3.zero;
-            PlayerPhysicsSet(false);
+            playerController.PhysicsSet(false);
         }
 
         public override PlayerStateBase Update()
@@ -30,30 +30,8 @@ public partial class PlayerController : MonoBehaviour
 
         public override void Destroy()
         {
-            PlayerPhysicsSet(true);
+            playerController.PhysicsSet(true);
             playerController.invincibleTimeCount = float.MaxValue;
-        }
-
-        /// <summary>
-        /// プレイヤーの物理演算のオンオフ
-        /// </summary>
-        void PlayerPhysicsSet(bool enabled)
-        {
-            //コライダーのオンオフ
-            foreach (var collider in playerController.gameObject.GetComponents<Collider>()) collider.enabled = enabled;
-
-            if (enabled)
-            {
-                //この順番にしないと警告が出る
-                playerController.playerRigidbody.isKinematic = false;
-                playerController.playerRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            }
-            else
-            {
-                //この順番にしないと警告が出る
-                playerController.playerRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-                playerController.playerRigidbody.isKinematic = true;
-            }
         }
     }
 }
