@@ -122,16 +122,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d160e7da0c4aac4aa7c01fe161802ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
+  maxHitPoint: 50
   maxAngularVelocity: 12
-  cantInputHitPower: 50
-  maxCantInputTime: 0.5
-  hitPowerPercenage: 0.003
-  strongHitBounceAddPower: 1.5
-  weakHitBounceAddPower: 1.7
-  boostPower: 1500
-  boostInterval: 1
+  strongHitBounceAddPower: 1.3
+  weakHitBounceAddPower: 1.5
   maxVelocityMagnitude: 50
+  cantInputHitPower: 50
+  maxCantInputTime: 0.3
+  hitPowerPercenage: 0.003
 --- !u!114 &3481246479687572610
 MonoBehaviour:
   m_ObjectHideFlags: 0

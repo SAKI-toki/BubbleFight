@@ -46,6 +46,14 @@ public class MaterialFlash : MonoBehaviour
     }
 
     /// <summary>
+    /// 点滅の色をセット
+    /// </summary>
+    public void SetFlashColor(Color color)
+    {
+        flashColor = color;
+    }
+
+    /// <summary>
     /// マテリアルのセット
     /// </summary>
     public void SetMaterial(Material mat)

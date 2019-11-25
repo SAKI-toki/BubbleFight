@@ -18,9 +18,9 @@ public class PlayerGenerator : MonoBehaviour
     {
 #if UNITY_EDITOR
         var playerTypeManager = PlayerTypeManager.GetInstance();
-        playerTypeManager.SetPlayerType(0, PlayerType.Chicken);
-        playerTypeManager.SetPlayerType(1, PlayerType.Chicken);
-        playerTypeManager.SetPlayerType(2, PlayerType.Chicken);
+        playerTypeManager.SetPlayerType(0, PlayerType.Horse);
+        playerTypeManager.SetPlayerType(1, PlayerType.Cat);
+        playerTypeManager.SetPlayerType(2, PlayerType.Elephant);
         playerTypeManager.SetPlayerType(3, PlayerType.Chicken);
 #endif // UNITY_EDITOR
         GenerateAllJoinPlayer();
@@ -86,10 +86,17 @@ public class PlayerGenerator : MonoBehaviour
     }
 }
 
+/// <summary>
+/// 位置と回転を保持するクラス
+/// </summary>
 public class PositionAndRotation
 {
     public Vector3 position;
     public Quaternion rotation;
+
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
     public PositionAndRotation(Vector3 pos, Quaternion rot)
     {
         position = pos;
