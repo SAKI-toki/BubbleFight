@@ -18,6 +18,9 @@ public partial class PlayerController : MonoBehaviour
         }
         public override PlayerStateBase Update()
         {
+            var localPosition = playerController.modelTransform.localPosition;
+            localPosition.y = playerController.inBallModelLocalPositionY;
+            playerController.modelTransform.localPosition = localPosition;
             return new InBallState();
         }
         public override void Destroy()
