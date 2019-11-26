@@ -43,6 +43,9 @@ public class TpsCamera : MonoBehaviour
     //揺れる力
     float shakePower = 0.0f;
 
+    [SerializeField]
+    PostEffect postEffect = null;
+
     /// <summary>
     /// カメラの初期化
     /// </summary>
@@ -54,6 +57,7 @@ public class TpsCamera : MonoBehaviour
         rotation = target.transform.eulerAngles;
         SetViewportRect();
         CameraManager.SetCamera(playerIndex, tpsCamera);
+        postEffect.SetIndex(playerIndex);
     }
 
     /// <summary>

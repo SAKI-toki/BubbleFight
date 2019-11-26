@@ -57,7 +57,6 @@ static public class SwitchInput
     /// <param name="npadId">パッドのID</param>
     static public void InputUpdate(int index, NpadId npadId)
     {
-        //#endif
         prevButtons[index] = currentButtons[index];
         //未接続
         if (!SwitchManager.GetInstance().IsConnect(index)) return;
