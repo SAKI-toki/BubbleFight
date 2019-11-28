@@ -6,7 +6,7 @@
 public class SwitchManager : Singleton<SwitchManager>
 {
     //使用するID
-    NpadId[] npadIds = { NpadId.No1, NpadId.No2, NpadId.No3, NpadId.No4,NpadId.No5, NpadId.No6, NpadId.No7, NpadId.No8 };
+    NpadId[] npadIds = { NpadId.No1, NpadId.No2, NpadId.No3, NpadId.No4 };
 
     //使用するコントローラーのスタイル
     NpadStyle npadStyles = NpadStyle.JoyDual;
@@ -21,10 +21,14 @@ public class SwitchManager : Singleton<SwitchManager>
         Npad.SetSupportedIdType(npadIds);
         //サポートするスタイルをセット
         Npad.SetSupportedStyleSet(npadStyles);
+        NpadJoy.SetHoldType(NpadJoyHoldType.Horizontal);
         //配列の要素確保
         isConnect = new bool[npadIds.Length];
         //入力の初期化
         SwitchInput.InputInit(npadIds.Length);
+        //色の初期化
+        SwitchColor.ColorInit(npadIds.Length);
+        SwitchAcceleration.AccelerationInit(npadIds.Length);
     }
 
     public override void MyUpdate()
@@ -35,6 +39,9 @@ public class SwitchManager : Singleton<SwitchManager>
             ConnectUpdate(i);
             //入力情報の更新
             SwitchInput.InputUpdate(i, npadIds[i]);
+            //色の更新
+            SwitchColor.ColorUpdate(i, npadIds[i]);
+            SwitchAcceleration.AccelerationUpdate(i, npadIds[i]);
         }
     }
 

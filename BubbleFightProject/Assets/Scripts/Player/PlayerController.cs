@@ -233,10 +233,9 @@ static public class PlayerMath
 /// </summary>
 static public class PlayerColor
 {
-    static Color[] color = new Color[8]
+    static Color[] color = new Color[4]
 {
-    Color.red,Color.blue,Color.yellow,Color.green,
-    Color.magenta,Color.cyan,Color.gray,Color.grey
+    Color.red,Color.blue,Color.yellow,Color.green
 };
 
     /// <summary>
