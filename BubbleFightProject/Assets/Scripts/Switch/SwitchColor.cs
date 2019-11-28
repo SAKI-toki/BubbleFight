@@ -1,12 +1,17 @@
 ﻿using nn.hid;
 using UnityEngine;
 
+/// <summary>
+/// スイッチのコントローラーの色
+/// </summary>
 static public class SwitchColor
 {
+    //それぞれの色を格納
     public class RightLeftColor
     {
         public Color right = Color.white, left = Color.white;
     }
+
     static RightLeftColor[] colors;
 
     static NpadControllerColor rightNpadControllerColor, leftNpadControllerColor;

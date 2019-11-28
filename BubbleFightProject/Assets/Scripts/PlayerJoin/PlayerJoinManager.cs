@@ -84,9 +84,9 @@ public class PlayerJoinManager : MonoBehaviour
     }
 
     //参加人数(別の場所でわざわざカウントしないようにする)
-    static int joinPlayerCount = 3;
+    static int joinPlayerCount = 4;
     //参加かどうか
-    static bool[] isJoins = { true, true, true, false, false, false, false, false };
+    static bool[] isJoins = { true, true, true, true };
 
     static public int GetJoinPlayerCount() { return joinPlayerCount; }
     static public bool IsJoin(int index) { return isJoins[index]; }
@@ -112,5 +112,5 @@ public class PlayerJoinManager : MonoBehaviour
 public static class PlayerCount
 {
     public const int MinValue = 2;
-    public const int MaxValue = 8;
+    public const int MaxValue = 4;
 }
