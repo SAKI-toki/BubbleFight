@@ -46,7 +46,7 @@ public class PlayerTypeManager : Singleton<PlayerTypeManager>
     /// <summary>
     /// プレイヤーのタイプをセット
     /// </summary>
-    public void SetPlayerType(int index, PlayerType playerType)
+    static public void SetPlayerType(int index, PlayerType playerType)
     {
         playerTypes[index] = playerType;
     }

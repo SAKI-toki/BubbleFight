@@ -84,9 +84,9 @@ public class PlayerJoinManager : MonoBehaviour
     }
 
     //参加人数(別の場所でわざわざカウントしないようにする)
-    static int joinPlayerCount = 4;
+    static int joinPlayerCount = 2;
     //参加かどうか
-    static bool[] isJoins = { true, true, true, true };
+    static bool[] isJoins = { true, true, false, false };
 
     static public int GetJoinPlayerCount() { return joinPlayerCount; }
     static public bool IsJoin(int index) { return isJoins[index]; }
