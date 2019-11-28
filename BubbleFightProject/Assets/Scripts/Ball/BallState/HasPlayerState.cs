@@ -105,8 +105,8 @@ public partial class BallController : MonoBehaviour
         {
             //ブースト
             ballController.boostIntervalTimeCount -= Time.deltaTime;
-            if (SwitchAcceleration.GetAcceleration(ballController.playerIndex).magnitude > 3 &&
-                ballController.boostIntervalTimeCount <= 0.0f)
+            if (SwitchInput.GetButtonDown(ballController.playerIndex, SwitchButton.Boost) &&
+                 ballController.boostIntervalTimeCount <= 0.0f)
             {
                 //入力方向に力を加える
                 ballController.thisRigidbody.AddForce(ballController.lookatDir.normalized * playerStatus.BallBoostPower * ballController.thisRigidbody.mass);
