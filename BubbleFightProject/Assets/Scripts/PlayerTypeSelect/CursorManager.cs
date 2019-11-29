@@ -40,7 +40,7 @@ public class CursorManager : MonoBehaviour
             if (SwitchInput.GetButtonDown(0, SwitchButton.Pause))
             {
                 //シーン遷移
-                UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("StageSelectScene");
             }
         }
     }

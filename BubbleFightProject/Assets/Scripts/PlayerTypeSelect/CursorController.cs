@@ -37,6 +37,7 @@ public class CursorController : MonoBehaviour
                     selectType = playerItemType;
                     selectType.SetAlreadySelect(true);
                     PlayerTypeManager.SetPlayerType(playerIndex, selectType.GetPlayerType());
+                    transform.localScale = Vector3.one * 2;
                 }
             }
         }
@@ -45,6 +46,7 @@ public class CursorController : MonoBehaviour
         {
             selectType.SetAlreadySelect(false);
             selectType = null;
+            transform.localScale = Vector3.one;
         }
     }
 

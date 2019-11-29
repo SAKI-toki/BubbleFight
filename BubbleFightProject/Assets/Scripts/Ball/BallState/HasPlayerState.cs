@@ -53,6 +53,10 @@ public partial class BallController : MonoBehaviour
         {
             Move();
             UpdateBoost();
+            if (!ballController.isGame)
+            {
+                ballController.currentHitPoint = float.MaxValue;
+            }
             //点滅する
             if (ballController.currentHitPoint * 2 < ballController.maxHitPoint)
             {
