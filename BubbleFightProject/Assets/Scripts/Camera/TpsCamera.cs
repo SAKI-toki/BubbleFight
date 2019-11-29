@@ -43,6 +43,8 @@ public class TpsCamera : MonoBehaviour
     //揺れる力
     float shakePower = 0.0f;
 
+    bool isFirst = true;
+
     /// <summary>
     /// カメラの初期化
     /// </summary>
@@ -50,8 +52,8 @@ public class TpsCamera : MonoBehaviour
     {
         targetTransform = target;
         index = playerIndex;
-        parentTransform.position = targetTransform.position;
-        rotation = target.transform.eulerAngles;
+        //parentTransform.position = targetTransform.position;
+        //rotation = target.transform.eulerAngles;
         SetViewportRect();
         CameraManager.SetCamera(playerIndex, tpsCamera);
     }
@@ -61,6 +63,11 @@ public class TpsCamera : MonoBehaviour
     /// </summary>
     public void CameraUpdate()
     {
+        if (isFirst)
+        {
+            isFirst = false;
+            FirstInterpolation();
+        }
         CameraRotation();
         Interpolation();
     }
@@ -187,6 +194,15 @@ public class TpsCamera : MonoBehaviour
             cameraRect.x = horizonNumber * width;
             tpsCamera.rect = cameraRect;
         }
+    }
+
+    /// <summary>
+    /// 最初の補間
+    /// </summary>
+    void FirstInterpolation()
+    {
+        parentTransform.position = targetTransform.position;
+        rotation = targetTransform.eulerAngles;
     }
 
     /// <summary>

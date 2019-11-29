@@ -39,6 +39,8 @@ public partial class BallController : MonoBehaviour
 
     BallStateManager ballStateManager = new BallStateManager();
 
+    bool isGame = true;
+
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
@@ -229,4 +231,11 @@ public partial class BallController : MonoBehaviour
         return thisRigidbody;
     }
 
+    /// <summary>
+    /// ゲームかどうかセットする
+    /// </summary>
+    public void SetIsGame(bool isGameValue)
+    {
+        isGame = isGameValue;
+    }
 }
