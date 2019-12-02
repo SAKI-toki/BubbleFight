@@ -94,6 +94,18 @@ public abstract partial class BallBehaviour : MonoBehaviour
     }
 
     /// <summary>
+    /// 入力不可時間をセット
+    /// </summary>
+    void SetCantInputTime(float time)
+    {
+        cantInputTime = time;
+        if (cantInputTime > ballScriptableObject.MaxCantInputTime)
+        {
+            cantInputTime = ballScriptableObject.MaxCantInputTime;
+        }
+    }
+
+    /// <summary>
     /// プレイヤーの情報をセット
     /// </summary>
     public void SetPlayerInfo(int index, PlayerAnimationController playerAnimationController, TpsCamera playerTpsCamera)

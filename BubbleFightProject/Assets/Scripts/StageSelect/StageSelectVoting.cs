@@ -31,7 +31,6 @@ public class StageSelectVoting : MonoBehaviour
         //全ての番号があるか確認する
         if (!HasAllNumber()) return;
         CameraManager.Reset();
-        LastHitPlayerManager.Reset();
         //配列の要素数の確保
         votingCounts = new int[stageSelectHoleColliders.Length];
         //全ての穴の当たり判定にイベントを追加する

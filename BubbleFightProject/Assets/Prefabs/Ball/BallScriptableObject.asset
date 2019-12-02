@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd25d0ffce22b9e4ba011067cdf97bb8, type: 3}
   m_Name: BallScriptableObject
   m_EditorClassIdentifier: 
-  maxHitPoint: 100
-  maxAngularVelocity: 10
-  strongHitBounceAddPower: 1.2
-  weakHitBounceAddPower: 1.2
-  maxVelocityMagnitude: 100
+  maxHitPoint: 50
+  maxAngularVelocity: 12
+  strongHitBounceAddPower: 1.3
+  weakHitBounceAddPower: 1.5
+  maxVelocityMagnitude: 50
   cantInputHitPower: 50
-  maxCantInputTime: 1
+  maxCantInputTime: 0.3
   hitPowerPercenage: 0.003

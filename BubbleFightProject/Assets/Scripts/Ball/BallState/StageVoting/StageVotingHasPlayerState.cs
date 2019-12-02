@@ -103,18 +103,6 @@ public abstract partial class BallBehaviour : MonoBehaviour
             ballBehaviour.thisRigidbody.AddTorque(addTorque * power * 0.9f);
         }
 
-        /// <summary>
-        /// 入力不可時間をセット
-        /// </summary>
-        public void SetCantInputTime(float time)
-        {
-            ballBehaviour.cantInputTime = time;
-            if (ballBehaviour.cantInputTime > ballBehaviour.ballScriptableObject.MaxCantInputTime)
-            {
-                ballBehaviour.cantInputTime = ballBehaviour.ballScriptableObject.MaxCantInputTime;
-            }
-        }
-
         public override void OnCollisionEnter(Collision other)
         {
             switch (other.gameObject.tag)
@@ -123,9 +111,11 @@ public abstract partial class BallBehaviour : MonoBehaviour
                     {
                         var otherballBehaviour = other.gameObject.GetComponent<BallBehaviour>();
                         //入っていて、力が一定以上なら入力不可時間を与える
-                        if (otherballBehaviour.IsInPlayer() && other.relativeVelocity.sqrMagnitude > ballBehaviour.ballScriptableObject.CantInputHitPower)
+                        if (otherballBehaviour.IsInPlayer() &&
+                            other.relativeVelocity.sqrMagnitude > ballBehaviour.ballScriptableObject.CantInputHitPower)
                         {
-                            SetCantInputTime(other.relativeVelocity.sqrMagnitude * ballBehaviour.ballScriptableObject.HitPowerPercenage);
+                            ballBehaviour.SetCantInputTime(
+                                other.relativeVelocity.sqrMagnitude * ballBehaviour.ballScriptableObject.HitPowerPercenage);
                             //ダメージに応じて揺らす幅を変える
                             float damage = ballBehaviour.DamageCalculate(other.relativeVelocity.sqrMagnitude,
                                                                             otherballBehaviour.prevVelocity.sqrMagnitude) *
