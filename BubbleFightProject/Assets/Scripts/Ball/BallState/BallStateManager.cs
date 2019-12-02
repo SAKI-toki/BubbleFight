@@ -1,20 +1,20 @@
 ﻿using UnityEngine;
 
-public partial class BallController : MonoBehaviour
+public abstract partial class BallBehaviour : MonoBehaviour
 {
     /// <summary>
     /// ボールのステートの基底クラス
     /// </summary>
-    abstract class BallStateBase
+    protected abstract class BallStateBase
     {
-        protected BallController ballController;
+        protected BallBehaviour ballBehaviour;
 
         /// <summary>
         /// ステートの初期化
         /// </summary>
-        public void StateInit(BallController argBallController)
+        public void StateInit(BallBehaviour argBallBehaviour)
         {
-            ballController = argBallController;
+            ballBehaviour = argBallBehaviour;
             Init();
         }
 
@@ -34,20 +34,20 @@ public partial class BallController : MonoBehaviour
     /// <summary>
     /// ボールのステートの管理クラス
     /// </summary>
-    class BallStateManager
+    protected class BallStateManager
     {
 
         //現在のステート
         BallStateBase currentBallState;
-        //状態を更新する対象のBallController
-        BallController ballController;
+        //状態を更新する対象のBallBehaviour
+        BallBehaviour ballBehaviour;
 
         /// <summary>
         /// 初期化
         /// </summary>
-        public void Init(BallController argBallController, BallStateBase initState)
+        public void Init(BallBehaviour argBallBehaviour, BallStateBase initState)
         {
-            ballController = argBallController;
+            ballBehaviour = argBallBehaviour;
             TranslationState(initState);
         }
 
@@ -88,7 +88,7 @@ public partial class BallController : MonoBehaviour
 
             if (IsValidState()) currentBallState.Destroy();
             currentBallState = nextBallState;
-            if (IsValidState()) currentBallState.StateInit(ballController);
+            if (IsValidState()) currentBallState.StateInit(ballBehaviour);
         }
 
         /// <summary>

@@ -12,11 +12,13 @@ public class PlayerTypeManager : Singleton<PlayerTypeManager>
     [System.Serializable]
     class PlayerTypeInfo
     {
-        public GameObject player = null;
+        public GameObject gamePlayer = null;
+        public GameObject stageVotingPlayer = null;
         public PlayerTypeStatusScriptableObject statusObject = null;
     }
     [SerializeField, Tooltip("プレイヤーのタイプ別のステータスリスト")]
     PlayerTypeInfo[] playerTypeInfoList = null;
+    public enum SceneType { Game, StageVoting };
     //後々管理しやすい
     Dictionary<PlayerType, PlayerTypeInfo> dictionaryPlayerTypeInfoByType = new Dictionary<PlayerType, PlayerTypeInfo>();
 
@@ -54,9 +56,16 @@ public class PlayerTypeManager : Singleton<PlayerTypeManager>
     /// <summary>
     /// プレイヤーを生成して返す
     /// </summary>
-    public GameObject GeneratePlayer(int index)
+    public GameObject GeneratePlayer(int index, SceneType sceneType)
     {
-        return Instantiate(dictionaryPlayerTypeInfoByType[playerTypes[index]].player);
+        switch (sceneType)
+        {
+            case SceneType.Game:
+                return Instantiate(dictionaryPlayerTypeInfoByType[playerTypes[index]].gamePlayer);
+            case SceneType.StageVoting:
+                return Instantiate(dictionaryPlayerTypeInfoByType[playerTypes[index]].stageVotingPlayer);
+        }
+        return null;
     }
 
     /// <summary>

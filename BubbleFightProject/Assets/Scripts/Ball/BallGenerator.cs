@@ -23,10 +23,10 @@ public class BallGenerator : MonoBehaviour
 
     void Start()
     {
-        foreach (var ballController in (BallController[])GameObject.FindObjectsOfType(typeof(BallController)))
+        foreach (var ballBehaviour in (BallBehaviour[])GameObject.FindObjectsOfType(typeof(BallBehaviour)))
         {
             ++ballCount;
-            SetDestroyEventToBallController(ballController);
+            SetDestroyEventToBallController(ballBehaviour);
         }
     }
 
@@ -50,16 +50,16 @@ public class BallGenerator : MonoBehaviour
         position.y += Random.Range(-1.0f, 1.0f);
         GameObject instantiateBall = Instantiate(ballPrefab, position, Quaternion.identity);
         instantiateBall.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)) * Random.Range(5, 20));
-        SetDestroyEventToBallController(instantiateBall.GetComponent<BallController>());
+        SetDestroyEventToBallController(instantiateBall.GetComponent<BallBehaviour>());
         return instantiateBall;
     }
 
     /// <summary>
     /// ボールの制御クラスのDestroyEventをセットする
     /// </summary>
-    void SetDestroyEventToBallController(BallController ballController)
+    void SetDestroyEventToBallController(BallBehaviour ballBehaviour)
     {
-        ballController.SetDestroyEvent(delegate { ballCount -= 1; });
+        ballBehaviour.SetDestroyEvent(delegate { ballCount -= 1; });
     }
 
 }

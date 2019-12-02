@@ -30,8 +30,8 @@ public class StageSelectHoleCollider : MonoBehaviour
     {
         if (other.gameObject.tag == "Ball")
         {
-            var ballController = other.gameObject.GetComponent<BallController>();
-            collisionPlayerEvent(ballController.GetPlayerIndex());
+            var ballBehaviour = other.gameObject.GetComponent<BallBehaviour>();
+            collisionPlayerEvent(ballBehaviour.GetPlayerIndex());
             Destroy(other.gameObject);
         }
     }

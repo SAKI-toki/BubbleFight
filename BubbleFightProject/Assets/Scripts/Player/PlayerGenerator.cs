@@ -48,14 +48,12 @@ public class PlayerGenerator : MonoBehaviour
     /// </summary>
     void GeneratePlayer(int index)
     {
-        var player = PlayerTypeManager.GetInstance().GeneratePlayer(index);
-        var playerController = player.GetComponent<PlayerController>();
+        var player = PlayerTypeManager.GetInstance().GeneratePlayer(index, PlayerTypeManager.SceneType.Game);
+        var playerBehaviour = player.GetComponent<PlayerBehaviour>();
         //番号をセット
-        playerController.SetPlayerNumber(index);
-        //ボールの中からのスタートなのでステートを変更
-        playerController.SetInitState(PlayerController.PlayerStateEnum.In);
+        playerBehaviour.SetPlayerNumber(index);
         //プレイヤーにセットする
-        playerController.SetPlayerGenerator(this);
+        playerBehaviour.SetPlayerGenerator(this);
         //ランダムな生成位置
         int rand = Random.Range(0, generatePositionAndRotations.Count);
         //ボールの生成

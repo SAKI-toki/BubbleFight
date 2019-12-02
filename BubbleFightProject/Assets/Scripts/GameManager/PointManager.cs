@@ -27,7 +27,7 @@ static public class PointManager
     /// <summary>
     /// ボールを壊した時のポイントの計算
     /// </summary>
-    static public void BreakBallPointCalculate(BallController breaker, BallController broken)
+    static public void BreakBallPointCalculate(BallBehaviour breaker, BallBehaviour broken)
     {
         if (broken.IsInPlayer())
         {
@@ -42,12 +42,12 @@ static public class PointManager
     /// <summary>
     /// プレイヤーを壊した時のポイントの計算
     /// </summary>
-    static public void BreakPlayerPointCalculate(BallController breaker, PlayerController playerController)
+    static public void BreakPlayerPointCalculate(BallBehaviour breaker, PlayerBehaviour playerBehaviour)
     {
         if (breaker.IsInPlayer())
         {
             AddPoint(breaker.GetPlayerIndex(), BreakPlayerPoint);
-            AddPoint(playerController.GetPlayerNumber(), BrokenPlayerPoint);
+            AddPoint(playerBehaviour.GetPlayerNumber(), BrokenPlayerPoint);
         }
     }
 
