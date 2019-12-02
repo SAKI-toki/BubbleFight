@@ -12,13 +12,11 @@ public class Bumper : MonoBehaviour
     {
         if (other.gameObject.tag == "Ball")
         {
-            var BallController = other.gameObject.GetComponent<BallController>();
-            var ballRigidbody = BallController.GetRigidbody();
+            var ballBehaviour = other.gameObject.GetComponent<BallBehaviour>();
+            var ballRigidbody = ballBehaviour.GetRigidbody();
             var ballVelocity = ballRigidbody.velocity;
             ballVelocity = Vector3.Scale(ballVelocity, new Vector3(bouncePower, 1, bouncePower));
             ballRigidbody.velocity = ballVelocity;
-            //BallController.SetCantInputTime(ballVelocity.magnitude / 100);
-            //Debug.Log(ballVelocity.magnitude / 100);
         }
     }
 }

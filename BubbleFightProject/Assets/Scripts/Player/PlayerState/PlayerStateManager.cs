@@ -1,20 +1,20 @@
 ﻿using UnityEngine;
 
-public partial class PlayerController : MonoBehaviour
+public abstract partial class PlayerBehaviour : MonoBehaviour
 {
     /// <summary>
     /// プレイヤーのステートの基底クラス
     /// </summary>
-    abstract class PlayerStateBase
+    protected abstract class PlayerStateBase
     {
-        protected PlayerController playerController;
+        protected PlayerBehaviour playerBehaviour;
 
         /// <summary>
         /// ステートの初期化
         /// </summary>
-        public void StateInit(PlayerController argPlayerController)
+        public void StateInit(PlayerBehaviour argPlayerBehaviour)
         {
-            playerController = argPlayerController;
+            playerBehaviour = argPlayerBehaviour;
             Init();
         }
 
@@ -34,19 +34,19 @@ public partial class PlayerController : MonoBehaviour
     /// <summary>
     /// プレイヤーのステートを管理するクラス
     /// </summary>
-    class PlayerStateManager
+    protected class PlayerStateManager
     {
         //現在のステート
         PlayerStateBase currentPlayerState;
-        //状態を更新する対象のPlayerController
-        PlayerController playerController;
+        //状態を更新する対象のPlayerBehaviour
+        PlayerBehaviour playerBehaviour;
 
         /// <summary>
         /// 初期化
         /// </summary>
-        public void Init(PlayerController argPlayerController, PlayerStateBase initState)
+        public void Init(PlayerBehaviour argPlayerBehaviour, PlayerStateBase initState)
         {
-            playerController = argPlayerController;
+            playerBehaviour = argPlayerBehaviour;
             TranslationState(initState);
         }
 
@@ -87,7 +87,7 @@ public partial class PlayerController : MonoBehaviour
 
             if (IsValidState()) currentPlayerState.Destroy();
             currentPlayerState = nextPlayerState;
-            if (IsValidState()) currentPlayerState.StateInit(playerController);
+            if (IsValidState()) currentPlayerState.StateInit(playerBehaviour);
         }
 
         /// <summary>

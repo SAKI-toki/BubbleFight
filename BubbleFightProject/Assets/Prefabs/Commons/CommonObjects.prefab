@@ -193,40 +193,68 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTypeInfoList:
-  - player: {fileID: 6442439259992693596, guid: be2c0006fe212644c8abd65f79f4aed9,
+  - gamePlayer: {fileID: 2749818026149578765, guid: b8f94a83a04a77a4c9f7b3c60d944d48,
+      type: 3}
+    stageVotingPlayer: {fileID: 6158436195404253131, guid: 41a0a7e2699d9c24bba87871f8559083,
       type: 3}
     statusObject: {fileID: 11400000, guid: a0101bdd3ab29794fbdd03e9d42172aa, type: 2}
-  - player: {fileID: 3871489426069160697, guid: b416fcc0e22d46a4891bcd30e32da471,
+  - gamePlayer: {fileID: 8346774407205537459, guid: fc162cf9c08a9f64a911c7d0518b291c,
+      type: 3}
+    stageVotingPlayer: {fileID: 6664495767698135254, guid: b2758658a87299744b1c90f911b7b31d,
       type: 3}
     statusObject: {fileID: 11400000, guid: f264463e0e4350d4cb0884cb810e2c1f, type: 2}
-  - player: {fileID: 2976813791787136340, guid: 81d64c1302f7bca41956b5e36dbe2808,
+  - gamePlayer: {fileID: 6819768946541647889, guid: 1979f49c87ff6fe4faa61d8de2b9c68d,
+      type: 3}
+    stageVotingPlayer: {fileID: 5871370927885551692, guid: 6ed2bd1c99328be4fbbbd9bad5452a75,
       type: 3}
     statusObject: {fileID: 11400000, guid: 09632758c6e34fe40b1cde14dc45a17f, type: 2}
-  - player: {fileID: 9176822481703410358, guid: 0dde7c1dc0125364c85d5f2e82069f04,
+  - gamePlayer: {fileID: 143099191210371567, guid: f5035e8f76d4691458857d1a8dde8e4b,
+      type: 3}
+    stageVotingPlayer: {fileID: 6838978744895066037, guid: b3f73bef0edc8634e90daea5a0255934,
       type: 3}
     statusObject: {fileID: 11400000, guid: e6c8e75717b753a4f93f80c0155555ed, type: 2}
-  - player: {fileID: 6562706030190358724, guid: 2c4f7a34436b71e448bc8379965d0c23,
+  - gamePlayer: {fileID: 553937455660276751, guid: c6fc105f22b60b04c828c49167ed7a21,
+      type: 3}
+    stageVotingPlayer: {fileID: 2686586722205053792, guid: d921285a82c148548bbed35cb13dc031,
       type: 3}
     statusObject: {fileID: 11400000, guid: 8e522e007eb33e049978a38c6578ce7a, type: 2}
-  - player: {fileID: 6988346205482189137, guid: 57ca5446137a8da4c86f33ecfeafed51,
+  - gamePlayer: {fileID: 8745637946010327858, guid: 651b05689c4367c45bbd5fd3b3726b9e,
+      type: 3}
+    stageVotingPlayer: {fileID: 4547351597038971412, guid: 8d30009bb196d7a4ba8eb0a9cd1cde08,
       type: 3}
     statusObject: {fileID: 11400000, guid: bc79bc9be75c03e499c9e8a19876a5f4, type: 2}
-  - player: {fileID: 1590331690352731148, guid: c74504d1d4fe93a49b5be4cea5f3d6eb,
+  - gamePlayer: {fileID: 840653796515741774, guid: 2f4a57256d3031247b3894ebeada20e3,
+      type: 3}
+    stageVotingPlayer: {fileID: 6061933472384695985, guid: 19c967e356a7e9c4db2c687205e21f75,
       type: 3}
     statusObject: {fileID: 11400000, guid: 30fb09666ea6cf54e8c1d62e58fdbf2d, type: 2}
-  - player: {fileID: 994049467657318558, guid: ea1c8c95d0f5777489dc7f72ffd2eab5, type: 3}
+  - gamePlayer: {fileID: 4170431334561155715, guid: 0f52dc03655656e4ab0b99a736676821,
+      type: 3}
+    stageVotingPlayer: {fileID: 2226145517853614962, guid: 2f248c50eb561e74986c535ec4875ff4,
+      type: 3}
     statusObject: {fileID: 11400000, guid: f6300e6dbbc961a41ab077c1c484930d, type: 2}
-  - player: {fileID: 3268000826183285692, guid: 5f8bb96945966aa42b3fc90ef17eb295,
+  - gamePlayer: {fileID: 8984466912979860352, guid: 74bdc310f238d4c4b90d07454dcad23d,
+      type: 3}
+    stageVotingPlayer: {fileID: 4004333421084332364, guid: ff0d3dd160d4fd740a9460c64754e392,
       type: 3}
     statusObject: {fileID: 11400000, guid: 30f5ad047f298634abda961e9b7ebc4f, type: 2}
-  - player: {fileID: 839860894276271748, guid: 611ace6b072e9674990d07a2569b561f, type: 3}
+  - gamePlayer: {fileID: 5763558076874800736, guid: 9f061f31c73dc5641b5a298ca734a554,
+      type: 3}
+    stageVotingPlayer: {fileID: 5768155246657275026, guid: cc7f2021997ac8b4ea36cbec71cd83b7,
+      type: 3}
     statusObject: {fileID: 11400000, guid: 468369b6ab7d44a4dab966183fd129ec, type: 2}
-  - player: {fileID: 6558627802078184912, guid: db8b61ece0fb0be4c93c235a8b4a9cde,
+  - gamePlayer: {fileID: 6899815057377610038, guid: 4e9a7f7c55b491a4b8a078dd43339fa7,
+      type: 3}
+    stageVotingPlayer: {fileID: 2244851083595997503, guid: 7665e75d59aee7448920d9b46b1cac56,
       type: 3}
     statusObject: {fileID: 11400000, guid: 550c8435245b0ff4582ac305103684af, type: 2}
-  - player: {fileID: 3622763933441127073, guid: a46ca49ff6f88e04b867180a068c3658,
+  - gamePlayer: {fileID: 3707901483868280180, guid: 473e5ff955163a54599f402c0081bf54,
+      type: 3}
+    stageVotingPlayer: {fileID: 2137557206252465842, guid: 00552745621ac0444a5be3bfd447fb6b,
       type: 3}
     statusObject: {fileID: 11400000, guid: 6856a8e3960432d49b83714d01afce7d, type: 2}
-  - player: {fileID: 1403238586233359515, guid: a95b2d810e60d5649924913dd983d71a,
+  - gamePlayer: {fileID: 8398488053965173904, guid: 394c64089b7cc2f48bb0c68323e66732,
+      type: 3}
+    stageVotingPlayer: {fileID: 2519590634593819895, guid: 057fb40e989d9b04880e90846b5da268,
       type: 3}
     statusObject: {fileID: 11400000, guid: 19ee7edd10cc578458576ae4a7378d1d, type: 2}
