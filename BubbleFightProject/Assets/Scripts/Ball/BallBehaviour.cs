@@ -61,7 +61,7 @@ public abstract partial class BallBehaviour : MonoBehaviour
     void Update()
     {
         prevVelocity = thisRigidbody.velocity;
-        thisRigidbody.AddForce(Vector3.up * -10);
+        thisRigidbody.AddForce(Vector3.up * -ballScriptableObject.Gravity);
         BallUpdate();
         ballStateManager.Update();
     }
