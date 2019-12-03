@@ -20,3 +20,4 @@ MonoBehaviour:
   cantInputHitPower: 50
   maxCantInputTime: 0.3
   hitPowerPercenage: 0.003
+  gravity: 20

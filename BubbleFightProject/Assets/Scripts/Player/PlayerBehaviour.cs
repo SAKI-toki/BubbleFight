@@ -46,6 +46,7 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
 
     void Update()
     {
+        playerRigidbody.AddForce(Vector3.up * -10);
         PlayerUpdate();
         playerStateManager.Update();
     }

@@ -41,4 +41,7 @@ public class BallScriptableObject : ScriptableObject
     float hitPowerPercenage = 0.003f;
     public float HitPowerPercenage { get { return hitPowerPercenage; } }
 
+    [SerializeField, Tooltip("重力")]
+    float gravity = 30.0f;
+    public float Gravity { get { return gravity; } }
 }
