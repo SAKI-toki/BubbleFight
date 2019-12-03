@@ -19,5 +19,5 @@ MonoBehaviour:
     type: 2}
   ballEasyCurveWeight: 1
   ballMass: 7
-  ballBoostPower: 1000
+  ballBoostPower: 700
   ballBoostInterval: 3

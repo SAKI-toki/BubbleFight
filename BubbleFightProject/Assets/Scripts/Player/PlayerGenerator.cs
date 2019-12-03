@@ -18,10 +18,9 @@ public class PlayerGenerator : MonoBehaviour
     {
 #if UNITY_EDITOR
         var playerTypeManager = PlayerTypeManager.GetInstance();
-        playerTypeManager.SetPlayerType(0, PlayerType.Horse);
+        playerTypeManager.SetPlayerType(0, PlayerType.Cow);
         playerTypeManager.SetPlayerType(1, PlayerType.Cat);
         playerTypeManager.SetPlayerType(2, PlayerType.Elephant);
-        playerTypeManager.SetPlayerType(3, PlayerType.Chicken);
 #endif // UNITY_EDITOR
         GenerateAllJoinPlayer();
         Physics.Simulate(5.0f);

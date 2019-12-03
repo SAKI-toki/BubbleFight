@@ -7,10 +7,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1403238586233359509}
     m_Modifications:
-    - target: {fileID: 100030, guid: 0b7d9308ac2a2f24a9b976e342ffd7bd, type: 3}
-      propertyPath: m_Name
-      value: Rabbit
-      objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 0b7d9308ac2a2f24a9b976e342ffd7bd, type: 3}
       propertyPath: m_Controller
       value: 
@@ -107,13 +103,17 @@ PrefabInstance:
       propertyPath: m_RootBone
       value: 
       objectReference: {fileID: 1347913809376186404}
+    - target: {fileID: 100030, guid: 0b7d9308ac2a2f24a9b976e342ffd7bd, type: 3}
+      propertyPath: m_Name
+      value: Rabbit
+      objectReference: {fileID: 0}
     - target: {fileID: 400030, guid: 0b7d9308ac2a2f24a9b976e342ffd7bd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400030, guid: 0b7d9308ac2a2f24a9b976e342ffd7bd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 400030, guid: 0b7d9308ac2a2f24a9b976e342ffd7bd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -153,15 +153,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400030, guid: 0b7d9308ac2a2f24a9b976e342ffd7bd, type: 3}
       propertyPath: m_LocalScale.x
-      value: 8
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 400030, guid: 0b7d9308ac2a2f24a9b976e342ffd7bd, type: 3}
       propertyPath: m_LocalScale.y
-      value: 8
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 400030, guid: 0b7d9308ac2a2f24a9b976e342ffd7bd, type: 3}
       propertyPath: m_LocalScale.z
-      value: 8
+      value: 5.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b7d9308ac2a2f24a9b976e342ffd7bd, type: 3}

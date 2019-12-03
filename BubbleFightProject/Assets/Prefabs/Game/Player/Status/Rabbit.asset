@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Rabbit
   m_EditorClassIdentifier: 
   type: 12
-  walkSpeed: 8
+  walkSpeed: 10
   ballMovePower: 40
   ballPhysicalMaterial: {fileID: 13400000, guid: 964bc9ebeb2b4ce4b869b2842562f40b,
     type: 2}
   ballEasyCurveWeight: 1
-  ballMass: 1
-  ballBoostPower: 1000
-  ballBoostInterval: 1
+  ballMass: 0.7
+  ballBoostPower: 1100
+  ballBoostInterval: 1.5
