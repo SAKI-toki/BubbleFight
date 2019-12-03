@@ -112,6 +112,18 @@ PrefabInstance:
       propertyPath: cameraLookat
       value: 
       objectReference: {fileID: 6104783392496441646}
+    - target: {fileID: 400000, guid: b14a36c4895cd0e4fbd4ff360394c0de, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b14a36c4895cd0e4fbd4ff360394c0de, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b14a36c4895cd0e4fbd4ff360394c0de, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45f5450d91c0e374d94504861f784702, type: 3}
 --- !u!4 &9176822481703410360 stripped

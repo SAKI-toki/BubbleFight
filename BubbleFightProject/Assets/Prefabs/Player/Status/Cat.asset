@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Cat
   m_EditorClassIdentifier: 
   type: 2
-  walkSpeed: 8
-  ballMovePower: 40
+  walkSpeed: 10
+  ballMovePower: 30
   ballPhysicalMaterial: {fileID: 13400000, guid: 964bc9ebeb2b4ce4b869b2842562f40b,
     type: 2}
   ballEasyCurveWeight: 2
-  ballMass: 3
-  ballBoostPower: 2000
-  ballBoostInterval: 1
+  ballMass: 1
+  ballBoostPower: 1000
+  ballBoostInterval: 1.5
