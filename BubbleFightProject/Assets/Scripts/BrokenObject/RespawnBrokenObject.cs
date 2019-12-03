@@ -22,6 +22,8 @@ public class RespawnBrokenObject : BrokenObject
     {
         foreach (var collider in GetComponents<Collider>()) collider.enabled = on;
         foreach (var renderer in GetComponents<Renderer>()) renderer.enabled = on;
+        foreach (var collider in GetComponentsInChildren<Collider>()) collider.enabled = on;
+        foreach (var renderer in GetComponentsInChildren<Renderer>()) renderer.enabled = on;
     }
 
     /// <summary>
