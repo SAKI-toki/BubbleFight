@@ -68,7 +68,6 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
     void OnDestroy()
     {
         PlayerOnDestroy();
-        playerStateManager.Destroy();
     }
 
     void OnCollisionEnter(Collision other) { PlayerOnCollisionEnter(other); playerStateManager.OnCollisionEnter(other); }
