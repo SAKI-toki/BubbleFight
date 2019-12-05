@@ -1,0 +1,73 @@
+The prefabricated data made with FBX data of a low polygon is included.
+
+■ The topography
+* 1 ground (3 finite differences of texture)
+* 3 kinds of hill (3 finite differences of texture)
+* Entrance of the cave (3 finite differences of texture)
+
+
+
+■ object.
+1. 2 kinds of tree (4 seasonal finite difference)
+2. 3 kinds of stump and mushroom (3 color finite difference)
+3. 2 kinds of rock (4 color finite difference)
+4. Barrier of a wooden board (3 color finite difference)
+5. Barrier of a log
+6. Fallen tree (3 color finite difference)
+7. Floral A (9 color finite difference)
+8. Floral B (9 color finite difference)
+9. Floral C (5 color finite difference) and grass
+10. Grass of alpha of a cross (3 color finite difference)
+11. 2 colors of weed of alpha (3 color finite difference)
+12. The grass from which alpha grows lengthwise (3 color finite difference)
+13. Ivy plant (3 color finite difference)
+14. Pteridophyte (3 color finite difference)
+15. Flower of alpha (3 color finite difference)
+16. Crane (3 color finite difference)
+
+
+
+
+Support is unity after 5.3.4.
+It's necessary to change setting of Wright and Schaeder in case of unity4.
+
+
+Hereinafter in Japanese, the same sentences
+
+※以下日本語同じ文章
+
+ローポリゴンのFBXデータで作られた、プレハブデータが入ってます。
+
+■地形
+・地面１つ(テクスチャ3差分)
+・丘3種類(テクスチャ3差分)
+・洞窟の入り口(テクスチャ3差分)
+
+
+
+■object
+1.木2種類(４季節差分)
+2.切り株ときのこ3種(3色差分)
+3.岩2種類(4色差分)
+4.木の板の柵(3色差分)
+5.丸太の柵
+6.倒木(3色差分)
+7.花A(9色差分)
+8.花B(9色差分)
+9.花C(5色差分)と草
+10.十字のアルファの草(3色差分)
+11.アルファの雑草2色(3色差分)
+12.アルファの縦に生えてる草(3色差分)
+13.ツタ植物(3色差分)
+14.シダ植物(3色差分)
+15.アルファの花(3色差分)
+16.ツル(3色差分)
+
+
+
+
+サポートはunity5.3.4以降です。
+unity4の場合はライトとシェーダーの設定を変える必要があります。
+
+SupportEmaill
+rainesyun@hotmail.co.jp

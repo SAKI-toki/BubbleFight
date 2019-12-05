@@ -43,9 +43,9 @@ public class PlayerTypeManager : Singleton<PlayerTypeManager>
                 Debug.LogError(((PlayerType)i).ToString() + "のタイプのプレイヤーが入っていません");
             }
         }
-        playerTypes[0] = PlayerType.Deer;
+        playerTypes[0] = PlayerType.Chick;
         playerTypes[1] = PlayerType.Lion;
-        playerTypes[2] = PlayerType.Cat;
+        playerTypes[2] = PlayerType.Dog;
         playerTypes[3] = PlayerType.Chick;
     }
 

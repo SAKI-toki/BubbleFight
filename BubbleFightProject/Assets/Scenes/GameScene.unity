@@ -286,6 +286,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stage1
       objectReference: {fileID: 0}
+    - target: {fileID: 624011440740917008, guid: d41a03e80c651a142a3b1ea6e57bf7c3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 624011440740917039, guid: d41a03e80c651a142a3b1ea6e57bf7c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -340,6 +345,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 624011440740917039, guid: d41a03e80c651a142a3b1ea6e57bf7c3,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 624011440740917039, guid: d41a03e80c651a142a3b1ea6e57bf7c3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 624011440740917039, guid: d41a03e80c651a142a3b1ea6e57bf7c3,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d41a03e80c651a142a3b1ea6e57bf7c3, type: 3}
@@ -438,6 +458,21 @@ PrefabInstance:
     - target: {fileID: 1301506770797703529, guid: 77d5586967c131249acdb08b5b79ab22,
         type: 3}
       propertyPath: ballGenerateTransforms.Array.data[4]
+      value: 
+      objectReference: {fileID: 1995312829}
+    - target: {fileID: 1301506770797703529, guid: 77d5586967c131249acdb08b5b79ab22,
+        type: 3}
+      propertyPath: generateInterval
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301506770797703529, guid: 77d5586967c131249acdb08b5b79ab22,
+        type: 3}
+      propertyPath: ballGenerateTransforms.Array.data[5]
+      value: 
+      objectReference: {fileID: 1995312829}
+    - target: {fileID: 1301506770797703529, guid: 77d5586967c131249acdb08b5b79ab22,
+        type: 3}
+      propertyPath: ballGenerateTransforms.Array.data[6]
       value: 
       objectReference: {fileID: 1995312829}
     - target: {fileID: 6041456702095325772, guid: 77d5586967c131249acdb08b5b79ab22,
