@@ -18,10 +18,7 @@ public partial class GameBallController : BallBehaviour
                 CollisionBall(other);
                 break;
             case "BreakArea":
-                //マップ外に出た時の処理
-                {
-                    BrokenBall();
-                }
+                CollisionBreakArea();
                 break;
         }
     }
@@ -53,5 +50,15 @@ public partial class GameBallController : BallBehaviour
             PointManager.BreakBallPointCalculate(otherGameBallController, this);
             BrokenBall();
         }
+    }
+
+    /// <summary>
+    /// マップ外に出た時の処理
+    /// </summary>
+    void CollisionBreakArea()
+    {
+        var gamePlayerController = GetComponentInChildren<GamePlayerController>();
+        gamePlayerController.CollisionBreakArea();
+        BrokenBall();
     }
 }

@@ -7,7 +7,50 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
     /// </summary>
     protected class GameRespawnState : PlayerStateBase
     {
+        const float animationSwitchTime = 1.0f;
+        const float rotationAndScalingTime = 4.0f;
+        float timeCount = animationSwitchTime + rotationAndScalingTime;
+        Vector3 initScale = Vector3.zero;
         protected override void Init()
+        {
+            playerBehaviour.invincibleTimeCount = float.MaxValue;
+            playerBehaviour.PhysicsSet(false);
+            playerBehaviour.canCameraControl = false;
+            initScale = playerBehaviour.modelTransform.localScale;
+        }
+
+        public override PlayerStateBase Update()
+        {
+            timeCount -= Time.deltaTime;
+            if (timeCount < 0)
+            {
+                return new GameOutBallState();
+            }
+            if (timeCount > rotationAndScalingTime)
+            {
+                playerBehaviour.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Rest);
+            }
+            else
+            {
+                playerBehaviour.rotation = playerBehaviour.rotation * Quaternion.Euler(0, 360 * Time.deltaTime, 0);
+                playerBehaviour.modelTransform.localScale = Vector3.Lerp(initScale, Vector3.zero, (rotationAndScalingTime - timeCount) / rotationAndScalingTime);
+            }
+            return this;
+        }
+
+        public override void Destroy()
+        {
+            Respawn();
+            playerBehaviour.invincibleTimeCount = PlayerBehaviour.InvincibleTime;
+            playerBehaviour.alreadyCollisionBreakArea = false;
+            playerBehaviour.canCameraControl = true;
+            playerBehaviour.modelTransform.localScale = initScale;
+        }
+
+        /// <summary>
+        /// リスポーン
+        /// </summary>
+        void Respawn()
         {
             //ランダムな位置を取得
             var posAndRot = playerBehaviour.playerGenerator.GetRandomGenerateTransform();
@@ -25,17 +68,6 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
             playerBehaviour.rotation = playerBehaviour.transform.rotation;
             //カメラの回転も更新
             playerBehaviour.cameraController.SetRotation(playerBehaviour.transform.eulerAngles);
-            playerBehaviour.invincibleTimeCount = float.MaxValue;
-        }
-
-        public override PlayerStateBase Update()
-        {
-            return new GameOutBallState();
-        }
-
-        public override void Destroy()
-        {
-            playerBehaviour.invincibleTimeCount = PlayerBehaviour.InvincibleTime;
         }
     }
 }

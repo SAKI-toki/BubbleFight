@@ -34,8 +34,19 @@ public partial class GamePlayerController : PlayerBehaviour
         //マップ外に出た時の処理
         if (other.gameObject.tag == "BreakArea")
         {
-            PointManager.DropPlayerPointCalculate(playerNumber);
-            playerStateManager.TranslationState(new GameRespawnState());
+            CollisionBreakArea();
         }
+    }
+
+
+    /// <summary>
+    /// ボールが壊れたときの処理
+    /// </summary>
+    public void CollisionBreakArea()
+    {
+        if (alreadyCollisionBreakArea) return;
+        alreadyCollisionBreakArea = true;
+        PointManager.DropPlayerPointCalculate(playerNumber);
+        playerStateManager.TranslationState(new GameRespawnState());
     }
 }

@@ -52,30 +52,14 @@ public class TpsCamera : MonoBehaviour
     {
         targetTransform = target;
         index = playerIndex;
-        //parentTransform.position = targetTransform.position;
-        //rotation = target.transform.eulerAngles;
         SetViewportRect();
         CameraManager.SetCamera(playerIndex, tpsCamera);
     }
 
     /// <summary>
-    /// カメラの更新
-    /// </summary>
-    public void CameraUpdate()
-    {
-        if (isFirst)
-        {
-            isFirst = false;
-            FirstInterpolation();
-        }
-        CameraRotation();
-        Interpolation();
-    }
-
-    /// <summary>
     /// カメラの回転
     /// </summary>
-    void CameraRotation()
+    public void CameraRotation()
     {
         var rightStick = SwitchInput.GetRightStick(index);
         //曲線を適応する値
@@ -91,11 +75,19 @@ public class TpsCamera : MonoBehaviour
     /// <summary>
     /// 各値の補間
     /// </summary>
-    void Interpolation()
+    public void Interpolation()
     {
-        DistanceInterpolation();
-        PositionInterpolation();
-        ShakeInterpolation();
+        if (!isFirst)
+        {
+            DistanceInterpolation();
+            PositionInterpolation();
+            ShakeInterpolation();
+        }
+        else
+        {
+            isFirst = false;
+            FirstInterpolation();
+        }
     }
 
     /// <summary>

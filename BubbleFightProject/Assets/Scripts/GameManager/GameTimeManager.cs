@@ -40,7 +40,7 @@ public class GameTimeManager : MonoBehaviour
         const float interval = 100.0f;
         for (int i = 0; i < PlayerJoinManager.GetJoinPlayerCount(); ++i)
         {
-            GUI.Label(rect, "Player" + i.ToString() + " : " + PointManager.GetPoint(i) + "P");
+            GUI.Label(rect, "Player" + (i + 1).ToString() + " : " + PointManager.GetPoint(i) + "P");
             rect.x += interval;
         }
         if (!IsPlayGame())
