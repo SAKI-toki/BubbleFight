@@ -133,11 +133,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1403238586233359509}
     m_Modifications:
-    - target: {fileID: 6962655781599583788, guid: 166e7caeca8e7cc4caafeb347be56592,
-        type: 3}
-      propertyPath: m_Name
-      value: Rabbit
-      objectReference: {fileID: 0}
     - target: {fileID: 5962722750398149945, guid: 166e7caeca8e7cc4caafeb347be56592,
         type: 3}
       propertyPath: m_Bones.Array.data[0]
@@ -253,6 +248,11 @@ PrefabInstance:
       propertyPath: m_RootBone
       value: 
       objectReference: {fileID: 8706195769280318359}
+    - target: {fileID: 6962655781599583788, guid: 166e7caeca8e7cc4caafeb347be56592,
+        type: 3}
+      propertyPath: m_Name
+      value: Rabbit
+      objectReference: {fileID: 0}
     - target: {fileID: 4953138508572029877, guid: 166e7caeca8e7cc4caafeb347be56592,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -307,6 +307,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953138508572029877, guid: 166e7caeca8e7cc4caafeb347be56592,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953138508572029877, guid: 166e7caeca8e7cc4caafeb347be56592,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953138508572029877, guid: 166e7caeca8e7cc4caafeb347be56592,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 166e7caeca8e7cc4caafeb347be56592, type: 3}

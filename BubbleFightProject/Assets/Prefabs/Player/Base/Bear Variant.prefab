@@ -143,11 +143,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3871489426069160695}
     m_Modifications:
-    - target: {fileID: 7356301288471930185, guid: ee3f08b801ad06c4284be9df822b2155,
-        type: 3}
-      propertyPath: m_Name
-      value: Bear
-      objectReference: {fileID: 0}
     - target: {fileID: 7405378233605924011, guid: ee3f08b801ad06c4284be9df822b2155,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -156,7 +151,7 @@ PrefabInstance:
     - target: {fileID: 7405378233605924011, guid: ee3f08b801ad06c4284be9df822b2155,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.9
+      value: -0.75
       objectReference: {fileID: 0}
     - target: {fileID: 7405378233605924011, guid: ee3f08b801ad06c4284be9df822b2155,
         type: 3}
@@ -318,6 +313,11 @@ PrefabInstance:
       propertyPath: m_RootBone
       value: 
       objectReference: {fileID: 559001232137855276}
+    - target: {fileID: 7356301288471930185, guid: ee3f08b801ad06c4284be9df822b2155,
+        type: 3}
+      propertyPath: m_Name
+      value: Bear
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee3f08b801ad06c4284be9df822b2155, type: 3}
 --- !u!4 &2303557871459333994 stripped

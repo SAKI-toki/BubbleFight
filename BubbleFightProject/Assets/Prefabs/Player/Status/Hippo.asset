@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 9
   walkSpeed: 4
-  ballMovePower: 35
+  ballMovePower: 25
   ballPhysicalMaterial: {fileID: 13400000, guid: 964bc9ebeb2b4ce4b869b2842562f40b,
     type: 2}
-  ballEasyCurveWeight: 1
-  ballMass: 5
-  ballBoostPower: 900
-  ballBoostInterval: 2
+  ballEasyCurveWeight: 1.75
+  ballMass: 8
+  ballBoostPower: 700
+  ballBoostInterval: 2.5

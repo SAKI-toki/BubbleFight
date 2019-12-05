@@ -133,11 +133,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2976813791787136346}
     m_Modifications:
-    - target: {fileID: 1142128403088268364, guid: 08f6e04d3e6a622448ffd71335c9360e,
-        type: 3}
-      propertyPath: m_Name
-      value: Cat
-      objectReference: {fileID: 0}
     - target: {fileID: 3108043075488340087, guid: 08f6e04d3e6a622448ffd71335c9360e,
         type: 3}
       propertyPath: m_Bones.Array.data[0]
@@ -273,6 +268,11 @@ PrefabInstance:
       propertyPath: m_RootBone
       value: 
       objectReference: {fileID: 418727749433548156}
+    - target: {fileID: 1142128403088268364, guid: 08f6e04d3e6a622448ffd71335c9360e,
+        type: 3}
+      propertyPath: m_Name
+      value: Cat
+      objectReference: {fileID: 0}
     - target: {fileID: 6496578741669834630, guid: 08f6e04d3e6a622448ffd71335c9360e,
         type: 3}
       propertyPath: m_LocalPosition.x
