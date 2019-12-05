@@ -26,6 +26,8 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
     [SerializeField, Tooltip("モデルのローカルTransform")]
     protected Transform modelTransform = null;
     protected float inBallModelLocalPositionY = 0.0f;
+    protected bool alreadyCollisionBreakArea = false;
+    protected bool canCameraControl = true;
 
     void Awake()
     {
@@ -58,7 +60,8 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
         playerStateManager.LateUpdate();
         transform.rotation = rotation;
         //回転をセットした後に実行しなければならない
-        cameraController.CameraUpdate();
+        if (canCameraControl) cameraController.CameraRotation();
+        cameraController.Interpolation();
 
         var velocity = playerRigidbody.velocity;
         velocity.x = velocity.z = 0;
