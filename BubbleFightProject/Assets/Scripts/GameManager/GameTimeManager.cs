@@ -45,7 +45,7 @@ public class GameTimeManager : MonoBehaviour
         }
         if (!IsPlayGame())
         {
-            GUI.Label(rect, "END GAME", style);
+            GUI.Label(rect, "END GAME Retry:+/-(1P)", style);
         }
         else
         {

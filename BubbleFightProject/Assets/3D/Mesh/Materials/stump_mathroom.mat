@@ -8,12 +8,12 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: stump_mathroom
-  m_Shader: {fileID: 4800000, guid: 81b009efa4d439440b464d88444fc507, type: 3}
+  m_Shader: {fileID: 4800000, guid: 7cc3035f656839443b627ca1e01f888e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:

@@ -25,10 +25,13 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         gameTimeManager.AddTime();
-        if (!gameTimeManager.IsPlayGame()) PointManager.PointLock();
-        if (SwitchInput.GetButtonDown(0, SwitchButton.Pause))
+        if (!gameTimeManager.IsPlayGame())
         {
-            SceneManager.LoadScene(SceneManager.GetSceneAt(0).name);
+            PointManager.PointLock();
+            if (SwitchInput.GetButtonDown(0, SwitchButton.Pause))
+            {
+                SceneManager.LoadScene(SceneManager.GetSceneAt(0).name);
+            }
         }
     }
 }

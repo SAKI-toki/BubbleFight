@@ -26,9 +26,6 @@ public class BrokenObject : MonoBehaviour
     float currentHitPoint;
     protected bool alreadyBroken = false;
 
-    [SerializeField]
-    bool debugDestroy = false;
-
     void Start()
     {
         SetMaxHp();
@@ -36,11 +33,6 @@ public class BrokenObject : MonoBehaviour
 
     void Update()
     {
-        if (debugDestroy)
-        {
-            debugDestroy = false;
-            currentHitPoint = 0;
-        }
         if (!alreadyBroken && IsBreak())
         {
             alreadyBroken = true;

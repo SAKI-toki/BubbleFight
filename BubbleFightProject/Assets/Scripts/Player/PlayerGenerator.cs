@@ -48,18 +48,18 @@ public class PlayerGenerator : MonoBehaviour
     /// </summary>
     void GeneratePlayer(int index)
     {
-        var player = PlayerTypeManager.GetInstance().GeneratePlayer(index, PlayerTypeManager.SceneType.Game);
-        var playerBehaviour = player.GetComponent<PlayerBehaviour>();
-        //番号をセット
-        playerBehaviour.SetPlayerNumber(index);
-        //プレイヤーにセットする
-        playerBehaviour.SetPlayerGenerator(this);
         //ランダムな生成位置
         int rand = Random.Range(0, generatePositionAndRotations.Count);
         //ボールの生成
         var ball = Instantiate(ballPrefab);
         ball.transform.SetPositionAndRotation(generatePositionAndRotations[rand].position,
                                                 generatePositionAndRotations[rand].rotation);
+        var player = PlayerTypeManager.GetInstance().GeneratePlayer(index, PlayerTypeManager.SceneType.Game);
+        var playerBehaviour = player.GetComponent<PlayerBehaviour>();
+        //番号をセット
+        playerBehaviour.SetPlayerNumber(index);
+        //プレイヤーにセットする
+        playerBehaviour.SetPlayerGenerator(this);
         player.transform.parent = ball.transform;
         player.transform.localPosition = Vector3.zero;
         player.transform.localRotation = Quaternion.identity;

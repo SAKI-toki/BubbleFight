@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHitPoint: 30
-  debugDestroy: 0
 --- !u!136 &6349631034730835259
 CapsuleCollider:
   m_ObjectHideFlags: 0
