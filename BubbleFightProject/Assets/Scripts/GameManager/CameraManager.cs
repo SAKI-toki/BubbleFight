@@ -30,4 +30,12 @@ static public class CameraManager
     {
         return cameras[PlayerJoinManager.GetNumberInPlayer(index)];
     }
+
+    /// <summary>
+    /// 全てのカメラの取得
+    /// </summary>
+    static public Camera[] GetAllCamera()
+    {
+        return cameras;
+    }
 }

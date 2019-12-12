@@ -143,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameTimeManager: {fileID: 1301506771713847203}
   addPointUIGenerator: {fileID: 5240159306781551587}
+  fadeShader: {fileID: 4800000, guid: 6645e7a9b9a24b340a0e11706765cabb, type: 3}
 --- !u!1 &1301506771522333164
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,3 +266,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cabedc3034eaed469e16fd200e7400a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  generateTransforms: []
+  ballPrefab: {fileID: 0}
