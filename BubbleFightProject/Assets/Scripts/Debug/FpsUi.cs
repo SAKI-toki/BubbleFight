@@ -3,7 +3,7 @@
 /// <summary>
 /// フレームレートを表示
 /// </summary>
-public class FpsOnGUI : MonoBehaviour
+public class FpsUi : MonoBehaviour
 {
     [SerializeField, Tooltip("更新頻度")]
     float updateFrequencyTime = 1.0f;
@@ -11,8 +11,14 @@ public class FpsOnGUI : MonoBehaviour
     float timeCount = 0.0f;
     //フレームをカウント
     int frameCount = 0;
-    //フレームレート
-    float framesPerSecond = 60.0f;
+
+    UnityEngine.UI.Text fpsText = null;
+
+    void Start()
+    {
+        fpsText = GetComponent<UnityEngine.UI.Text>();
+        UpdateText(60.0f);
+    }
 
     void Update()
     {
@@ -20,17 +26,17 @@ public class FpsOnGUI : MonoBehaviour
         timeCount += Time.deltaTime;
         if (timeCount >= updateFrequencyTime)
         {
-            framesPerSecond = frameCount / timeCount;
+            UpdateText(frameCount / timeCount);
             timeCount = 0;
             frameCount = 0;
         }
     }
 
-    void OnGUI()
+    /// <summary>
+    /// テキストの更新
+    /// </summary>
+    void UpdateText(float frameRate)
     {
-        GUI.color = Color.black;
-        GUIStyle style = new GUIStyle();
-        style.fontSize = 30;
-        GUI.Label(new Rect(Screen.width - 200, Screen.height - 30, 200, 30), "FPS : " + framesPerSecond.ToString("F"), style);
+        fpsText.text = "FPS : " + frameRate.ToString("F");
     }
 }

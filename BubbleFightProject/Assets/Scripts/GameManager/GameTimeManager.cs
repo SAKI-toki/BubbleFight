@@ -10,10 +10,19 @@ public class GameTimeManager : MonoBehaviour
 
     float playTimeCount = 0.0f;
 
+    [SerializeField]
+    UnityEngine.UI.Text pointText = null, timeText = null;
+
+
     void Start()
     {
         playTimeCount = playTime;
+        prevPonits = new int[PlayerJoinManager.GetJoinPlayerCount()];
+        prevTime = (int)playTimeCount;
+        UpdatePointText();
+        UpdateTimeText();
     }
+
 
     /// <summary>
     /// 時間の加算
@@ -31,25 +40,42 @@ public class GameTimeManager : MonoBehaviour
         return playTimeCount > 0;
     }
 
-    void OnGUI()
+    int[] prevPonits = null;
+    int prevTime = 0;
+
+    private void Update()
     {
-        Rect rect = new Rect(0, 0, 100, 100);
-        GUI.color = Color.red;
-        GUIStyle style = new GUIStyle();
-        style.fontSize = 50;
-        const float interval = 100.0f;
         for (int i = 0; i < PlayerJoinManager.GetJoinPlayerCount(); ++i)
         {
-            GUI.Label(rect, "Player" + (i + 1).ToString() + " : " + PointManager.GetPoint(i) + "P");
-            rect.x += interval;
+            if (prevPonits[i] != PointManager.GetPoint(i))
+            {
+                UpdatePointText();
+                break;
+            }
         }
-        if (!IsPlayGame())
+        if (prevTime != (int)playTimeCount)
+            UpdateTimeText();
+    }
+    void UpdatePointText()
+    {
+        pointText.text = "";
+        for (int i = 0; i < PlayerJoinManager.GetJoinPlayerCount(); ++i)
         {
-            GUI.Label(rect, "END GAME Retry:+/-(1P)", style);
+            prevPonits[i] = PointManager.GetPoint(i);
+            pointText.text += "Player" + (i + 1).ToString() + " : " + prevPonits[i] + "P  ";
         }
-        else
+    }
+
+    void UpdateTimeText()
+    {
+        prevTime = (int)playTimeCount;
+        if (prevTime > 0)
         {
-            GUI.Label(rect, ((int)playTimeCount).ToString(), style);
+            timeText.text = "Time : " + prevTime.ToString();
+        }
+        else if (timeText.text[0] != 'E')
+        {
+            timeText.text = "END";
         }
     }
 }
