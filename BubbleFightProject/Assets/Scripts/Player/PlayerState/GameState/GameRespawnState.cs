@@ -67,8 +67,6 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
             //回転の更新
             playerBehaviour.transform.rotation = posAndRot.rotation;
             playerBehaviour.rotation = playerBehaviour.transform.rotation;
-            //カメラの回転も更新
-            playerBehaviour.cameraController.SetRotation(playerBehaviour.transform.eulerAngles);
         }
     }
 }

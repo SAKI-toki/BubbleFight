@@ -18,7 +18,6 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
     protected GameObject cameraObject = null;
     [SerializeField, Tooltip("カメラの注視点")]
     protected Transform cameraLookat = null;
-    protected TpsCamera cameraController = null;
     protected PlayerTypeStatusScriptableObject status;
     protected float invincibleTimeCount = 0.0f;
     //無敵時間
@@ -41,8 +40,6 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
         //ステータスを取得
         status = PlayerTypeManager.GetInstance().GetPlayerStatus(playerNumber);
         rotation = transform.rotation;
-        cameraController = Instantiate(cameraObject).GetComponent<TpsCamera>();
-        cameraController.CameraInit(playerNumber, cameraLookat);
         PlayerStart();
     }
 
@@ -59,9 +56,6 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
 
         playerStateManager.LateUpdate();
         transform.rotation = rotation;
-        //回転をセットした後に実行しなければならない
-        if (canCameraControl) cameraController.CameraRotation();
-        cameraController.Interpolation();
 
         var velocity = playerRigidbody.velocity;
         velocity.x = velocity.z = 0;
@@ -120,23 +114,6 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
     }
 
     /// <summary>
-    /// 前移動の方向をカメラから取得
-    /// </summary>
-    Vector3 GetMoveForwardDirection()
-    {
-        return cameraController.GetMoveForwardDirection();
-    }
-
-
-    /// <summary>
-    /// 右移動の方向をカメラから取得
-    /// </summary>
-    Vector3 GetMoveRightDirection()
-    {
-        return cameraController.GetMoveRightDirection();
-    }
-
-    /// <summary>
     /// /// プレイヤーの番号を取得
     /// </summary>
     public int GetPlayerNumber()
@@ -180,29 +157,6 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
     protected virtual void PlayerOnTriggerStay(Collider other) { }
     protected virtual void PlayerOnTriggerExit(Collider other) { }
 }
-
-/// <summary>
-/// プレイヤーの計算
-/// </summary>
-static public class PlayerMath
-{
-    /// <summary>
-    /// 前方向と右方向のベクトルから移動する向きを出力する
-    /// </summary>
-    static public Vector3 ForwardAndRightMove(Vector2 globalDir, Vector3 forward, Vector3 right)
-    {
-        return globalDir.y * forward + globalDir.x * right;
-    }
-
-    /// <summary>
-    /// 前方向と右方向のベクトルから移動する向きを出力する
-    /// </summary>
-    static public Vector3 ForwardAndRightMove(Vector3 globalDir, Vector3 forward, Vector3 right)
-    {
-        return globalDir.y * forward + globalDir.x * right;
-    }
-}
-
 
 /// <summary>
 /// プレイヤーの色

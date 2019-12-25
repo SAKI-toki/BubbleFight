@@ -52,7 +52,7 @@ public abstract partial class BallBehaviour : MonoBehaviour
             }
 
             var stickInput = SwitchInput.GetLeftStick(ballBehaviour.playerIndex);
-            Vector3 addPower = PlayerMath.ForwardAndRightMove(stickInput, ballBehaviour.playerForward, ballBehaviour.playerRight);
+            Vector3 addPower = new Vector3(stickInput.x, 0, stickInput.y);
 
             AddForceAndTorque(addPower);
             ballBehaviour.UpdateLookatDirection(addPower);
@@ -132,8 +132,6 @@ public abstract partial class BallBehaviour : MonoBehaviour
                             float damage = ballBehaviour.DamageCalculate(other.relativeVelocity.sqrMagnitude,
                                                                             otherballBehaviour.prevVelocity.sqrMagnitude) *
                                             (otherballBehaviour.IsInPlayer() ? 1.0f : 0.1f);
-
-                            ballBehaviour.tpsCamera.CameraShake(ballBehaviour.cantInputTime / 2, damage / 30);
                         }
                     }
                     break;

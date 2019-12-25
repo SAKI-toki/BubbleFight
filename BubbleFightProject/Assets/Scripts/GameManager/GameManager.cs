@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     {
         PointManager.Reset();
         LastHitPlayerManager.Reset();
-        CameraManager.Reset();
         PointManager.AddPointFunction = delegate (int index, int point)
         {
             addPointUIGenerator.AddPoint(index, point);
@@ -43,21 +42,13 @@ public class GameManager : MonoBehaviour
     /// </summary>
     IEnumerator AllFadeCamera()
     {
-        Camera[] fadeCameras = CameraManager.GetAllCamera();
-        Postprocess[] postprocesses = new Postprocess[fadeCameras.Length];
-        for (int i = 0; i < fadeCameras.Length; ++i)
-        {
-            postprocesses[i] = fadeCameras[i].transform.GetComponent<Postprocess>();
-            postprocesses[i].SetMaterial(new Material(fadeShader));
-        }
+        Postprocess postprocess = Camera.main.GetComponent<Postprocess>();
+        postprocess.SetMaterial(new Material(fadeShader));
         float percent = 0.0f;
         while (percent < 1.0f)
         {
             percent += Time.deltaTime / 2;
-            for (int i = 0; i < postprocesses.Length; ++i)
-            {
-                postprocesses[i].ApplyMaterialFunction(delegate (Material material) { material.SetFloat("_Percent", percent); });
-            }
+            postprocess.ApplyMaterialFunction(delegate (Material material) { material.SetFloat("_Percent", percent); });
             yield return null;
         }
         SceneManager.LoadScene("ResultScene");

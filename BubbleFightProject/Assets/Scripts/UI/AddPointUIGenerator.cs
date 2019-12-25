@@ -17,37 +17,27 @@ public class AddPointUIGenerator : MonoBehaviour
     {
         if (point > 0)
         {
-            PlusPoint(point, CameraManager.GetCamera(index));
+            PlusPoint(point);
         }
         else
         {
-            MinusPoint(point, CameraManager.GetCamera(index));
+            MinusPoint(point);
         }
     }
 
     /// <summary>
     /// プラスの呼び出し
     /// </summary>
-    void PlusPoint(int point, Camera renderCamera)
+    void PlusPoint(int point)
     {
-        SetCamera(Instantiate(PlusUIList[point - 1]), renderCamera);
+        //未実装
     }
 
     /// <summary>
     /// マイナスの呼び出し
     /// </summary>
-    void MinusPoint(int point, Camera renderCamera)
+    void MinusPoint(int point)
     {
-        SetCamera(Instantiate(MinusUIList[Mathf.Abs(point) - 1]), renderCamera);
-    }
-
-    /// <summary>
-    /// カメラのセット
-    /// </summary>
-    void SetCamera(GameObject ui, Camera renderCamera)
-    {
-        var canvas = ui.GetComponent<Canvas>();
-        canvas.worldCamera = renderCamera;
-        canvas.planeDistance = renderCamera.nearClipPlane + 0.001f;
+        //未実装
     }
 }

@@ -30,7 +30,6 @@ public class StageSelectVoting : MonoBehaviour
     {
         //全ての番号があるか確認する
         if (!HasAllNumber()) return;
-        CameraManager.Reset();
         //配列の要素数の確保
         votingCounts = new int[stageSelectHoleColliders.Length];
         //全ての穴の当たり判定にイベントを追加する
@@ -98,18 +97,17 @@ public class StageSelectVoting : MonoBehaviour
     /// </summary>
     IEnumerator FadeCamera(int index)
     {
-        var cameraObject = CameraManager.GetCamera(index);
-        var postprocess = cameraObject.transform.GetComponent<Postprocess>();
-        postprocess.SetMaterial(new Material(fadeShader));
-        float percent = 0.0f;
-        while (percent < 1.0f)
-        {
-            percent += Time.deltaTime / 2;
-            postprocess.ApplyMaterialFunction(delegate (Material material) { material.SetFloat("_Percent", percent); });
-            yield return null;
-        }
         if (AlreadyAllPlayerVoting() && !alreadyLoadScene)
         {
+            var postprocess = Camera.main.GetComponent<Postprocess>();
+            postprocess.SetMaterial(new Material(fadeShader));
+            float percent = 0.0f;
+            while (percent < 1.0f)
+            {
+                percent += Time.deltaTime / 2;
+                postprocess.ApplyMaterialFunction(delegate (Material material) { material.SetFloat("_Percent", percent); });
+                yield return null;
+            }
             alreadyLoadScene = true;
             SceneManager.LoadScene("GameScene");
         }

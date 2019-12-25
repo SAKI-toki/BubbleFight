@@ -12,8 +12,7 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
         {
             //ボールの初期化
             ballController = playerBehaviour.transform.parent.GetComponent<GameBallController>();
-            ballController.SetPlayerInfo(playerBehaviour.playerNumber, playerBehaviour.playerAnimation,
-                                                playerBehaviour.cameraController);
+            ballController.SetPlayerInfo(playerBehaviour.playerNumber, playerBehaviour.playerAnimation);
             ballController.StartIntoPlayer();
             ballController.SetDestroyEvent(delegate { playerBehaviour.transform.parent = null; });
         }

@@ -20,8 +20,8 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
         {
             var stickInput = SwitchInput.GetLeftStick(playerBehaviour.playerNumber);
 
-            Vector3 moveDir = PlayerMath.ForwardAndRightMove(stickInput,
-                playerBehaviour.GetMoveForwardDirection(), playerBehaviour.GetMoveRightDirection());
+            Vector3 moveDir = new Vector3(stickInput.x, 0, stickInput.y);
+
             //回転
             playerBehaviour.PlayerRotation(moveDir);
             //位置の更新

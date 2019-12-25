@@ -23,7 +23,6 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
         {
             //親オブジェクト(ボール)がなくなったらステート遷移
             if (playerBehaviour.transform.parent == null) return new GameBreakBallState();
-            ballController.SetPlayerForwardRight(playerBehaviour.GetMoveForwardDirection(), playerBehaviour.GetMoveRightDirection());
             playerBehaviour.PlayerRotation(ballController.GetLookatDir());
             return this;
         }

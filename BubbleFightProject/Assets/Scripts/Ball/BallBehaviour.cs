@@ -16,7 +16,6 @@ public abstract partial class BallBehaviour : MonoBehaviour
 
     //当たる前の力を保持する変数
     protected Vector3 prevVelocity = Vector3.zero;
-    protected TpsCamera tpsCamera = null;
 
     public delegate void DestroyEventType();
     protected DestroyEventType destroyEvent;
@@ -29,20 +28,9 @@ public abstract partial class BallBehaviour : MonoBehaviour
     protected float cantInputTime = 0.0f;
     //ブーストの間隔の時間を測る
     protected float boostIntervalTimeCount = 0.0f;
-    //プレイヤーの前方と右のベクトル
-    protected Vector3 playerForward = Vector3.zero, playerRight = Vector3.zero;
 
     [SerializeField, Tooltip("ボールの情報")]
     protected BallScriptableObject ballScriptableObject = null;
-
-    /// <summary>
-    /// プレイヤーの前方と右のベクトルをセット
-    /// </summary>
-    public void SetPlayerForwardRight(Vector3 forward, Vector3 right)
-    {
-        playerForward = forward;
-        playerRight = right;
-    }
 
     void Awake()
     {
@@ -108,11 +96,10 @@ public abstract partial class BallBehaviour : MonoBehaviour
     /// <summary>
     /// プレイヤーの情報をセット
     /// </summary>
-    public void SetPlayerInfo(int index, PlayerAnimationController playerAnimationController, TpsCamera playerTpsCamera)
+    public void SetPlayerInfo(int index, PlayerAnimationController playerAnimationController)
     {
         playerIndex = index;
         playerAnimation = playerAnimationController;
-        tpsCamera = playerTpsCamera;
     }
 
     /// <summary>
