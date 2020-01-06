@@ -13,11 +13,6 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
     protected int playerNumber = 0;
     protected PlayerStateManager playerStateManager = new PlayerStateManager();
     protected Quaternion rotation = Quaternion.identity;
-
-    [SerializeField, Tooltip("三人称視点カメラ")]
-    protected GameObject cameraObject = null;
-    [SerializeField, Tooltip("カメラの注視点")]
-    protected Transform cameraLookat = null;
     protected PlayerTypeStatusScriptableObject status;
     protected float invincibleTimeCount = 0.0f;
     //無敵時間
@@ -25,7 +20,6 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
     [SerializeField, Tooltip("モデルのローカルTransform")]
     protected Transform modelTransform = null;
     protected float inBallModelLocalPositionY = 0.0f;
-    protected bool alreadyCollisionBreakArea = false;
     protected bool canCameraControl = true;
 
     void Awake()

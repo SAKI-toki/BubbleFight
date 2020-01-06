@@ -21,11 +21,6 @@ public class StageSelectVoting : MonoBehaviour
     [SerializeField, Tooltip("ボールのプレファブ")]
     GameObject ballPrefab = null;
 
-    [SerializeField, Tooltip("フェード用のシェーダー")]
-    Shader fadeShader = null;
-
-    bool alreadyLoadScene = false;
-
     void Start()
     {
         //全ての番号があるか確認する
@@ -97,18 +92,16 @@ public class StageSelectVoting : MonoBehaviour
     /// </summary>
     IEnumerator FadeCamera(int index)
     {
-        if (AlreadyAllPlayerVoting() && !alreadyLoadScene)
+        if (AlreadyAllPlayerVoting())
         {
-            var postprocess = Camera.main.GetComponent<Postprocess>();
-            postprocess.SetMaterial(new Material(fadeShader));
+            var postprocess = Camera.main.GetComponent<FadePostprocess>();
             float percent = 0.0f;
             while (percent < 1.0f)
             {
                 percent += Time.deltaTime / 2;
-                postprocess.ApplyMaterialFunction(delegate (Material material) { material.SetFloat("_Percent", percent); });
+                postprocess.SetValue(percent);
                 yield return null;
             }
-            alreadyLoadScene = true;
             SceneManager.LoadScene("GameScene");
         }
     }

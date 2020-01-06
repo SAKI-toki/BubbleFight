@@ -78,6 +78,7 @@ public abstract partial class BallBehaviour : MonoBehaviour
         {
             velocity = velocity / magnitude * ballScriptableObject.MaxVelocityMagnitude;
         }
+        velocity.y = Mathf.Clamp(velocity.y, float.MinValue, 0.0f);
         thisRigidbody.velocity = velocity;
     }
 

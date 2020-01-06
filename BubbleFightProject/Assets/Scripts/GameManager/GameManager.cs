@@ -11,8 +11,6 @@ public class GameManager : MonoBehaviour
     GameTimeManager gameTimeManager = null;
     [SerializeField, Tooltip("ポイントを取得したUIの生成クラス")]
     AddPointUIGenerator addPointUIGenerator = null;
-    [SerializeField, Tooltip("フェードシェーダー")]
-    Shader fadeShader = null;
 
     bool endFlag = false;
 
@@ -42,13 +40,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     IEnumerator AllFadeCamera()
     {
-        Postprocess postprocess = Camera.main.GetComponent<Postprocess>();
-        postprocess.SetMaterial(new Material(fadeShader));
+        var postprocess = Camera.main.GetComponent<FadePostprocess>();
         float percent = 0.0f;
         while (percent < 1.0f)
         {
             percent += Time.deltaTime / 2;
-            postprocess.ApplyMaterialFunction(delegate (Material material) { material.SetFloat("_Percent", percent); });
+            postprocess.SetValue(percent);
             yield return null;
         }
         SceneManager.LoadScene("ResultScene");

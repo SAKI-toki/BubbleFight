@@ -12,8 +12,6 @@ public class PlayerGenerator : MonoBehaviour
     [SerializeField, Tooltip("ボール")]
     GameObject ballPrefab = null;
 
-    List<PositionAndRotation> generatePositionAndRotations = new List<PositionAndRotation>();
-
     void Start()
     {
         GenerateAllJoinPlayer();
@@ -29,11 +27,6 @@ public class PlayerGenerator : MonoBehaviour
         {
             Debug.LogError("生成位置が参加人数より少ないです");
         }
-        generatePositionAndRotations.Clear();
-        foreach (var generateTransform in generateTransforms)
-        {
-            generatePositionAndRotations.Add(new PositionAndRotation(generateTransform.position, generateTransform.rotation));
-        }
         for (int i = 0; i < PlayerCount.MaxValue; ++i)
         {
             if (PlayerJoinManager.IsJoin(i))
@@ -48,12 +41,10 @@ public class PlayerGenerator : MonoBehaviour
     /// </summary>
     void GeneratePlayer(int index)
     {
-        //ランダムな生成位置
-        int rand = Random.Range(0, generatePositionAndRotations.Count);
         //ボールの生成
         var ball = Instantiate(ballPrefab);
-        ball.transform.SetPositionAndRotation(generatePositionAndRotations[rand].position,
-                                                generatePositionAndRotations[rand].rotation);
+        ball.transform.SetPositionAndRotation(generateTransforms[index].position,
+                                                generateTransforms[index].rotation);
         var player = PlayerTypeManager.GetInstance().GeneratePlayer(index, PlayerTypeManager.SceneType.Game);
         var playerBehaviour = player.GetComponent<PlayerBehaviour>();
         //番号をセット
@@ -63,8 +54,6 @@ public class PlayerGenerator : MonoBehaviour
         player.transform.parent = ball.transform;
         player.transform.localPosition = Vector3.zero;
         player.transform.localRotation = Quaternion.identity;
-        //かぶらないように削除
-        generatePositionAndRotations.RemoveAt(rand);
     }
 
     /// <summary>

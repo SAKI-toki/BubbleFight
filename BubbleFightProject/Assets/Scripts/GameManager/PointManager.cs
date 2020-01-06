@@ -8,70 +8,34 @@ static public class PointManager
 
     static bool pointLock = false;
 
-    //ボールを壊した時のポイント
-    const int BreakBallPoint = 1;
-    //ボールを壊された時のポイント
-    const int BrokenBallPoint = -1;
-    //プレイヤーを壊した時のポイント
-    const int BreakPlayerPoint = 2;
-    //プレイヤーを壊された時のポイント
-    const int BrokenPlayerPoint = -2;
-    //場外に落とした時のポイント
-    const int DropPoint = 3;
-    //場外に落とされた時のポイント
-    const int DroppedPoint = -3;
+    //ゴールのポイント
+    const int GoalPoint = 1;
 
     public delegate void AddPointFunctionType(int point, int addPoint);
     public static AddPointFunctionType AddPointFunction;
 
     /// <summary>
-    /// ボールを壊した時のポイントの計算
+    /// ゴール時のポイント計算
     /// </summary>
-    static public void BreakBallPointCalculate(BallBehaviour breaker, BallBehaviour broken)
+    static public void GoalCalculate(int goalNumber, int playerNumber)
     {
-        if (broken.IsInPlayer())
-        {
-            AddPoint(broken.GetPlayerIndex(), BrokenBallPoint);
-            if (breaker.IsInPlayer())
-            {
-                AddPoint(breaker.GetPlayerIndex(), BreakBallPoint);
-            }
-        }
+        AddPoint(playerNumber, GoalPoint);
+        AddPoint(goalNumber, -GoalPoint);
     }
 
     /// <summary>
-    /// プレイヤーを壊した時のポイントの計算
+    /// オウンゴール時のポイント計算
     /// </summary>
-    static public void BreakPlayerPointCalculate(BallBehaviour breaker, PlayerBehaviour playerBehaviour)
+    static public void OwnGoalCalculate(int playerNumber)
     {
-        if (breaker.IsInPlayer())
-        {
-            AddPoint(breaker.GetPlayerIndex(), BreakPlayerPoint);
-            AddPoint(playerBehaviour.GetPlayerNumber(), BrokenPlayerPoint);
-        }
-    }
-
-    /// <summary>
-    /// 場外に落とした時のポイントの計算
-    /// </summary>
-    static public void DropPlayerPointCalculate(int broken)
-    {
-        if (broken != int.MaxValue)
-        {
-            AddPoint(broken, DroppedPoint);
-            if (LastHitPlayerManager.IsValid(broken))
-            {
-                AddPoint(LastHitPlayerManager.GetLastHitPlayer(broken), DropPoint);
-                LastHitPlayerManager.UseLastHitPlayer(broken);
-            }
-        }
+        AddPoint(playerNumber, -GoalPoint);
     }
 
 
     /// <summary>
     /// ポイントの加算
     /// </summary>
-    static public void AddPoint(int index, int addPoint)
+    static void AddPoint(int index, int addPoint)
     {
         if (pointLock) return;
         playerPoint[index] += addPoint;
@@ -83,6 +47,7 @@ static public class PointManager
     {
         return playerPoint[index];
     }
+
     /// <summary>
     /// ポイントのリセット
     /// </summary>

@@ -67,7 +67,7 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
                 {
                     if (!playerBehaviour.IsInvincible())
                     {
-                        PointManager.BreakPlayerPointCalculate(ballController, playerBehaviour);
+                        //PointManager.BreakPlayerPointCalculate(ballController, playerBehaviour);
                         playerBehaviour.playerStateManager.TranslationState(new GameHitInPlayerBallState());
                     }
                 }

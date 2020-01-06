@@ -42,7 +42,6 @@ public abstract partial class PlayerBehaviour : MonoBehaviour
         {
             Respawn();
             playerBehaviour.invincibleTimeCount = PlayerBehaviour.InvincibleTime;
-            playerBehaviour.alreadyCollisionBreakArea = false;
             playerBehaviour.canCameraControl = true;
             playerBehaviour.modelTransform.localScale = initScale;
             playerBehaviour.PhysicsSet(true);

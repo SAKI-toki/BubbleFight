@@ -1,4 +1,8 @@
-﻿public class StageVotingPlayerController : PlayerBehaviour
+﻿/// <summary>
+/// ステージの投票時のプレイヤー制御
+/// </summary>
+
+public class StageVotingPlayerController : PlayerBehaviour
 {
     protected override void PlayerAwake()
     {

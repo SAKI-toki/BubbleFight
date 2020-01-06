@@ -1,27 +1,19 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// ぷストプロセス
+/// ポストプロセス
 /// </summary>
-public class Postprocess : MonoBehaviour
+public abstract class Postprocess : MonoBehaviour
 {
-    public delegate void ApplyMaterialFunctionType(Material applyMaterial);
-    Material material = null;
+    [SerializeField, Tooltip("シェーダー")]
+    Shader shader = null;
 
-    /// <summary>
-    /// マテリアルのセット
-    /// </summary>
-    public void SetMaterial(Material postprocessMaterial)
-    {
-        material = postprocessMaterial;
-    }
+    protected Material material = null;
 
-    /// <summary>
-    /// マテリアルに適用させる
-    /// </summary>
-    public void ApplyMaterialFunction(ApplyMaterialFunctionType func)
+    void Start()
     {
-        func(material);
+        material = new Material(shader);
+        Initialize();
     }
 
     void OnRenderImage(RenderTexture src, RenderTexture dest)
@@ -35,4 +27,6 @@ public class Postprocess : MonoBehaviour
             Graphics.Blit(src, dest);
         }
     }
+
+    protected abstract void Initialize();
 }
