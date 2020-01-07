@@ -43,11 +43,10 @@ public class StageSelectVoting : MonoBehaviour
             {
                 //プレイヤー生成
                 var player = PlayerTypeManager.GetInstance().GeneratePlayer(i, PlayerTypeManager.SceneType.StageVoting);
-                var playerBehaviour = player.GetComponent<PlayerBehaviour>();
-                //番号をセット
-                playerBehaviour.SetPlayerNumber(i);
                 //ボールの生成
                 var ball = Instantiate(ballPrefab, playerGenerateTransforms[i].position, playerGenerateTransforms[i].rotation);
+                var ballBehaviour = ball.GetComponent<BallBehaviour>();
+                ballBehaviour.SetPlayerIndex(i);
                 player.transform.parent = ball.transform;
                 player.transform.localPosition = Vector3.zero;
                 player.transform.localRotation = Quaternion.identity;
@@ -60,12 +59,19 @@ public class StageSelectVoting : MonoBehaviour
     /// </summary>
     bool AlreadyAllPlayerVoting()
     {
+        //総投票数
         int votingSum = 0;
         foreach (var votingCount in votingCounts)
         {
             votingSum += votingCount;
         }
-        return votingSum == PlayerJoinManager.GetJoinPlayerCount();
+        //参加人数
+        int joinCount = 0;
+        for (int i = 0; i < PlayerCount.MaxValue; ++i)
+        {
+            if (PlayerJoinManager.IsJoin(i)) ++joinCount;
+        }
+        return votingSum == joinCount;
     }
 
     /// <summary>

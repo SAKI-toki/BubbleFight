@@ -2,41 +2,51 @@
 
 public abstract partial class BallBehaviour : MonoBehaviour
 {
-
-
     /// <summary>
     /// プレイヤーが入っているステート
     /// </summary>
     protected class GameHasPlayerState : BallStateBase
     {
-        PlayerTypeStatusScriptableObject playerStatus;
+        PlayerTypeStatusScriptableObject playerStatus = null;
+        PlayerAnimationController playerAnimationController = null;
+        Transform playerTransform = null;
+        Quaternion playerRotation = Quaternion.identity;
+        GameObject playerRotationObject = null;
+        Vector3 initPosition = Vector3.zero;
+        Quaternion initRotation = Quaternion.identity;
 
         protected override void Init()
         {
+            //プレイヤーの情報を格納
             playerStatus = PlayerTypeManager.GetInstance().GetPlayerStatus(ballBehaviour.playerIndex);
             ballBehaviour.transform.GetComponent<SphereCollider>().material = playerStatus.BallPhysicalMaterial;
             ballBehaviour.thisRigidbody.mass = playerStatus.BallMass;
+            playerTransform = ballBehaviour.transform.GetChild(0).transform;
+            playerAnimationController = playerTransform.GetComponent<PlayerAnimationController>();
+            //色をプレイヤーの色に変える
             var mat = ballBehaviour.transform.GetComponent<MeshRenderer>().material;
             var color = PlayerColor.GetColor(ballBehaviour.playerIndex);
             color.a = 0.8f;
             mat.color = color;
-            ballBehaviour.materialFlash.SetMaterial(mat);
-            color.r = color.g = color.b = 0;
-            ballBehaviour.materialFlash.SetFlashColor(color);
+            //回転しやすいように空のオブジェクトを作成
+            playerRotationObject = new GameObject("PlayerRotationObject");
+            playerRotationObject.transform.parent = ballBehaviour.transform;
+
+            playerTransform.localPosition = Vector3.zero;
+            initPosition = ballBehaviour.transform.position;
+            initRotation = ballBehaviour.transform.rotation;
         }
 
         public override BallStateBase Update()
         {
             Move();
             UpdateBoost();
-            //点滅する
-            if (ballBehaviour.currentHitPoint * 2 < ballBehaviour.ballScriptableObject.MaxHitPoint)
-            {
-                ballBehaviour.materialFlash.FlashStart();
-                float interval = ballBehaviour.currentHitPoint / ballBehaviour.ballScriptableObject.MaxHitPoint;
-                ballBehaviour.materialFlash.SetInterval(interval < 0.1f ? 0.1f : interval);
-            }
             return this;
+        }
+
+        public override void LateUpdate()
+        {
+            playerTransform.rotation = playerRotation;
         }
 
         /// <summary>
@@ -51,27 +61,39 @@ public abstract partial class BallBehaviour : MonoBehaviour
                 return;
             }
 
-            var stickInput = SwitchInput.GetLeftStick(ballBehaviour.playerIndex);
+            //var stickInput = SwitchInput.GetLeftStick(ballBehaviour.playerIndex);
+            Vector2 stickInput = new Vector2();
+            if (ballBehaviour.playerIndex == 0)
+            {
+                stickInput.x = Input.GetKey(KeyCode.D) ? 1 : Input.GetKey(KeyCode.A) ? -1 : 0;
+                stickInput.y = Input.GetKey(KeyCode.W) ? 1 : Input.GetKey(KeyCode.S) ? -1 : 0;
+            }
+            stickInput.Normalize();
+
             Vector3 addPower = new Vector3(stickInput.x, 0, stickInput.y);
-
+            //力を加える
             AddForceAndTorque(addPower);
+            //向きを更新
             ballBehaviour.UpdateLookatDirection(addPower);
-
+            //アニメーションの更新
             if (stickInput.sqrMagnitude == 0)
             {
-                ballBehaviour.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Idle);
+                playerAnimationController.AnimationSwitch(PlayerAnimationController.AnimationType.Idle);
             }
             else
             {
                 if (stickInput.magnitude > 0.9f)
                 {
-                    ballBehaviour.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Run);
+                    playerAnimationController.AnimationSwitch(PlayerAnimationController.AnimationType.Run);
                 }
                 else
                 {
-                    ballBehaviour.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Walk);
+                    playerAnimationController.AnimationSwitch(PlayerAnimationController.AnimationType.Walk);
                 }
             }
+
+            PlayerRotation(ballBehaviour.lookatDir);
+
         }
 
         /// <summary>
@@ -85,7 +107,11 @@ public abstract partial class BallBehaviour : MonoBehaviour
                  ballBehaviour.boostIntervalTimeCount <= 0.0f)
             {
                 //入力方向に力を加える
-                ballBehaviour.thisRigidbody.AddForce(ballBehaviour.lookatDir.normalized * playerStatus.BallBoostPower * ballBehaviour.thisRigidbody.mass);
+                ballBehaviour.thisRigidbody.AddForce(
+                    ballBehaviour.lookatDir.normalized *
+                    playerStatus.BallBoostPower *
+                    ballBehaviour.thisRigidbody.mass);
+
                 ballBehaviour.boostIntervalTimeCount = playerStatus.BallBoostInterval;
             }
         }
@@ -108,11 +134,29 @@ public abstract partial class BallBehaviour : MonoBehaviour
             Vector3 addTorque = Vector3.zero;
             addTorque.x = addPower.z;
             addTorque.z = -addPower.x;
-            float power = playerStatus.BallMovePower * ballBehaviour.thisRigidbody.mass * Mathf.Pow(angle + 1, playerStatus.BallEasyCurveWeight);
+            //力
+            float power = playerStatus.BallMovePower *
+                ballBehaviour.thisRigidbody.mass *
+                Mathf.Pow(angle + 1, playerStatus.BallEasyCurveWeight);
             //入力方向に力を加える
             ballBehaviour.thisRigidbody.AddForce(addPower * power * 0.1f);
             //入力方向に回転の力を加える
             ballBehaviour.thisRigidbody.AddTorque(addTorque * power * 0.9f);
+        }
+
+        /// <summary>
+        /// プレイヤーの回転
+        /// </summary>
+        void PlayerRotation(Vector3 lookatDir)
+        {
+            if (lookatDir == Vector3.zero) return;
+            //プレイヤーの回転
+            playerRotationObject.transform.position = Vector3.zero;
+            playerRotationObject.transform.LookAt(Vector3.Cross(playerTransform.right, Vector3.up));
+            var startQ = playerRotationObject.transform.rotation;
+            playerRotationObject.transform.LookAt(lookatDir);
+            var endQ = playerRotationObject.transform.rotation;
+            playerRotation = Quaternion.Lerp(startQ, endQ, 10 * Time.deltaTime);
         }
 
         public override void OnCollisionEnter(Collision other)
@@ -128,11 +172,21 @@ public abstract partial class BallBehaviour : MonoBehaviour
                         {
                             ballBehaviour.SetCantInputTime(
                                 other.relativeVelocity.sqrMagnitude * ballBehaviour.ballScriptableObject.HitPowerPercenage);
-                            //ダメージに応じて揺らす幅を変える
-                            float damage = ballBehaviour.DamageCalculate(other.relativeVelocity.sqrMagnitude,
-                                                                            otherballBehaviour.prevVelocity.sqrMagnitude) *
-                                            (otherballBehaviour.IsInPlayer() ? 1.0f : 0.1f);
                         }
+                    }
+                    break;
+                case "Goal":
+                    {
+                        //入れたゴールの番号を取得
+                        int goalNumber = other.gameObject.GetComponent<GoalController>().GetGoalNumber();
+
+                        if (PointManager.GetPoint(goalNumber) <= 0) return;
+
+                        PointManager.GoalCalculate(goalNumber);
+
+                        ballBehaviour.transform.position = initPosition;
+                        ballBehaviour.transform.rotation = initRotation;
+                        ballBehaviour.thisRigidbody.velocity = Vector3.zero;
                     }
                     break;
             }

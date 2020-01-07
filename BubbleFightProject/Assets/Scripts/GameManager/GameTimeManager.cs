@@ -17,8 +17,6 @@ public class GameTimeManager : MonoBehaviour
     void Start()
     {
         playTimeCount = playTime;
-        prevPonits = new int[PlayerJoinManager.GetJoinPlayerCount()];
-        prevTime = (int)playTimeCount;
         UpdatePointText();
         UpdateTimeText();
     }
@@ -40,40 +38,48 @@ public class GameTimeManager : MonoBehaviour
         return playTimeCount > 0;
     }
 
-    int[] prevPonits = null;
-    int prevTime = 0;
-
     private void Update()
     {
-        for (int i = 0; i < PlayerJoinManager.GetJoinPlayerCount(); ++i)
+        if (!IsPlayGame()) return;
+        UpdatePointText();
+        UpdateTimeText();
+        int alivePlayerCount = 0;
+        for (int i = 0; i < PlayerCount.MaxValue; ++i)
         {
-            if (prevPonits[i] != PointManager.GetPoint(i))
-            {
-                UpdatePointText();
-                break;
-            }
+            if (!PlayerJoinManager.IsJoin(i)) continue;
+            if (PointManager.GetPoint(i) != 0) ++alivePlayerCount;
         }
-        if (prevTime != (int)playTimeCount)
-            UpdateTimeText();
+        if (alivePlayerCount <= 1)
+        {
+            playTimeCount = 0.0f;
+        }
     }
+
+    /// <summary>
+    /// ポイントテキストの更新
+    /// </summary>
     void UpdatePointText()
     {
         pointText.text = "";
-        for (int i = 0; i < PlayerJoinManager.GetJoinPlayerCount(); ++i)
+        for (int i = 0; i < PlayerCount.MaxValue; ++i)
         {
-            prevPonits[i] = PointManager.GetPoint(i);
-            pointText.text += "Player" + (i + 1).ToString() + " : " + prevPonits[i] + "P  ";
+            if (!PlayerJoinManager.IsJoin(i)) continue;
+
+            pointText.text += "Player" + (i + 1).ToString() + " : " +
+             PointManager.GetPoint(i) + "P  ";
         }
     }
 
+    /// <summary>
+    /// 時間テキストの更新
+    /// </summary>
     void UpdateTimeText()
     {
-        prevTime = (int)playTimeCount;
-        if (prevTime > 0)
+        if (playTimeCount > 0)
         {
-            timeText.text = "Time : " + prevTime.ToString();
+            timeText.text = "Time : " + ((int)playTimeCount).ToString();
         }
-        else if (timeText.text[0] != 'E')
+        else
         {
             timeText.text = "END";
         }

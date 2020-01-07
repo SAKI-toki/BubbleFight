@@ -23,10 +23,6 @@ public class PlayerGenerator : MonoBehaviour
     /// </summary>
     void GenerateAllJoinPlayer()
     {
-        if (generateTransforms.Length < PlayerJoinManager.GetJoinPlayerCount())
-        {
-            Debug.LogError("生成位置が参加人数より少ないです");
-        }
         for (int i = 0; i < PlayerCount.MaxValue; ++i)
         {
             if (PlayerJoinManager.IsJoin(i))
@@ -46,11 +42,10 @@ public class PlayerGenerator : MonoBehaviour
         ball.transform.SetPositionAndRotation(generateTransforms[index].position,
                                                 generateTransforms[index].rotation);
         var player = PlayerTypeManager.GetInstance().GeneratePlayer(index, PlayerTypeManager.SceneType.Game);
-        var playerBehaviour = player.GetComponent<PlayerBehaviour>();
-        //番号をセット
-        playerBehaviour.SetPlayerNumber(index);
+
+        var ballBehaviour = ball.GetComponent<BallBehaviour>();
+        ballBehaviour.SetPlayerIndex(index);
         //プレイヤーにセットする
-        playerBehaviour.SetPlayerGenerator(this);
         player.transform.parent = ball.transform;
         player.transform.localPosition = Vector3.zero;
         player.transform.localRotation = Quaternion.identity;

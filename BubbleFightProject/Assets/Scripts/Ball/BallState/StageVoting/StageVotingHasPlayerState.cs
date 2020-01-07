@@ -8,12 +8,15 @@ public abstract partial class BallBehaviour : MonoBehaviour
     protected class StageVotingHasPlayerState : BallStateBase
     {
         PlayerTypeStatusScriptableObject playerStatus;
+        PlayerAnimationController playerAnimationController = null;
 
         protected override void Init()
         {
             playerStatus = PlayerTypeManager.GetInstance().GetPlayerStatus(ballBehaviour.playerIndex);
             ballBehaviour.transform.GetComponent<SphereCollider>().material = playerStatus.BallPhysicalMaterial;
             ballBehaviour.thisRigidbody.mass = playerStatus.BallMass;
+            playerAnimationController = ballBehaviour.transform.GetChild(0).GetComponent<PlayerAnimationController>();
+
             var mat = ballBehaviour.transform.GetComponent<MeshRenderer>().material;
             var color = PlayerColor.GetColor(ballBehaviour.playerIndex);
             color.a = 0.8f;
@@ -47,17 +50,17 @@ public abstract partial class BallBehaviour : MonoBehaviour
 
             if (stickInput.sqrMagnitude == 0)
             {
-                ballBehaviour.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Idle);
+                playerAnimationController.AnimationSwitch(PlayerAnimationController.AnimationType.Idle);
             }
             else
             {
                 if (stickInput.magnitude > 0.9f)
                 {
-                    ballBehaviour.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Run);
+                    playerAnimationController.AnimationSwitch(PlayerAnimationController.AnimationType.Run);
                 }
                 else
                 {
-                    ballBehaviour.playerAnimation.AnimationSwitch(PlayerAnimationController.AnimationType.Walk);
+                    playerAnimationController.AnimationSwitch(PlayerAnimationController.AnimationType.Walk);
                 }
             }
         }

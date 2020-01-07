@@ -1,29 +1,23 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// ボールの動作
+/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SphereCollider))]
-[RequireComponent(typeof(MaterialFlash))]
 public abstract partial class BallBehaviour : MonoBehaviour
 {
-    protected MaterialFlash materialFlash;
     protected Rigidbody thisRigidbody;
     protected Vector3 lookatDir = Vector3.zero;
 
     //操作するプレイヤー
     protected int playerIndex = int.MaxValue;
-    //現在のHP
-    protected float currentHitPoint = 0.0f;
 
     //当たる前の力を保持する変数
     protected Vector3 prevVelocity = Vector3.zero;
 
-    public delegate void DestroyEventType();
-    protected DestroyEventType destroyEvent;
-
     protected BallStateManager ballStateManager = new BallStateManager();
 
-    //プレイヤーのアニメーションを制御するクラス
-    protected PlayerAnimationController playerAnimation = null;
     //入力を受け付けない時間
     protected float cantInputTime = 0.0f;
     //ブーストの間隔の時間を測る
@@ -35,14 +29,12 @@ public abstract partial class BallBehaviour : MonoBehaviour
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
-        materialFlash = GetComponent<MaterialFlash>();
         BallAwake();
     }
 
     void Start()
     {
         thisRigidbody.maxAngularVelocity = ballScriptableObject.MaxAngularVelocity;
-        currentHitPoint = ballScriptableObject.MaxHitPoint;
         BallStart();
     }
 
@@ -84,7 +76,7 @@ public abstract partial class BallBehaviour : MonoBehaviour
 
     /// <summary>
     /// 入力不可時間をセット
-    /// </summary>
+    /// /// </summary>
     void SetCantInputTime(float time)
     {
         cantInputTime = time;
@@ -92,31 +84,6 @@ public abstract partial class BallBehaviour : MonoBehaviour
         {
             cantInputTime = ballScriptableObject.MaxCantInputTime;
         }
-    }
-
-    /// <summary>
-    /// プレイヤーの情報をセット
-    /// </summary>
-    public void SetPlayerInfo(int index, PlayerAnimationController playerAnimationController)
-    {
-        playerIndex = index;
-        playerAnimation = playerAnimationController;
-    }
-
-    /// <summary>
-    /// プレイヤーが入り始めた
-    /// </summary>
-    public void StartIntoPlayer()
-    {
-        ballStateManager.TranslationState(new GamePlayerIntoBallState());
-    }
-
-    /// <summary>
-    /// プレイヤーが入り終わった
-    /// </summary>
-    public void EndIntoPlayer()
-    {
-        ballStateManager.TranslationState(new GameHasPlayerState());
     }
 
     /// <summary>
@@ -145,16 +112,6 @@ public abstract partial class BallBehaviour : MonoBehaviour
     void OnTriggerStay(Collider other) { BallOnTriggerStay(other); ballStateManager.OnTriggerStay(other); }
     void OnTriggerExit(Collider other) { BallOnTriggerExit(other); ballStateManager.OnTriggerExit(other); }
 
-
-    /// <summary>
-    /// ボールが破壊された
-    /// </summary>
-    protected void BrokenBall()
-    {
-        destroyEvent();
-        Destroy(this.gameObject);
-    }
-
     /// <summary>
     /// 受けるダメージを計算する
     /// </summary>
@@ -176,21 +133,12 @@ public abstract partial class BallBehaviour : MonoBehaviour
     public int GetPlayerIndex()
     { return playerIndex; }
 
-
     /// <summary>
-    /// 壊れたときのイベントをセット
+    /// プレイヤーのインデックスをセット
     /// </summary>
-    public void SetDestroyEvent(DestroyEventType eventType)
+    public void SetPlayerIndex(int index)
     {
-        destroyEvent += eventType;
-    }
-
-    /// <summary>
-    /// 向く方向を返す
-    /// </summary>
-    public Vector3 GetLookatDir()
-    {
-        return lookatDir;
+        playerIndex = index;
     }
 
     /// <summary>

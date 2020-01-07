@@ -32,8 +32,12 @@ public class PlayerJoinManager : MonoBehaviour
             }
         }
 
-        //参加人数の更新
-        UpdateJoinCount();
+        int joinPlayerCount = 0;
+
+        for (int i = 0; i < PlayerCount.MaxValue; ++i)
+        {
+            if (IsJoin(i)) ++joinPlayerCount;
+        }
 
         //プレイ人数確定
         if (SwitchInput.GetButtonDown(0, SwitchButton.Pause) &&
@@ -62,48 +66,17 @@ public class PlayerJoinManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 参加人数の更新
-    /// </summary>
-    void UpdateJoinCount()
-    {
-        //参加人数
-        joinPlayerCount = 0;
-        foreach (var isJoin in isJoins)
-        {
-            if (isJoin) ++joinPlayerCount;
-        }
-    }
-
-    /// <summary>
     /// 参加情報をリセット
     /// </summary>
     void ResetJoinInfo()
     {
         for (int i = 0; i < isJoins.Length; ++i) isJoins[i] = false;
-        joinPlayerCount = 0;
     }
 
-    //参加人数(別の場所でわざわざカウントしないようにする)
-    static int joinPlayerCount = 4;
     //参加かどうか
-    static bool[] isJoins = { true, true, true, true };
+    static bool[] isJoins = { true, false, true, true };
 
-    static public int GetJoinPlayerCount() { return joinPlayerCount; }
     static public bool IsJoin(int index) { return isJoins[index]; }
-
-    /// <summary>
-    /// プレイしているプレイヤーの中で何番目か
-    /// </summary>
-    static public int GetNumberInPlayer(int index)
-    {
-        int count = 0;
-        for (int i = 0; i < PlayerCount.MaxValue; ++i)
-        {
-            if (i == index) break;
-            if (IsJoin(i)) ++count;
-        }
-        return count;
-    }
 }
 
 /// <summary>

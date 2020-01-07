@@ -17,54 +17,13 @@ public class ResultManager : MonoBehaviour
     GameObject[] kusudamaArray = null;
     Text[] rankTextArray = null;
 
-    List<OrderData> orderList = new List<OrderData>();
-    private class OrderData
-    {
-        public int playerId = 0;
-        public int playerPoint = 0;
-        public int playerRank = 0;
-    }
-
     void Start()
     {
-        kusudamaArray = new GameObject[PlayerJoinManager.GetJoinPlayerCount()];
-        rankTextArray = new Text[PlayerJoinManager.GetJoinPlayerCount()];
-        SetRanking();
+        PointManager.ApplyRank();
+        kusudamaArray = new GameObject[PlayerCount.MaxValue];
+        rankTextArray = new Text[PlayerCount.MaxValue];
         Generate();
         StartCoroutine(ResultStart());
-    }
-
-    // ランクを決める
-    void SetRanking()
-    {
-        for (int i = 0; i < PlayerCount.MaxValue; ++i)
-        {
-            if (PlayerJoinManager.IsJoin(i))
-            {
-                OrderData orderData = new OrderData();
-                orderData.playerId = i;
-                orderData.playerPoint = PointManager.GetPoint(i);
-                orderData.playerRank = 0;
-                orderList.Add(orderData);
-            }
-        }
-        // 一位から決めたいため降順
-        orderList.Sort((lhs, rhs)
-            => rhs.playerPoint - lhs.playerPoint);
-        int rank = 1;
-        orderList[0].playerRank = rank;
-        for (int i = 1; i < orderList.Count; ++i)
-        {
-            if (orderList[i - 1].playerPoint == orderList[i].playerPoint)
-            {
-                orderList[i].playerRank = rank;
-            }
-            else
-            {
-                orderList[i].playerRank = i + 1;
-                rank = i + 1;
-            }
-        }
     }
 
     // 動物とくす玉を生成
@@ -72,78 +31,78 @@ public class ResultManager : MonoBehaviour
     {
         for (int i = 0; i < PlayerCount.MaxValue; ++i)
         {
-            if (!PlayerJoinManager.IsJoin(i)) return;
+            if (!PlayerJoinManager.IsJoin(i)) continue;
             // 動物生成
-            //GameObject player = Instantiate(animalPrefab, playerPosArray[i].transform.position, playerPosArray[i].transform.rotation);
             GameObject player = PlayerTypeManager.GetInstance().GeneratePlayer(i, PlayerTypeManager.SceneType.Object);
             player.transform.position = playerPosArray[i].transform.position;
             player.transform.rotation = playerPosArray[i].transform.rotation;
             player.transform.localScale = playerPosArray[i].transform.localScale;
-            //player.transform.parent = playerPosArray[i].transform;
 
             // くす玉生成
-            GameObject kusudama = Instantiate(kusudamaPrefab[i], playerPosArray[i].transform.position + kusudamaOffset, playerPosArray[i].transform.rotation);
-            //kusudama.transform.parent = playerPosArray[i].transform;
+            GameObject kusudama = Instantiate(
+                kusudamaPrefab[i],
+                playerPosArray[i].transform.position + kusudamaOffset,
+                playerPosArray[i].transform.rotation);
             kusudamaArray[i] = kusudama;
 
             // RankTextを取得
             foreach (Transform child in kusudama.transform)
             {
-                if (child.name == "Canvas")
+                if (child.name != "Canvas") continue;
+
+                foreach (Transform grandchild in child)
                 {
-                    foreach (Transform grandchild in child)
-                    {
-                        if (grandchild.name == "RankText")
-                        {
-                            rankTextArray[i] = grandchild.GetComponent<Text>();
-                            for (int j = 0; j < orderList.Count; ++j)
-                            {
-                                if (i == orderList[j].playerId)
-                                {
-                                    rankTextArray[i].text = orderList[j].playerRank.ToString() + "位";
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
+                    if (grandchild.name != "RankText") continue;
+
+                    rankTextArray[i] = grandchild.GetComponent<Text>();
+                    rankTextArray[i].text = PointManager.GetRank(i).ToString() + "位";
                     break;
                 }
+                break;
             }
         }
     }
 
     IEnumerator ResultStart()
     {
-        int[] counts = new int[orderList.Count];
-        for (int i = 0; i < orderList.Count; ++i)
+        List<int>[] counts = new List<int>[PlayerCount.MaxValue];
+        for (int i = 0; i < PlayerCount.MaxValue; ++i)
         {
-            counts[orderList[i].playerRank - 1] += 1;
+            counts[i] = new List<int>();
         }
+
+        for (int i = 0; i < PlayerCount.MaxValue; ++i)
+        {
+            if (!PlayerJoinManager.IsJoin(i)) continue;
+            counts[PointManager.GetRank(i) - 1].Add(i);
+        }
+
         yield return new WaitForSeconds(0.5f);
+
         // くす玉を開く間隔
         const float intervalTime = 1.0f;
-        int index = orderList.Count - 1;
-        for (int i = orderList.Count - 1; i >= 0; --i)
+        int index = PlayerCount.MaxValue - 1;
+        for (int i = PlayerCount.MaxValue - 1; i >= 0; --i)
         {
-            for (int j = 0; j < counts[i]; ++j)
+            for (int j = 0; j < counts[i].Count; ++j)
             {
-                KusudamaAnimationPlay(orderList[index].playerId);
+                KusudamaAnimationPlay(counts[i][j]);
                 if (i == 0)
                 {
                     Instantiate(
                         kamifubukiPrefab,
-                        playerPosArray[orderList[index].playerId].transform.position + new Vector3(0, 2, 0),
+                        playerPosArray[counts[i][j]].transform.position + new Vector3(0, 2, 0),
                         kamifubukiPrefab.transform.rotation);
                 }
                 --index;
             }
-            if (counts[i] != 0)
+            if (counts[i].Count != 0)
             {
                 yield return new WaitForSeconds(intervalTime);
             }
         }
     }
+
     // くす玉のアニメーションを再生
     void KusudamaAnimationPlay(int playerId)
     {
