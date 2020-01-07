@@ -55,33 +55,46 @@ public class GameTimeManager : MonoBehaviour
         }
     }
 
+    string nextPointText;
     /// <summary>
     /// ポイントテキストの更新
     /// </summary>
     void UpdatePointText()
     {
-        pointText.text = "";
+        nextPointText = "";
         for (int i = 0; i < PlayerCount.MaxValue; ++i)
         {
             if (!PlayerJoinManager.IsJoin(i)) continue;
 
-            pointText.text += "Player" + (i + 1).ToString() + " : " +
+            nextPointText += "Player" + (i + 1).ToString() + " : " +
              PointManager.GetPoint(i) + "P  ";
+        }
+
+        if (nextPointText != pointText.text)
+        {
+            pointText.text = nextPointText;
         }
     }
 
+    string nextTimeText;
     /// <summary>
     /// 時間テキストの更新
     /// </summary>
     void UpdateTimeText()
     {
+        nextTimeText = "";
         if (playTimeCount > 0)
         {
-            timeText.text = "Time : " + ((int)playTimeCount).ToString();
+            nextTimeText = "Time : " + ((int)playTimeCount).ToString();
         }
         else
         {
-            timeText.text = "END";
+            nextTimeText = "END";
+        }
+
+        if (nextTimeText != timeText.text)
+        {
+            timeText.text = nextTimeText;
         }
     }
 }

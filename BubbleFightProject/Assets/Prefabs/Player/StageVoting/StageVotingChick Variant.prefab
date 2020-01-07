@@ -1,21 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &199062578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6838978744895066037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a4b141bd2b57b346953ab49d8d87069, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraObject: {fileID: 6522284076813312950, guid: d8294539a2efb11469d60fb8de62113f,
-    type: 3}
-  cameraLookat: {fileID: 8433832135762021421}
-  modelTransform: {fileID: 8953294857085976434}
 --- !u!1001 &2428127952386053379
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 9176822481703410358, guid: 0dde7c1dc0125364c85d5f2e82069f04,
         type: 3}
       propertyPath: m_Name
-      value: StageVotingChick
+      value: StageVotingChick Variant
       objectReference: {fileID: 0}
     - target: {fileID: 9176822481703410360, guid: 0dde7c1dc0125364c85d5f2e82069f04,
         type: 3}
@@ -140,24 +124,6 @@ PrefabInstance:
       objectReference: {fileID: 6876585579240884362}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dde7c1dc0125364c85d5f2e82069f04, type: 3}
---- !u!1 &6838978744895066037 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9176822481703410358, guid: 0dde7c1dc0125364c85d5f2e82069f04,
-    type: 3}
-  m_PrefabInstance: {fileID: 2428127952386053379}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8433832135762021421 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6104783392496441646, guid: 0dde7c1dc0125364c85d5f2e82069f04,
-    type: 3}
-  m_PrefabInstance: {fileID: 2428127952386053379}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8953294857085976434 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6769490500267944561, guid: 0dde7c1dc0125364c85d5f2e82069f04,
-    type: 3}
-  m_PrefabInstance: {fileID: 2428127952386053379}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &8586522824179514946 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6240586664510106433, guid: 0dde7c1dc0125364c85d5f2e82069f04,

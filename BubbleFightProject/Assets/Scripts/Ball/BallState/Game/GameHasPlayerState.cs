@@ -180,7 +180,7 @@ public abstract partial class BallBehaviour : MonoBehaviour
                         //入れたゴールの番号を取得
                         int goalNumber = other.gameObject.GetComponent<GoalController>().GetGoalNumber();
 
-                        if (PointManager.GetPoint(goalNumber) <= 0) return;
+                        if (!PlayerJoinManager.IsJoin(goalNumber) || PointManager.GetPoint(goalNumber) <= 0) return;
 
                         PointManager.GoalCalculate(goalNumber);
 

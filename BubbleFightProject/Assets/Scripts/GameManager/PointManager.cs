@@ -88,7 +88,7 @@ static public class PointManager
             int rank = 1;
             for (int j = 0; j < PlayerCount.MaxValue; ++j)
             {
-                if (!PlayerJoinManager.IsJoin(i)) continue;
+                if (!PlayerJoinManager.IsJoin(j)) continue;
                 if (playerPoints[i] < playerPoints[j]) ++rank;
             }
             playerRanks[i] = rank;

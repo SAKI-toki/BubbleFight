@@ -65,6 +65,7 @@ public class ResultManager : MonoBehaviour
 
     IEnumerator ResultStart()
     {
+        //各順位ごとにプレイヤーの番号を格納
         List<int>[] counts = new List<int>[PlayerCount.MaxValue];
         for (int i = 0; i < PlayerCount.MaxValue; ++i)
         {
