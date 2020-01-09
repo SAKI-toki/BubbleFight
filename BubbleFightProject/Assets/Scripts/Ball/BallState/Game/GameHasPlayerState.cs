@@ -61,14 +61,7 @@ public abstract partial class BallBehaviour : MonoBehaviour
                 return;
             }
 
-            //var stickInput = SwitchInput.GetLeftStick(ballBehaviour.playerIndex);
-            Vector2 stickInput = new Vector2();
-            if (ballBehaviour.playerIndex == 0)
-            {
-                stickInput.x = Input.GetKey(KeyCode.D) ? 1 : Input.GetKey(KeyCode.A) ? -1 : 0;
-                stickInput.y = Input.GetKey(KeyCode.W) ? 1 : Input.GetKey(KeyCode.S) ? -1 : 0;
-            }
-            stickInput.Normalize();
+            var stickInput = SwitchInput.GetStick(ballBehaviour.playerIndex);
 
             Vector3 addPower = new Vector3(stickInput.x, 0, stickInput.y);
             //力を加える
@@ -103,7 +96,7 @@ public abstract partial class BallBehaviour : MonoBehaviour
         {
             //ブースト
             ballBehaviour.boostIntervalTimeCount -= Time.deltaTime;
-            if (SwitchInput.GetButtonDown(ballBehaviour.playerIndex, SwitchButton.Boost) &&
+            if (SwitchAcceleration.GetAcceleration(ballBehaviour.playerIndex).magnitude > 3.0f &&
                  ballBehaviour.boostIntervalTimeCount <= 0.0f)
             {
                 //入力方向に力を加える

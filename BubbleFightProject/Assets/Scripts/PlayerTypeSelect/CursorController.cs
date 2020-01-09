@@ -18,7 +18,7 @@ public class CursorController : MonoBehaviour
     public void CursorUpdate()
     {
         var position = transform.position;
-        var stick = SwitchInput.GetLeftStick(playerIndex);
+        var stick = SwitchInput.GetStick(playerIndex);
         position.x += stick.x * moveSpeed * Time.deltaTime;
         position.y += stick.y * moveSpeed * Time.deltaTime;
         position.x = Mathf.Clamp(position.x, -moveRange.x, moveRange.x);

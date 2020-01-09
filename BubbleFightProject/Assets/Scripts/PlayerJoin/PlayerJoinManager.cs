@@ -12,7 +12,6 @@ public class PlayerJoinManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Assert(PlayerCount.MaxValue == joinControllers.Count);
         ResetJoinInfo();
     }
 
@@ -74,7 +73,7 @@ public class PlayerJoinManager : MonoBehaviour
     }
 
     //参加かどうか
-    static bool[] isJoins = { true, false, true, true };
+    static bool[] isJoins = { true, true, true, true };
 
     static public bool IsJoin(int index) { return isJoins[index]; }
 }

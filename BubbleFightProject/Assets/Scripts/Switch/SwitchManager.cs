@@ -9,7 +9,7 @@ public class SwitchManager : Singleton<SwitchManager>
     NpadId[] npadIds = { NpadId.No1, NpadId.No2, NpadId.No3, NpadId.No4 };
 
     //使用するコントローラーのスタイル
-    NpadStyle npadStyles = NpadStyle.JoyDual;
+    NpadStyle npadStyles = NpadStyle.JoyLeft | NpadStyle.JoyRight;
     //接続されているかどうか
     static bool[] isConnect;
 
@@ -26,8 +26,6 @@ public class SwitchManager : Singleton<SwitchManager>
         isConnect = new bool[npadIds.Length];
         //入力の初期化
         SwitchInput.InputInit(npadIds.Length);
-        //色の初期化
-        SwitchColor.ColorInit(npadIds.Length);
         SwitchAcceleration.AccelerationInit(npadIds.Length);
     }
 
@@ -39,8 +37,6 @@ public class SwitchManager : Singleton<SwitchManager>
             ConnectUpdate(i);
             //入力情報の更新
             SwitchInput.InputUpdate(i, npadIds[i]);
-            //色の更新
-            SwitchColor.ColorUpdate(i, npadIds[i]);
             SwitchAcceleration.AccelerationUpdate(i, npadIds[i]);
         }
     }

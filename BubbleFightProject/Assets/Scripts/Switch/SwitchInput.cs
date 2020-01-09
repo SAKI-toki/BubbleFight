@@ -3,15 +3,15 @@ using nn.hid;
 
 public enum SwitchButton : long
 {
-    Ok = NpadButton.A,
-    Cancel = NpadButton.B,
+    Ok = NpadButton.X | NpadButton.Down,
+    Cancel = NpadButton.A | NpadButton.Left,
     Boost = NpadButton.ZR | NpadButton.ZL,
     Pause = NpadButton.Plus | NpadButton.Minus,
     //項目選択
-    SelectUp = NpadButton.StickLUp,
-    SelectDown = NpadButton.StickLDown,
-    SelectRight = NpadButton.StickLRight,
-    SelectLeft = NpadButton.StickLLeft,
+    SelectUp = NpadButton.StickLRight | NpadButton.StickRLeft,
+    SelectDown = NpadButton.StickLLeft | NpadButton.StickRRight,
+    SelectRight = NpadButton.StickLDown | NpadButton.StickRUp,
+    SelectLeft = NpadButton.StickLUp | NpadButton.StickRDown,
 }
 
 /// <summary>
@@ -24,13 +24,8 @@ static public class SwitchInput
     static long[] prevButtons;
     //現在のボタンの状態
     static long[] currentButtons;
-    //スティックの情報
-    class StickInfo
-    {
-        public Vector2 right, left;
-    }
-    //スティックの水平
-    static StickInfo[] stickInfos;
+    //スティック
+    static Vector2[] stickInfos;
     //コントローラーの状態
     static NpadState npadState = new NpadState();
 
@@ -43,10 +38,10 @@ static public class SwitchInput
         //配列の要素確保
         prevButtons = new long[npadIdsLength];
         currentButtons = new long[npadIdsLength];
-        stickInfos = new StickInfo[npadIdsLength];
+        stickInfos = new Vector2[npadIdsLength];
         for (int i = 0; i < npadIdsLength; ++i)
         {
-            stickInfos[i] = new StickInfo();
+            stickInfos[i] = new Vector2();
         }
     }
 
@@ -71,48 +66,52 @@ static public class SwitchInput
                                 NpadButton.StickLDown | NpadButton.StickRDown |
                                 NpadButton.StickLRight | NpadButton.StickRRight |
                                 NpadButton.StickLLeft | NpadButton.StickRLeft);
-        //スティックの更新
-        //右のジョイスティック
-        //デッドゾーンを超えているかどうか
-        if (Mathf.Abs(npadState.analogStickR.fx) > DeadZone)
+
+        if (npadStyle == NpadStyle.JoyLeft)
         {
-            stickInfos[index].right.x = npadState.analogStickR.fx;
-            npadState.buttons |= (npadState.analogStickR.fx > 0) ? NpadButton.StickRRight : NpadButton.StickRLeft;
+            //デッドゾーンを超えているかどうか
+            if (Mathf.Abs(npadState.analogStickL.fx) > DeadZone)
+            {
+                stickInfos[index].y = npadState.analogStickL.fx;
+                npadState.buttons |= (npadState.analogStickL.fx > 0) ? NpadButton.StickLUp : NpadButton.StickLDown;
+            }
+            else
+            {
+                stickInfos[index].y = 0.0f;
+            }
+            //デッドゾーンを超えているかどうか
+            if (Mathf.Abs(npadState.analogStickL.fy) > DeadZone)
+            {
+                stickInfos[index].x = -npadState.analogStickL.fy;
+                npadState.buttons |= (npadState.analogStickL.fy > 0) ? NpadButton.StickLLeft : NpadButton.StickLRight;
+            }
+            else
+            {
+                stickInfos[index].x = 0.0f;
+            }
         }
         else
         {
-            stickInfos[index].right.x = 0.0f;
-        }
-        //デッドゾーンを超えているかどうか
-        if (Mathf.Abs(npadState.analogStickR.fy) > DeadZone)
-        {
-            stickInfos[index].right.y = npadState.analogStickR.fy;
-            npadState.buttons |= (npadState.analogStickR.fy > 0) ? NpadButton.StickRUp : NpadButton.StickRDown;
-        }
-        else
-        {
-            stickInfos[index].right.y = 0.0f;
-        }
-        //左のジョイスティック
-        //デッドゾーンを超えているかどうか
-        if (Mathf.Abs(npadState.analogStickL.fx) > DeadZone)
-        {
-            stickInfos[index].left.x = npadState.analogStickL.fx;
-            npadState.buttons |= (npadState.analogStickL.fx > 0) ? NpadButton.StickLRight : NpadButton.StickLLeft;
-        }
-        else
-        {
-            stickInfos[index].left.x = 0.0f;
-        }
-        //デッドゾーンを超えているかどうか
-        if (Mathf.Abs(npadState.analogStickL.fy) > DeadZone)
-        {
-            stickInfos[index].left.y = npadState.analogStickL.fy;
-            npadState.buttons |= (npadState.analogStickL.fy > 0) ? NpadButton.StickLUp : NpadButton.StickLDown;
-        }
-        else
-        {
-            stickInfos[index].left.y = 0.0f;
+            //デッドゾーンを超えているかどうか
+            if (Mathf.Abs(npadState.analogStickR.fx) > DeadZone)
+            {
+                stickInfos[index].y = -npadState.analogStickR.fx;
+                npadState.buttons |= (npadState.analogStickR.fx > 0) ? NpadButton.StickRDown : NpadButton.StickRUp;
+            }
+            else
+            {
+                stickInfos[index].y = 0.0f;
+            }
+            //デッドゾーンを超えているかどうか
+            if (Mathf.Abs(npadState.analogStickR.fy) > DeadZone)
+            {
+                stickInfos[index].x = npadState.analogStickR.fy;
+                npadState.buttons |= (npadState.analogStickR.fy > 0) ? NpadButton.StickRRight : NpadButton.StickRLeft;
+            }
+            else
+            {
+                stickInfos[index].x = 0.0f;
+            }
         }
 
         currentButtons[index] = (long)npadState.buttons;
@@ -201,25 +200,12 @@ static public class SwitchInput
     /// </summary>
     /// <param name="index">コントローラーの番号</param>
     /// <returns>右スティックの入力</returns>
-    static public Vector2 GetRightStick(int index)
+    static public Vector2 GetStick(int index)
     {
         //未接続ならVector2.zero;
         if (!SwitchManager.GetInstance().IsConnect(index)) return Vector2.zero;
-        return stickInfos[index].right;
+        return stickInfos[index];
     }
-
-    /// <summary>
-    /// 左スティックの入力を取得
-    /// </summary>
-    /// <param name="index">コントローラーの番号</param>
-    /// <returns>左スティックの入力</returns>
-    static public Vector2 GetLeftStick(int index)
-    {
-        //未接続ならVector2.zero;
-        if (!SwitchManager.GetInstance().IsConnect(index)) return Vector2.zero;
-        return stickInfos[index].left;
-    }
-
     /// <summary>
     /// 1フレーム前にボタンを押していたか
     /// </summary>

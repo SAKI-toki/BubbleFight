@@ -42,7 +42,7 @@ public abstract partial class BallBehaviour : MonoBehaviour
                 return;
             }
 
-            var stickInput = SwitchInput.GetLeftStick(ballBehaviour.playerIndex);
+            var stickInput = SwitchInput.GetStick(ballBehaviour.playerIndex);
             Vector3 addPower = new Vector3(stickInput.x, 0, stickInput.y);
 
             AddForceAndTorque(addPower);
