@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public abstract partial class BallBehaviour : MonoBehaviour
 {
@@ -87,6 +88,9 @@ public abstract partial class BallBehaviour : MonoBehaviour
                 //入力方向に力を加える
                 ballBehaviour.thisRigidbody.AddForce(ballBehaviour.lookatDir.normalized * playerStatus.BallBoostPower * ballBehaviour.thisRigidbody.mass);
                 ballBehaviour.boostIntervalTimeCount = playerStatus.BallBoostInterval;
+
+                // ブースト時、画面に放射状のぼかしを加える
+                CoroutineHandler.StartStaticCoroutine(RadialBlur());
             }
         }
 
@@ -113,6 +117,44 @@ public abstract partial class BallBehaviour : MonoBehaviour
             ballBehaviour.thisRigidbody.AddForce(addPower * power * 0.1f);
             //入力方向に回転の力を加える
             ballBehaviour.thisRigidbody.AddTorque(addTorque * power * 0.9f);
+        }
+
+        /// <summary>
+        /// ブースト時、画面に放射状のぼかしを加える
+        /// </summary>
+        IEnumerator RadialBlur()
+        {
+            Debug.Log("RadialBlur()");
+            var camera = CameraManager.GetCamera(ballBehaviour.playerIndex);
+            var radialBlur = camera.GetComponent<RadialBlur>();
+
+            float blurTime = playerStatus.BallBoostInterval;
+            float blurElapsedTime = 0.0f;
+
+            float blurFadeInStartTime = 0.0f;
+            float blurFadeInEndTime = blurTime * 1 / ballBehaviour.thisRigidbody.velocity.magnitude;
+            float blurFadeOutStartTime = blurTime / 2;
+            float blurFadeOutEndTime = blurTime;
+            bool fade = false;
+
+            while (blurTime > blurElapsedTime)
+            {
+                blurElapsedTime += Time.deltaTime;
+
+                if (fade == false)
+                {
+                    // フェイドイン
+                    radialBlur._strength = Mathf.Sin((90 * blurElapsedTime / blurFadeInEndTime) * Mathf.Deg2Rad);
+                    if (blurFadeInEndTime < blurElapsedTime) { fade = true; }
+                }
+                else
+                {
+                    // フェイドアウト
+                    radialBlur._strength = Mathf.Cos((90 * blurElapsedTime / blurTime) * Mathf.Deg2Rad);
+                }
+
+                yield return null;
+            }
         }
 
         public override void OnCollisionEnter(Collision other)
