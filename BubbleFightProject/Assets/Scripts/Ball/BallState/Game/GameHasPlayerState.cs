@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public abstract partial class BallBehaviour : MonoBehaviour
 {
@@ -15,19 +14,21 @@ public abstract partial class BallBehaviour : MonoBehaviour
         GameObject playerRotationObject = null;
         Vector3 initPosition = Vector3.zero;
         Quaternion initRotation = Quaternion.identity;
-
+        ParticleSystem particleSystem = null;
         protected override void Init()
         {
             //プレイヤーの情報を格納
             playerStatus = PlayerTypeManager.GetInstance().GetPlayerStatus(ballBehaviour.playerIndex);
             ballBehaviour.transform.GetComponent<SphereCollider>().material = playerStatus.BallPhysicalMaterial;
             ballBehaviour.thisRigidbody.mass = playerStatus.BallMass;
-            playerTransform = ballBehaviour.transform.GetChild(0).transform;
-            playerAnimationController = playerTransform.GetComponent<PlayerAnimationController>();
+            playerAnimationController = ballBehaviour.GetComponentInChildren<PlayerAnimationController>();
+            playerTransform = playerAnimationController.transform;
             //色をプレイヤーの色に変える
+
             var mat = ballBehaviour.transform.GetComponent<MeshRenderer>().material;
             var color = PlayerColor.GetColor(ballBehaviour.playerIndex);
             mat.SetColor("_ColorDown", color);
+
             //回転しやすいように空のオブジェクトを作成
             playerRotationObject = new GameObject("PlayerRotationObject");
             playerRotationObject.transform.parent = ballBehaviour.transform;
@@ -35,6 +36,8 @@ public abstract partial class BallBehaviour : MonoBehaviour
             playerTransform.localPosition = Vector3.zero;
             initPosition = ballBehaviour.transform.position;
             initRotation = ballBehaviour.transform.rotation;
+
+            particleSystem = ballBehaviour.GetComponentInChildren<ParticleSystem>();
         }
 
         public override BallStateBase Update()
@@ -84,9 +87,7 @@ public abstract partial class BallBehaviour : MonoBehaviour
                     playerAnimationController.AnimationSwitch(PlayerAnimationController.AnimationType.Walk);
                 }
             }
-
             PlayerRotation(ballBehaviour.lookatDir);
-
         }
 
         /// <summary>
@@ -96,7 +97,17 @@ public abstract partial class BallBehaviour : MonoBehaviour
         {
             //ブースト
             ballBehaviour.boostIntervalTimeCount -= Time.deltaTime;
-            if (SwitchAcceleration.GetAcceleration(ballBehaviour.playerIndex).magnitude > 3.0f &&
+            if (ballBehaviour.boostIntervalTimeCount <= 0.0f)
+            {
+                if (!particleSystem.isPlaying) particleSystem.Play();
+            }
+            else
+            {
+                if (!particleSystem.isStopped) particleSystem.Stop();
+            }
+
+            if ((SwitchAcceleration.GetAcceleration(ballBehaviour.playerIndex).magnitude > 3.0f ||
+            SwitchInput.GetButtonDown(ballBehaviour.playerIndex, SwitchButton.Boost)) &&
                  ballBehaviour.boostIntervalTimeCount <= 0.0f)
             {
                 //入力方向に力を加える
@@ -176,10 +187,13 @@ public abstract partial class BallBehaviour : MonoBehaviour
                         if (!PlayerJoinManager.IsJoin(goalNumber) || PointManager.GetPoint(goalNumber) <= 0) return;
 
                         PointManager.GoalCalculate(goalNumber);
+                        if (PointManager.GetPoint(ballBehaviour.playerIndex) > 0) PointManager.GoalCalculate(ballBehaviour.playerIndex);
 
                         ballBehaviour.transform.position = initPosition;
                         ballBehaviour.transform.rotation = initRotation;
                         ballBehaviour.thisRigidbody.velocity = Vector3.zero;
+
+                        ballBehaviour.boostIntervalTimeCount = 0.0f;
                     }
                     break;
             }
