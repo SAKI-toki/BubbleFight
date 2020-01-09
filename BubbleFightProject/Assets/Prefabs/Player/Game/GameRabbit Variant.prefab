@@ -67,16 +67,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 750442784579554062, guid: a95b2d810e60d5649924913dd983d71a,
-        type: 3}
-      propertyPath: skinMeshRenderer
-      value: 
-      objectReference: {fileID: 7270012204823849444}
     - target: {fileID: 5623831597409846874, guid: a95b2d810e60d5649924913dd983d71a,
         type: 3}
       propertyPath: animator
       value: 
       objectReference: {fileID: 6535798146100544241}
+    - target: {fileID: 750442784579554062, guid: a95b2d810e60d5649924913dd983d71a,
+        type: 3}
+      propertyPath: skinMeshRenderer
+      value: 
+      objectReference: {fileID: 7270012204823849444}
     - target: {fileID: 220790702701580783, guid: a95b2d810e60d5649924913dd983d71a,
         type: 3}
       propertyPath: m_Bones.Array.data[0]

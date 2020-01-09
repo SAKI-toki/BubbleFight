@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1466357930766992116}
   - component: {fileID: 7519834329787226258}
   - component: {fileID: 4063578691180799558}
-  - component: {fileID: 3481246479687572610}
   - component: {fileID: 6144879996313191305}
   m_Layer: 0
   m_Name: GameBall
@@ -61,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 478490545e21f3f48bfffac31ab83c0e, type: 2}
+  - {fileID: 2100000, guid: 85f32f27ea14f97429c59918e013dcfd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,22 +109,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3481246479687572610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9115919894792072580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7eb3cdd3fe461c14c8db1fca2361fa88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flashColor: {r: 0, g: 0, b: 0, a: 1}
-  intervalTime: 0
-  meshRenderer: {fileID: 1466357930766992116}
-  skinMeshRenderer: {fileID: 0}
 --- !u!114 &6144879996313191305
 MonoBehaviour:
   m_ObjectHideFlags: 0

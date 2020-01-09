@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public abstract partial class BallBehaviour : MonoBehaviour
 {
@@ -26,8 +27,7 @@ public abstract partial class BallBehaviour : MonoBehaviour
             //色をプレイヤーの色に変える
             var mat = ballBehaviour.transform.GetComponent<MeshRenderer>().material;
             var color = PlayerColor.GetColor(ballBehaviour.playerIndex);
-            color.a = 0.8f;
-            mat.color = color;
+            mat.SetColor("_ColorDown", color);
             //回転しやすいように空のオブジェクトを作成
             playerRotationObject = new GameObject("PlayerRotationObject");
             playerRotationObject.transform.parent = ballBehaviour.transform;
