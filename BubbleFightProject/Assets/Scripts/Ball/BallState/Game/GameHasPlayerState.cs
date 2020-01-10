@@ -154,7 +154,7 @@ public abstract partial class BallBehaviour : MonoBehaviour
         void PlayerRotation(Vector3 lookatDir)
         {
             if (lookatDir == Vector3.zero) return;
-            //プレイヤーの回転
+
             playerRotationObject.transform.position = Vector3.zero;
             playerRotationObject.transform.LookAt(Vector3.Cross(playerTransform.right, Vector3.up));
             var startQ = playerRotationObject.transform.rotation;
