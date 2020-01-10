@@ -73,7 +73,7 @@ public class PlayerJoinManager : MonoBehaviour
     }
 
     //参加かどうか
-    static bool[] isJoins = { true, true, false, false };
+    static bool[] isJoins = { true, true, true, true };
 
     static public bool IsJoin(int index) { return isJoins[index]; }
 }

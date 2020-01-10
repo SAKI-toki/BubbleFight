@@ -37,6 +37,9 @@ public class ResultManager : MonoBehaviour
             player.transform.position = playerPosArray[i].transform.position;
             player.transform.rotation = playerPosArray[i].transform.rotation;
             player.transform.localScale = playerPosArray[i].transform.localScale;
+            var pos = player.transform.GetChild(0).transform.localPosition;
+            pos.y = 0;
+            player.transform.GetChild(0).transform.localPosition = pos;
 
             // くす玉生成
             GameObject kusudama = Instantiate(
