@@ -187,8 +187,10 @@ public abstract partial class BallBehaviour : MonoBehaviour
                         if (!PlayerJoinManager.IsJoin(goalNumber) || PointManager.GetPoint(goalNumber) <= 0) return;
 
                         PointManager.GoalCalculate(goalNumber);
+                        //自分自身が入ったら自分のポイントも減る
                         if (PointManager.GetPoint(ballBehaviour.playerIndex) > 0) PointManager.GoalCalculate(ballBehaviour.playerIndex);
 
+                        //初期位置にリスポーン
                         ballBehaviour.transform.position = initPosition;
                         ballBehaviour.transform.rotation = initRotation;
                         ballBehaviour.thisRigidbody.velocity = Vector3.zero;
