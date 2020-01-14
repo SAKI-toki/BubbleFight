@@ -12,11 +12,6 @@ public partial class BallBehaviour : MonoBehaviour
         ParticleSystem particleSystem = null;
         protected override void Init()
         {
-            //色をプレイヤーの色に変える
-
-            var mat = ballBehaviour.transform.GetComponent<MeshRenderer>().material;
-            var color = PlayerColor.GetColor(ballBehaviour.playerIndex);
-            mat.SetColor("_ColorDown", color);
 
             particleSystem = ballBehaviour.GetComponentInChildren<ParticleSystem>();
         }

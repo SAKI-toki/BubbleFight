@@ -49,6 +49,11 @@ public partial class BallBehaviour : MonoBehaviour
             initPosition = transform.position;
             initRotation = transform.rotation;
 
+            //色をプレイヤーの色に変える
+            var mat = transform.GetComponent<MeshRenderer>().material;
+            var color = PlayerColor.GetColor(playerIndex);
+            mat.SetColor("_ColorDown", color);
+
             //回転しやすいように空のオブジェクトを作成
             playerRotationObject = new GameObject("PlayerRotationObject");
             playerRotationObject.transform.parent = transform;
