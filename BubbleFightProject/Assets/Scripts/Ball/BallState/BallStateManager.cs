@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract partial class BallBehaviour : MonoBehaviour
+public partial class BallBehaviour : MonoBehaviour
 {
     /// <summary>
     /// ボールのステートの基底クラス
@@ -8,13 +8,15 @@ public abstract partial class BallBehaviour : MonoBehaviour
     protected abstract class BallStateBase
     {
         protected BallBehaviour ballBehaviour;
+        protected BallStateManager ballStateManager;
 
         /// <summary>
         /// ステートの初期化
         /// </summary>
-        public void StateInit(BallBehaviour argBallBehaviour)
+        public void StateInit(BallBehaviour argBallBehaviour, BallStateManager argBallStateManager)
         {
             ballBehaviour = argBallBehaviour;
+            ballStateManager = argBallStateManager;
             Init();
         }
 
@@ -88,7 +90,7 @@ public abstract partial class BallBehaviour : MonoBehaviour
 
             if (IsValidState()) currentBallState.Destroy();
             currentBallState = nextBallState;
-            if (IsValidState()) currentBallState.StateInit(ballBehaviour);
+            if (IsValidState()) currentBallState.StateInit(ballBehaviour, this);
         }
 
         /// <summary>

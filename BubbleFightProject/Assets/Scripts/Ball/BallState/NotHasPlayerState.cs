@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-public abstract partial class BallBehaviour : MonoBehaviour
+public partial class BallBehaviour : MonoBehaviour
 {
     /// <summary>
     /// プレイヤーが入っていないステート
     /// </summary>
-    protected class GameNotHasPlayerState : BallStateBase
+    protected class NotHasPlayerState : BallStateBase
     {
         public override void OnCollisionEnter(Collision other)
         {

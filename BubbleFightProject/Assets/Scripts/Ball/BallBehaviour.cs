@@ -5,57 +5,81 @@
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SphereCollider))]
-public abstract partial class BallBehaviour : MonoBehaviour
+public partial class BallBehaviour : MonoBehaviour
 {
-    protected Rigidbody thisRigidbody;
-    protected Vector3 lookatDir = Vector3.zero;
+    Rigidbody thisRigidbody;
+    Vector3 lookatDir = Vector3.zero;
 
     //操作するプレイヤー
-    protected int playerIndex = int.MaxValue;
+    int playerIndex = int.MaxValue;
 
     //当たる前の力を保持する変数
-    protected Vector3 prevVelocity = Vector3.zero;
+    Vector3 prevVelocity = Vector3.zero;
 
-    protected BallStateManager ballStateManager = new BallStateManager();
+    BallStateManager ballStateManager = new BallStateManager();
 
     //入力を受け付けない時間
-    protected float cantInputTime = 0.0f;
+    float cantInputTime = 0.0f;
     //ブーストの間隔の時間を測る
-    protected float boostIntervalTimeCount = 0.0f;
+    float boostIntervalTimeCount = 0.0f;
 
     [SerializeField, Tooltip("ボールの情報")]
-    protected BallScriptableObject ballScriptableObject = null;
-
+    BallScriptableObject ballScriptableObject = null;
+    Vector3 initPosition = Vector3.zero;
+    Quaternion initRotation = Quaternion.identity;
+    Transform playerTransform = null;
+    Quaternion playerRotation = Quaternion.identity;
+    GameObject playerRotationObject = null;
+    PlayerTypeStatusScriptableObject playerStatus = null;
+    PlayerAnimationController playerAnimationController = null;
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
-        BallAwake();
     }
 
     void Start()
     {
         thisRigidbody.maxAngularVelocity = ballScriptableObject.MaxAngularVelocity;
-        BallStart();
+        if (IsInPlayer())
+        {
+            //プレイヤーの情報を格納
+            playerStatus = PlayerTypeManager.GetInstance().GetPlayerStatus(playerIndex);
+            transform.GetComponent<SphereCollider>().material = playerStatus.BallPhysicalMaterial;
+            thisRigidbody.mass = playerStatus.BallMass;
+            playerAnimationController = GetComponentInChildren<PlayerAnimationController>();
+            playerTransform = playerAnimationController.transform;
+            initPosition = transform.position;
+            initRotation = transform.rotation;
+
+            //回転しやすいように空のオブジェクトを作成
+            playerRotationObject = new GameObject("PlayerRotationObject");
+            playerRotationObject.transform.parent = transform;
+            playerTransform.localPosition = Vector3.zero;
+
+            ballStateManager.Init(this, new HasPlayerState());
+        }
+        else
+        {
+            ballStateManager.Init(this, new NotHasPlayerState());
+        }
     }
 
     void Update()
     {
         prevVelocity = thisRigidbody.velocity;
         thisRigidbody.AddForce(Vector3.up * -ballScriptableObject.Gravity);
-        BallUpdate();
         ballStateManager.Update();
     }
 
     void LateUpdate()
     {
-        BallLateUpdate();
         RestrictVelocity();
         ballStateManager.LateUpdate();
+        if (IsInPlayer()) playerTransform.rotation = playerRotation;
     }
 
     void OnDestroy()
     {
-        BallOnDestroy();
         ballStateManager.Destroy();
     }
 
@@ -89,7 +113,7 @@ public abstract partial class BallBehaviour : MonoBehaviour
     /// <summary>
     /// 向く方向の更新
     /// </summary>
-    protected void UpdateLookatDirection(Vector3 addPower)
+    void UpdateLookatDirection(Vector3 addPower)
     {
         if (addPower.x == 0 && addPower.z == 0)
         {
@@ -104,18 +128,26 @@ public abstract partial class BallBehaviour : MonoBehaviour
             lookatDir.z = addPower.z;
         }
     }
-
-    void OnCollisionEnter(Collision other) { BallOnCollisionEnter(other); ballStateManager.OnCollisionEnter(other); }
-    void OnCollisionStay(Collision other) { BallOnCollisionStay(other); ballStateManager.OnCollisionStay(other); }
-    void OnCollisionExit(Collision other) { BallOnCollisionExit(other); ballStateManager.OnCollisionExit(other); }
-    void OnTriggerEnter(Collider other) { BallOnTriggerEnter(other); ballStateManager.OnTriggerEnter(other); }
-    void OnTriggerStay(Collider other) { BallOnTriggerStay(other); ballStateManager.OnTriggerStay(other); }
-    void OnTriggerExit(Collider other) { BallOnTriggerExit(other); ballStateManager.OnTriggerExit(other); }
+    void OnCollisionEnter(Collision other)
+    {
+        switch (other.gameObject.tag)
+        {
+            case "Ball":
+                CollisionBall(other);
+                break;
+        }
+        ballStateManager.OnCollisionEnter(other);
+    }
+    void OnCollisionStay(Collision other) { ballStateManager.OnCollisionStay(other); }
+    void OnCollisionExit(Collision other) { ballStateManager.OnCollisionExit(other); }
+    void OnTriggerEnter(Collider other) { ballStateManager.OnTriggerEnter(other); }
+    void OnTriggerStay(Collider other) { ballStateManager.OnTriggerStay(other); }
+    void OnTriggerExit(Collider other) { ballStateManager.OnTriggerExit(other); }
 
     /// <summary>
     /// 受けるダメージを計算する
     /// </summary>
-    protected float DamageCalculate(float collisionPower, float hitObjectPower)
+    float DamageCalculate(float collisionPower, float hitObjectPower)
     {
         return DamageCalculator.Damage(collisionPower,
                                         hitObjectPower / (prevVelocity.sqrMagnitude + hitObjectPower));
@@ -149,15 +181,32 @@ public abstract partial class BallBehaviour : MonoBehaviour
         return thisRigidbody;
     }
 
-    protected virtual void BallAwake() { }
-    protected virtual void BallStart() { }
-    protected virtual void BallUpdate() { }
-    protected virtual void BallLateUpdate() { }
-    protected virtual void BallOnDestroy() { }
-    protected virtual void BallOnCollisionEnter(Collision other) { }
-    protected virtual void BallOnCollisionStay(Collision other) { }
-    protected virtual void BallOnCollisionExit(Collision other) { }
-    protected virtual void BallOnTriggerEnter(Collider other) { }
-    protected virtual void BallOnTriggerStay(Collider other) { }
-    protected virtual void BallOnTriggerExit(Collider other) { }
+    /// <summary>
+    /// プレイヤーの回転
+    /// </summary>
+    void PlayerRotation(Vector3 lookatDir)
+    {
+        if (lookatDir == Vector3.zero) return;
+
+        playerRotationObject.transform.position = Vector3.zero;
+        playerRotationObject.transform.LookAt(Vector3.Cross(playerTransform.right, Vector3.up));
+        var startQ = playerRotationObject.transform.rotation;
+        playerRotationObject.transform.LookAt(lookatDir);
+        var endQ = playerRotationObject.transform.rotation;
+        playerRotation = Quaternion.Lerp(startQ, endQ, 10 * Time.deltaTime);
+    }
+
+    /// <summary>
+    /// ボールとの衝突
+    /// </summary>
+    void CollisionBall(Collision other)
+    {
+        //跳ね返りの強さ
+        float bounceAddPower = other.relativeVelocity.sqrMagnitude > ballScriptableObject.CantInputHitPower ?
+                                ballScriptableObject.StrongHitBounceAddPower : ballScriptableObject.WeakHitBounceAddPower;
+        var velocity = thisRigidbody.velocity;
+        velocity.x *= bounceAddPower;
+        velocity.z *= bounceAddPower;
+        thisRigidbody.velocity = velocity;
+    }
 }

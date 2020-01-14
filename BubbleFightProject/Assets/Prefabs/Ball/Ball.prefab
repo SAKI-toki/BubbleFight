@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8252730825435612316}
   - component: {fileID: 7213466621988893078}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: BoostParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4711,9 +4711,9 @@ GameObject:
   - component: {fileID: 1466357930766992116}
   - component: {fileID: 7519834329787226258}
   - component: {fileID: 4063578691180799558}
-  - component: {fileID: 6144879996313191305}
+  - component: {fileID: 5292204108031782743}
   m_Layer: 0
-  m_Name: GameBall
+  m_Name: Ball
   m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4808,7 +4808,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6144879996313191305
+--- !u!114 &5292204108031782743
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4817,7 +4817,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9115919894792072580}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b6555eaa34f7314383601b99ecff552, type: 3}
+  m_Script: {fileID: 11500000, guid: 0792d5362c606564fab9bf20f8800e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ballScriptableObject: {fileID: 11400000, guid: c8b278ad44638554c9d6fb47c5520bbe,
