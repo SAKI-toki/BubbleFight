@@ -20,8 +20,6 @@ public partial class BallBehaviour : MonoBehaviour
 
     //入力を受け付けない時間
     float cantInputTime = 0.0f;
-    //ブーストの間隔の時間を測る
-    float boostIntervalTimeCount = 0.0f;
 
     [SerializeField, Tooltip("ボールの情報")]
     BallScriptableObject ballScriptableObject = null;

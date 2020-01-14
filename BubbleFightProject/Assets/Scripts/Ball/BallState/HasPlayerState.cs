@@ -7,6 +7,8 @@ public partial class BallBehaviour : MonoBehaviour
     /// </summary>
     protected class HasPlayerState : BallStateBase
     {
+        //ブーストの間隔の時間を測る
+        float boostIntervalTimeCount = 0.0f;
         ParticleSystem particleSystem = null;
         protected override void Init()
         {
@@ -70,8 +72,8 @@ public partial class BallBehaviour : MonoBehaviour
         void UpdateBoost()
         {
             //ブースト
-            ballBehaviour.boostIntervalTimeCount -= Time.deltaTime;
-            if (ballBehaviour.boostIntervalTimeCount <= 0.0f)
+            boostIntervalTimeCount -= Time.deltaTime;
+            if (boostIntervalTimeCount <= 0.0f)
             {
                 if (!particleSystem.isPlaying) particleSystem.Play();
             }
@@ -82,7 +84,7 @@ public partial class BallBehaviour : MonoBehaviour
 
             if ((SwitchAcceleration.GetAcceleration(ballBehaviour.playerIndex).magnitude > 3.0f ||
             SwitchInput.GetButtonDown(ballBehaviour.playerIndex, SwitchButton.Boost)) &&
-                 ballBehaviour.boostIntervalTimeCount <= 0.0f)
+                 boostIntervalTimeCount <= 0.0f)
             {
                 //入力方向に力を加える
                 ballBehaviour.thisRigidbody.AddForce(
@@ -90,7 +92,7 @@ public partial class BallBehaviour : MonoBehaviour
                     ballBehaviour.playerStatus.BallBoostPower *
                     ballBehaviour.thisRigidbody.mass);
 
-                ballBehaviour.boostIntervalTimeCount = ballBehaviour.playerStatus.BallBoostInterval;
+                boostIntervalTimeCount = ballBehaviour.playerStatus.BallBoostInterval;
             }
         }
 
