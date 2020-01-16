@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ResultManager : MonoBehaviour
@@ -22,6 +23,8 @@ public class ResultManager : MonoBehaviour
     [SerializeField]
     AudioSource aud = null;
 
+    bool animEnd = false;
+
     void Start()
     {
         PointManager.ApplyRank();
@@ -30,6 +33,15 @@ public class ResultManager : MonoBehaviour
         Generate();
         BgmManager.GetInstance().Stop();
         StartCoroutine(ResultStart());
+    }
+
+    void Update()
+    {
+        if (!animEnd) return;
+        if (SwitchInput.GetButtonDown(0, SwitchButton.Ok) || Input.GetKeyDown(KeyCode.Return))
+        {
+            SceneManager.LoadScene("TitleScene");
+        }
     }
 
     // 動物とくす玉を生成
@@ -115,6 +127,7 @@ public class ResultManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);
         BgmManager.GetInstance().Play(BgmEnum.Result, false);
+        animEnd = true;
     }
 
     // くす玉のアニメーションを再生
