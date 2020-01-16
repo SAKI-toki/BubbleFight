@@ -12,7 +12,6 @@ public partial class BallBehaviour : MonoBehaviour
         ParticleSystem particleSystem = null;
         protected override void Init()
         {
-
             particleSystem = ballBehaviour.GetComponentInChildren<ParticleSystem>();
         }
 
