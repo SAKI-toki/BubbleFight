@@ -1,26 +1,19 @@
 ﻿using UnityEngine;
 
-public abstract partial class BallBehaviour : MonoBehaviour
+public partial class BallBehaviour : MonoBehaviour
 {
     /// <summary>
     /// プレイヤーが入っているステート
     /// </summary>
-    protected class StageVotingHasPlayerState : BallStateBase
+    protected class HasPlayerState : BallStateBase
     {
-        PlayerTypeStatusScriptableObject playerStatus;
-        PlayerAnimationController playerAnimationController = null;
-
+        //ブーストの間隔の時間を測る
+        float boostIntervalTimeCount = 0.0f;
+        ParticleSystem particleSystem = null;
         protected override void Init()
         {
-            playerStatus = PlayerTypeManager.GetInstance().GetPlayerStatus(ballBehaviour.playerIndex);
-            ballBehaviour.transform.GetComponent<SphereCollider>().material = playerStatus.BallPhysicalMaterial;
-            ballBehaviour.thisRigidbody.mass = playerStatus.BallMass;
-            playerAnimationController = ballBehaviour.transform.GetChild(0).GetComponent<PlayerAnimationController>();
 
-            var mat = ballBehaviour.transform.GetComponent<MeshRenderer>().material;
-            var color = PlayerColor.GetColor(ballBehaviour.playerIndex);
-            color.a = 0.8f;
-            mat.color = color;
+            particleSystem = ballBehaviour.GetComponentInChildren<ParticleSystem>();
         }
 
         public override BallStateBase Update()
@@ -43,26 +36,29 @@ public abstract partial class BallBehaviour : MonoBehaviour
             }
 
             var stickInput = SwitchInput.GetStick(ballBehaviour.playerIndex);
+
             Vector3 addPower = new Vector3(stickInput.x, 0, stickInput.y);
-
+            //力を加える
             AddForceAndTorque(addPower);
+            //向きを更新
             ballBehaviour.UpdateLookatDirection(addPower);
-
+            //アニメーションの更新
             if (stickInput.sqrMagnitude == 0)
             {
-                playerAnimationController.AnimationSwitch(PlayerAnimationController.AnimationType.Idle);
+                ballBehaviour.playerAnimationController.AnimationSwitch(PlayerAnimationController.AnimationType.Idle);
             }
             else
             {
                 if (stickInput.magnitude > 0.9f)
                 {
-                    playerAnimationController.AnimationSwitch(PlayerAnimationController.AnimationType.Run);
+                    ballBehaviour.playerAnimationController.AnimationSwitch(PlayerAnimationController.AnimationType.Run);
                 }
                 else
                 {
-                    playerAnimationController.AnimationSwitch(PlayerAnimationController.AnimationType.Walk);
+                    ballBehaviour.playerAnimationController.AnimationSwitch(PlayerAnimationController.AnimationType.Walk);
                 }
             }
+            ballBehaviour.PlayerRotation(ballBehaviour.lookatDir);
         }
 
         /// <summary>
@@ -71,13 +67,27 @@ public abstract partial class BallBehaviour : MonoBehaviour
         void UpdateBoost()
         {
             //ブースト
-            ballBehaviour.boostIntervalTimeCount -= Time.deltaTime;
-            if (SwitchInput.GetButtonDown(ballBehaviour.playerIndex, SwitchButton.Boost) &&
-                 ballBehaviour.boostIntervalTimeCount <= 0.0f)
+            boostIntervalTimeCount -= Time.deltaTime;
+            if (boostIntervalTimeCount <= 0.0f)
+            {
+                if (!particleSystem.isPlaying) particleSystem.Play();
+            }
+            else
+            {
+                if (!particleSystem.isStopped) particleSystem.Stop();
+            }
+
+            if ((SwitchAcceleration.GetAcceleration(ballBehaviour.playerIndex).magnitude > 3.0f ||
+            SwitchInput.GetButtonDown(ballBehaviour.playerIndex, SwitchButton.Boost)) &&
+                 boostIntervalTimeCount <= 0.0f)
             {
                 //入力方向に力を加える
-                ballBehaviour.thisRigidbody.AddForce(ballBehaviour.lookatDir.normalized * playerStatus.BallBoostPower * ballBehaviour.thisRigidbody.mass);
-                ballBehaviour.boostIntervalTimeCount = playerStatus.BallBoostInterval;
+                ballBehaviour.thisRigidbody.AddForce(
+                    ballBehaviour.lookatDir.normalized *
+                    ballBehaviour.playerStatus.BallBoostPower *
+                    ballBehaviour.thisRigidbody.mass);
+
+                boostIntervalTimeCount = ballBehaviour.playerStatus.BallBoostInterval;
             }
         }
 
@@ -99,7 +109,10 @@ public abstract partial class BallBehaviour : MonoBehaviour
             Vector3 addTorque = Vector3.zero;
             addTorque.x = addPower.z;
             addTorque.z = -addPower.x;
-            float power = playerStatus.BallMovePower * ballBehaviour.thisRigidbody.mass * Mathf.Pow(angle + 1, playerStatus.BallEasyCurveWeight);
+            //力
+            float power = ballBehaviour.playerStatus.BallMovePower *
+                ballBehaviour.thisRigidbody.mass *
+                Mathf.Pow(angle + 1, ballBehaviour.playerStatus.BallEasyCurveWeight);
             //入力方向に力を加える
             ballBehaviour.thisRigidbody.AddForce(addPower * power * 0.1f);
             //入力方向に回転の力を加える
@@ -119,11 +132,21 @@ public abstract partial class BallBehaviour : MonoBehaviour
                         {
                             ballBehaviour.SetCantInputTime(
                                 other.relativeVelocity.sqrMagnitude * ballBehaviour.ballScriptableObject.HitPowerPercenage);
-                            //ダメージに応じて揺らす幅を変える
-                            float damage = ballBehaviour.DamageCalculate(other.relativeVelocity.sqrMagnitude,
-                                                                            otherballBehaviour.prevVelocity.sqrMagnitude) *
-                                            (otherballBehaviour.IsInPlayer() ? 1.0f : 0.1f);
                         }
+                    }
+                    break;
+                case "Goal":
+                    {
+                        //入れたゴールの番号を取得
+                        int goalNumber = other.gameObject.GetComponent<GoalController>().GetGoalNumber();
+
+                        if (!PlayerJoinManager.IsJoin(goalNumber) || PointManager.GetPoint(goalNumber) <= 0) return;
+
+                        PointManager.GoalCalculate(goalNumber);
+                        //自分自身が入ったら自分のポイントも減る
+                        if (PointManager.GetPoint(ballBehaviour.playerIndex) > 0) PointManager.GoalCalculate(ballBehaviour.playerIndex);
+
+                        ballStateManager.TranslationState(new RespawnState());
                     }
                     break;
             }
