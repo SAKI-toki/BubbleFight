@@ -146,6 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: {fileID: 8300000, guid: 72163aa89394be74489b22f327ab25ec, type: 3}
   game: {fileID: 8300000, guid: 09fb82f0f2a0846408d9079e650f5689, type: 3}
+  result: {fileID: 8300000, guid: 11a9b836e020ee045a333871e7d3c5aa, type: 3}
 --- !u!114 &1718711354309908496
 MonoBehaviour:
   m_ObjectHideFlags: 0

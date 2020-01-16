@@ -17,6 +17,7 @@ public partial class BallBehaviour : MonoBehaviour
 
         public override BallStateBase Update()
         {
+            if (Time.timeScale == 0.0f) return this;
             Move();
             UpdateBoost();
             return this;

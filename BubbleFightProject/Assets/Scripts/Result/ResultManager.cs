@@ -19,12 +19,16 @@ public class ResultManager : MonoBehaviour
     GameObject[] kusudamaArray = null;
     Image[] rankTextArray = null;
 
+    [SerializeField]
+    AudioSource aud = null;
+
     void Start()
     {
         PointManager.ApplyRank();
         kusudamaArray = new GameObject[PlayerCount.MaxValue];
         rankTextArray = new Image[PlayerCount.MaxValue];
         Generate();
+        BgmManager.GetInstance().Stop();
         StartCoroutine(ResultStart());
     }
 
@@ -104,9 +108,13 @@ public class ResultManager : MonoBehaviour
             }
             if (counts[i].Count != 0)
             {
+                aud.Play();
                 yield return new WaitForSeconds(intervalTime);
             }
         }
+
+        yield return new WaitForSeconds(1.0f);
+        BgmManager.GetInstance().Play(BgmEnum.Result, false);
     }
 
     // くす玉のアニメーションを再生

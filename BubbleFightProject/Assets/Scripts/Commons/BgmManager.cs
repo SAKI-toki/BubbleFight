@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum BgmEnum { Title, Game, None };
+public enum BgmEnum { Title, Game, Result, None };
 
 /// <summary>
 /// BGMの管理クラス
@@ -15,7 +15,7 @@ public class BgmManager : Singleton<BgmManager>
     BgmEnum currentBgm = BgmEnum.None;
 
     [SerializeField]
-    AudioClip title = null, game = null;
+    AudioClip title = null, game = null, result = null;
 
     public override void MyStart()
     {
@@ -47,6 +47,9 @@ public class BgmManager : Singleton<BgmManager>
                 break;
             case BgmEnum.Game:
                 aud.clip = game;
+                break;
+            case BgmEnum.Result:
+                aud.clip = result;
                 break;
             case BgmEnum.None:
                 aud.clip = null;
