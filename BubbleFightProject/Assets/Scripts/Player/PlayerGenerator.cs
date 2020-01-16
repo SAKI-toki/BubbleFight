@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
 /// <summary>
 /// プレイヤーの生成器
@@ -49,32 +48,29 @@ public class PlayerGenerator : MonoBehaviour
         player.transform.parent = ball.transform;
         player.transform.localPosition = Vector3.zero;
         player.transform.localRotation = Quaternion.identity;
-    }
 
-    /// <summary>
-    /// ランダムな生成位置を返す
-    /// </summary>
-    public PositionAndRotation GetRandomGenerateTransform()
-    {
-        int rand = Random.Range(0, generateTransforms.Length);
-        return new PositionAndRotation(generateTransforms[rand].position, generateTransforms[rand].rotation);
-    }
-}
-
-/// <summary>
-/// 位置と回転を保持するクラス
-/// </summary>
-public class PositionAndRotation
-{
-    public Vector3 position;
-    public Quaternion rotation;
-
-    /// <summary>
-    /// コンストラクタ
-    /// </summary>
-    public PositionAndRotation(Vector3 pos, Quaternion rot)
-    {
-        position = pos;
-        rotation = rot;
+        var uiPlayer = PlayerTypeManager.GetInstance().GeneratePlayer(index, PlayerTypeManager.SceneType.Object);
+        uiPlayer.layer = LayerMask.NameToLayer("3DUI");
+        foreach (var uiPlayerTransform in uiPlayer.GetComponentsInChildren<Transform>())
+        {
+            uiPlayerTransform.gameObject.layer = LayerMask.NameToLayer("3DUI");
+        }
+        const float length = 2.0f;
+        switch (index)
+        {
+            case 0:
+                uiPlayer.transform.position = new Vector3(0, 0, length);
+                break;
+            case 1:
+                uiPlayer.transform.position = new Vector3(length, 0, 0);
+                break;
+            case 2:
+                uiPlayer.transform.position = new Vector3(0, 0, -length);
+                break;
+            case 3:
+                uiPlayer.transform.position = new Vector3(-length, 0, 0);
+                break;
+        }
+        uiPlayer.transform.LookAt(Vector3.zero);
     }
 }

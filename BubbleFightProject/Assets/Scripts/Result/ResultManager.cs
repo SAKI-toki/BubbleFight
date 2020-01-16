@@ -13,15 +13,17 @@ public class ResultManager : MonoBehaviour
     GameObject[] kusudamaPrefab = null;
     [SerializeField]
     GameObject kamifubukiPrefab = null;
+    [SerializeField]
+    Sprite[] rankSprites = null;
 
     GameObject[] kusudamaArray = null;
-    Text[] rankTextArray = null;
+    Image[] rankTextArray = null;
 
     void Start()
     {
         PointManager.ApplyRank();
         kusudamaArray = new GameObject[PlayerCount.MaxValue];
-        rankTextArray = new Text[PlayerCount.MaxValue];
+        rankTextArray = new Image[PlayerCount.MaxValue];
         Generate();
         StartCoroutine(ResultStart());
     }
@@ -55,10 +57,10 @@ public class ResultManager : MonoBehaviour
 
                 foreach (Transform grandchild in child)
                 {
-                    if (grandchild.name != "RankText") continue;
+                    if (grandchild.name != "RankImage") continue;
 
-                    rankTextArray[i] = grandchild.GetComponent<Text>();
-                    rankTextArray[i].text = PointManager.GetRank(i).ToString() + "位";
+                    rankTextArray[i] = grandchild.GetComponent<Image>();
+                    rankTextArray[i].sprite = rankSprites[PointManager.GetRank(i) - 1];
                     break;
                 }
                 break;

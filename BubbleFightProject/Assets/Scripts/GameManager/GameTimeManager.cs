@@ -11,13 +11,12 @@ public class GameTimeManager : MonoBehaviour
     float playTimeCount = 0.0f;
 
     [SerializeField]
-    UnityEngine.UI.Text pointText = null, timeText = null;
+    UnityEngine.UI.Text timeText = null;
 
 
     void Start()
     {
         playTimeCount = playTime;
-        UpdatePointText();
         UpdateTimeText();
     }
 
@@ -41,7 +40,6 @@ public class GameTimeManager : MonoBehaviour
     private void Update()
     {
         if (!IsPlayGame()) return;
-        UpdatePointText();
         UpdateTimeText();
         int alivePlayerCount = 0;
         for (int i = 0; i < PlayerCount.MaxValue; ++i)
@@ -52,27 +50,6 @@ public class GameTimeManager : MonoBehaviour
         if (alivePlayerCount <= 1)
         {
             playTimeCount = 0.0f;
-        }
-    }
-
-    string nextPointText;
-    /// <summary>
-    /// ポイントテキストの更新
-    /// </summary>
-    void UpdatePointText()
-    {
-        nextPointText = "";
-        for (int i = 0; i < PlayerCount.MaxValue; ++i)
-        {
-            if (!PlayerJoinManager.IsJoin(i)) continue;
-
-            nextPointText += "Player" + (i + 1).ToString() + " : " +
-             PointManager.GetPoint(i) + "P  ";
-        }
-
-        if (nextPointText != pointText.text)
-        {
-            pointText.text = nextPointText;
         }
     }
 

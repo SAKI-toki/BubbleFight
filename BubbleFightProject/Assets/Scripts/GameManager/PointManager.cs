@@ -11,7 +11,7 @@ static public class PointManager
     static bool pointLock = false;
 
     //始まりのポイント
-    const int StartPoint = 5;
+    const int StartPoint = 20;
 
     //ゴールのポイント
     const int GoalPoint = 1;
