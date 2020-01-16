@@ -11,11 +11,15 @@ public class GameManager : MonoBehaviour
     GameTimeManager gameTimeManager = null;
 
     bool endFlag = false;
+    AudioSource aud;
 
     void Start()
     {
         PointManager.Reset();
-        BgmManager.GetInstance().Play(BgmEnum.Game);
+        Time.timeScale = 0.0f;
+        BgmManager.GetInstance().Stop();
+        aud = GetComponent<AudioSource>();
+        StartCoroutine(Countdown());
     }
 
     void Update()
@@ -43,5 +47,29 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
         SceneManager.LoadScene("ResultScene");
+    }
+
+    [SerializeField]
+    GameObject[] countDownImage = null;
+
+    IEnumerator Countdown()
+    {
+        aud.Play();
+        for (int count = countDownImage.Length - 1; count >= 0; count--)
+        {
+            //表示
+            countDownImage[count].SetActive(true);
+            //1秒待つ
+            float t = 0.0f;
+            while (t <= 1.0f)
+            {
+                t += Time.unscaledDeltaTime;
+                yield return null;
+            }
+            //消す
+            countDownImage[count].SetActive(false);
+        }
+        Time.timeScale = 1.0f;
+        BgmManager.GetInstance().Play(BgmEnum.Game);
     }
 }
