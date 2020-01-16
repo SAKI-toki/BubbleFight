@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
 {
@@ -48,7 +49,7 @@ public class TitleManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                Debug.Log("nextScene");
+                SceneManager.LoadScene("GameScene");
             }
         }
 

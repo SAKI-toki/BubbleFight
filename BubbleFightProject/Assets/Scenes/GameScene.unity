@@ -3060,7 +3060,7 @@ PrefabInstance:
     - target: {fileID: 1301506771713847203, guid: 77d5586967c131249acdb08b5b79ab22,
         type: 3}
       propertyPath: playTime
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1301506771713847203, guid: 77d5586967c131249acdb08b5b79ab22,
         type: 3}

@@ -12,6 +12,6 @@ public class PhysicsUnAutoSimulate : Singleton<PhysicsUnAutoSimulate>
 
     public override void MyUpdate()
     {
-        Physics.Simulate(Time.deltaTime);
+        if (Time.deltaTime > 0.0f) Physics.Simulate(Time.deltaTime);
     }
 }

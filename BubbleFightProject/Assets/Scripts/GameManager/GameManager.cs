@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0.0f) return;
         gameTimeManager.AddTime();
         if (!gameTimeManager.IsPlayGame() && !endFlag)
         {
