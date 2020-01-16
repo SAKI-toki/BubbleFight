@@ -1,8 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
 {
@@ -32,8 +29,15 @@ public class TitleManager : MonoBehaviour
 
     bool titleAnimationPlaying = true;
 
+    AudioSource aud = null;
+
+    [SerializeField]
+    AudioClip gachaRotateAudio = null, ballGenerateAudio = null;
+
     private void Start()
     {
+        aud = GetComponent<AudioSource>();
+        BgmManager.GetInstance().Stop();
         StartCoroutine(Gacha());
     }
 
@@ -76,6 +80,7 @@ public class TitleManager : MonoBehaviour
     IEnumerator Gacha()
     {
         gachaAnimator.SetTrigger("TurnTrigger");
+        aud.PlayOneShot(gachaRotateAudio);
         yield return new WaitForSeconds(1.4f);
 
         // ボールを出す数
@@ -90,6 +95,7 @@ public class TitleManager : MonoBehaviour
         while (gachaBallNum > count && titleAnimationPlaying)
         {
             gachaAnimator.SetTrigger("ShakeTrigger");
+            aud.PlayOneShot(ballGenerateAudio);
             // 球の生成
             GachaGenerator(ballSpeed, seed++);
             count++;
@@ -105,9 +111,16 @@ public class TitleManager : MonoBehaviour
             gachaAnimator.SetFloat("Speed", animatorSpeed);
         }
 
-        if (!titleAnimationPlaying) { yield break; }
+        if (!titleAnimationPlaying)
+        {
+            BgmManager.GetInstance().Play(BgmEnum.Title);
+            yield break;
+        }
 
         titleAnimator.SetTrigger("FadeTrigger");
+        var anim = titleAnimator.GetCurrentAnimatorStateInfo(0);
+        yield return new WaitForSeconds(1.0f);
+        BgmManager.GetInstance().Play(BgmEnum.Title);
     }
 
     // タイトルのアニメーション終了(AnimationEvent)

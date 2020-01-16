@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         PointManager.Reset();
+        BgmManager.GetInstance().Play(BgmEnum.Game);
     }
 
     void Update()
