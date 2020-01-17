@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterScelectManager : MonoBehaviour
 {
@@ -84,8 +84,13 @@ public class CharacterScelectManager : MonoBehaviour
 
     private void Start()
     {
+        BgmManager.GetInstance().Play(BgmEnum.Select);
         viewportMin = Camera.main.ViewportToWorldPoint(Vector2.zero);
         viewportMax = Camera.main.ViewportToWorldPoint(Vector2.one);
+        for (int i = 0; i < PlayerCount.MaxValue; ++i)
+        {
+            PlayerJoinManager.SetJoinInfo(i, false);
+        }
 
         for (int i = 0; i < playerNum; ++i)
         {
@@ -120,22 +125,38 @@ public class CharacterScelectManager : MonoBehaviour
     {
         // 各プレイヤー実行
         //----------------------
-        // 未決定
-        if (!playerUI[0].decisionInfo.isDecision)
+        for (int i = 0; i < playerUI.Length; ++i)
         {
-            CursorMove(0);
-        }
-        else
-        {
-            playerUI[0].OkObjAnimation();
-            if (Input.GetKeyDown(KeyCode.Backspace))
+            // 未決定
+            if (!playerUI[i].decisionInfo.isDecision)
             {
-                Cancel(0);
+                CursorMove(i);
+            }
+            else
+            {
+                playerUI[i].OkObjAnimation();
+                Cancel(i);
             }
         }
         //----------------------
 
         AnimalRote();
+
+        if (SwitchInput.GetButtonDown(0, SwitchButton.Pause))
+        {
+            int count = 0;
+            for (int i = 0; i < PlayerCount.MaxValue; ++i)
+            {
+                if (PlayerJoinManager.IsJoin(i))
+                {
+                    ++count;
+                }
+            }
+            if (count >= PlayerCount.MinValue)
+            {
+                SceneManager.LoadScene("GameScene");
+            }
+        }
     }
 
     /// <summary>
@@ -144,19 +165,15 @@ public class CharacterScelectManager : MonoBehaviour
     /// <param name="playerId"></param>
     void CursorMove(int playerId)
     {
-        float x = 0, y = 0;
         float cursorSpeed = 0.015f;
 
-        if (Input.GetKey(KeyCode.W)) { y += cursorSpeed; }
-        if (Input.GetKey(KeyCode.A)) { x -= cursorSpeed; }
-        if (Input.GetKey(KeyCode.S)) { y -= cursorSpeed; }
-        if (Input.GetKey(KeyCode.D)) { x += cursorSpeed; }
+        var stick = SwitchInput.GetStick(playerId) * cursorSpeed;
 
         Vector3 cursorPos = playerUI[playerId].cursor.transform.position;
 
         playerUI[playerId].cursor.transform.position = new Vector3(
-            Mathf.Clamp(cursorPos.x + x,viewportMin.x,viewportMax.x),
-            Mathf.Clamp(cursorPos.y + y, viewportMin.y, viewportMax.y),
+            Mathf.Clamp(cursorPos.x + stick.x, viewportMin.x, viewportMax.x),
+            Mathf.Clamp(cursorPos.y + stick.y, viewportMin.y, viewportMax.y),
             cursorPos.z);
 
         PointerRaycast(playerId);
@@ -180,7 +197,7 @@ public class CharacterScelectManager : MonoBehaviour
             PlayerType type = obj.GetComponent<CharaType>().type;
 
             // 決定
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (SwitchInput.GetButtonDown(playerId, SwitchButton.Ok))
             {
                 Decision(playerId, type);
             }
@@ -227,6 +244,8 @@ public class CharacterScelectManager : MonoBehaviour
             playerUI[playerId].capusuleTransform.position.y - 0.15f,
             animalArray[animalIndex[type]].transform.position.z);
         playerUI[playerId].Decision(type);
+        PlayerJoinManager.SetJoinInfo(playerId, true);
+        PlayerTypeManager.SetPlayerType(playerId, type);
     }
 
     /// <summary>
@@ -234,9 +253,13 @@ public class CharacterScelectManager : MonoBehaviour
     /// </summary>
     void Cancel(int playerId)
     {
-        PlayerType type = playerUI[playerId].decisionInfo.decisionInfoType;
-        animalArray[animalIndex[type]].GetComponent<BoxCollider>().enabled = true;
-        animalArray[animalIndex[type]].transform.localPosition = startAnimal[animalIndex[type]];
-        playerUI[playerId].Cancel();
+        if (SwitchInput.GetButtonDown(playerId, SwitchButton.Cancel))
+        {
+            PlayerType type = playerUI[playerId].decisionInfo.decisionInfoType;
+            animalArray[animalIndex[type]].GetComponent<BoxCollider>().enabled = true;
+            animalArray[animalIndex[type]].transform.localPosition = startAnimal[animalIndex[type]];
+            playerUI[playerId].Cancel();
+            PlayerJoinManager.SetJoinInfo(playerId, false);
+        }
     }
 }

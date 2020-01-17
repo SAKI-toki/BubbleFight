@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GachaManager : MonoBehaviour
 {
@@ -58,6 +56,9 @@ public class GachaManager : MonoBehaviour
                     "下限が上限を超えないように変更してください");
             }
         }
+        ballGeneratIntervalTime = Random.Range(
+            gamePhaseList[gamePhaseNum].ballGeneratIntervalLowerLimitTime,
+            gamePhaseList[gamePhaseNum].ballGeneratIntervalUpperLimitTime);
     }
 
     private void Update()
@@ -69,7 +70,7 @@ public class GachaManager : MonoBehaviour
 
     int ballCurrentNum = 0;
     float ballGeneratIntervalTime = 0.0f;
-    float ballGeneratCountTime = 99.0f;
+    float ballGeneratCountTime = 0.0f;
 
     void BallGenerator()
     {
@@ -124,7 +125,7 @@ public class GachaManager : MonoBehaviour
                     gachaponObj[i].eulerAngles.x,
                     gachaponObj[i].eulerAngles.y + gachaponMoveSpeed,
                     gachaponObj[i].eulerAngles.z);
-                if(gachaponObj[i].eulerAngles.y > gachaponSetRotationYNum[i])
+                if (gachaponObj[i].eulerAngles.y > gachaponSetRotationYNum[i])
                 {
                     gachaponSetRotationYNum[i] = Random.Range(
                         gachaponStartRotation[i] - (gachaponMoveRange / 2),

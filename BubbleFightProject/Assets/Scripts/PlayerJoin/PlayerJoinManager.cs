@@ -76,6 +76,12 @@ public class PlayerJoinManager : MonoBehaviour
     static bool[] isJoins = { true, true, true, true };
 
     static public bool IsJoin(int index) { return isJoins[index]; }
+
+    static public void SetJoinInfo(int index, bool isJoin)
+    {
+        isJoins[index] = isJoin;
+    }
+
 }
 
 /// <summary>

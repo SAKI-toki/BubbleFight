@@ -48,15 +48,15 @@ public class TitleManager : MonoBehaviour
         RenderSettings.skybox = skybox;
         if (!titleAnimationPlaying)
         {
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (SwitchInput.GetButtonDown(0, SwitchButton.Ok))
             {
-                SceneManager.LoadScene("GameScene");
+                SceneManager.LoadScene("CharacterSelectScene");
             }
         }
 
         if (titleAnimationPlaying)
         {
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (SwitchInput.GetButtonDown(0, SwitchButton.Ok))
             {
                 titleAnimator.SetTrigger("SkipTrigger");
             }
