@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebd6fd04824c36c47baee4fe84aeb2e1, type: 3}
   m_Name: GamePhase2
   m_EditorClassIdentifier: 
-  phaseTime: 20
+  phaseTime: 40
   ballNumUpperLimit: 10
   ballSpeed: 1000
-  ballGeneratIntervalUpperLimitTime: 6
-  ballGeneratIntervalLowerLimitTime: 4
+  ballGeneratIntervalUpperLimitTime: 3
+  ballGeneratIntervalLowerLimitTime: 2

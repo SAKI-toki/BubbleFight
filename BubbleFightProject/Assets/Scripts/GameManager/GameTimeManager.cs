@@ -5,8 +5,7 @@
 /// </summary>
 public class GameTimeManager : MonoBehaviour
 {
-    [SerializeField, Tooltip("ゲームの時間")]
-    float playTime = 120.0f;
+    float playTime = 180.0f;
 
     float playTimeCount = 0.0f;
 

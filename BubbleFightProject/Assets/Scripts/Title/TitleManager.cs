@@ -49,7 +49,15 @@ public class TitleManager : MonoBehaviour
         RenderSettings.skybox = skybox;
         if (!titleAnimationPlaying)
         {
-            if (SwitchInput.GetButtonDown(0, SwitchButton.Ok))
+            if (SwitchInput.GetButtonDown(0,
+                nn.hid.NpadButton.A |
+                nn.hid.NpadButton.B |
+                nn.hid.NpadButton.X |
+                nn.hid.NpadButton.Y |
+                nn.hid.NpadButton.Up |
+                nn.hid.NpadButton.Down |
+                nn.hid.NpadButton.Right |
+                nn.hid.NpadButton.Left))
             {
                 SceneManager.LoadScene("CharacterSelectScene");
             }
@@ -57,7 +65,7 @@ public class TitleManager : MonoBehaviour
 
         if (canSkip)
         {
-            if (SwitchInput.GetButtonDown(0, SwitchButton.Ok))
+            if (SwitchInput.GetButtonDown(0, SwitchButton.Pause))
             {
                 titleAnimator.SetTrigger("SkipTrigger");
             }

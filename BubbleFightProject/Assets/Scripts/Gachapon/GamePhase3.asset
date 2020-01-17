@@ -15,5 +15,5 @@ MonoBehaviour:
   phaseTime: 20
   ballNumUpperLimit: 15
   ballSpeed: 1000
-  ballGeneratIntervalUpperLimitTime: 4
-  ballGeneratIntervalLowerLimitTime: 2
+  ballGeneratIntervalUpperLimitTime: 2
+  ballGeneratIntervalLowerLimitTime: 1
