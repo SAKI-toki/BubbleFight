@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// ゲームを管理するクラス
 /// </summary>
+[RequireComponent(typeof(AudioSource))]
 public class GameManager : MonoBehaviour
 {
     [SerializeField, Tooltip("ゲームの時間を管理するクラス")]

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(AudioSource))]
 public class ResultManager : MonoBehaviour
 {
     [SerializeField, Tooltip("くす玉のオフセット")]
@@ -20,13 +21,13 @@ public class ResultManager : MonoBehaviour
     GameObject[] kusudamaArray = null;
     Image[] rankTextArray = null;
 
-    [SerializeField]
     AudioSource aud = null;
 
     bool animEnd = false;
 
     void Start()
     {
+        aud = GetComponent<AudioSource>();
         PointManager.ApplyRank();
         kusudamaArray = new GameObject[PlayerCount.MaxValue];
         rankTextArray = new Image[PlayerCount.MaxValue];
