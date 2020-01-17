@@ -30,6 +30,7 @@ public class TitleManager : MonoBehaviour
     TitleAnimalManager titleAnimalManager = null;
 
     bool titleAnimationPlaying = true;
+    bool canSkip = true;
 
     AudioSource aud = null;
 
@@ -54,7 +55,7 @@ public class TitleManager : MonoBehaviour
             }
         }
 
-        if (titleAnimationPlaying)
+        if (canSkip)
         {
             if (SwitchInput.GetButtonDown(0, SwitchButton.Ok))
             {
@@ -141,5 +142,11 @@ public class TitleManager : MonoBehaviour
     void SkyBoxSwitch()
     {
         RenderSettings.skybox = skybox;
+    }
+
+    // スキップができなくなる(AnimationEvent)
+    void SkipEnd()
+    {
+        canSkip = false;
     }
 }
