@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class TitleAnimalManager : MonoBehaviour
 {
+    #region Enum
+
+    // 動物のスピード種類
     enum AnimalSpeedType
     {
         Slow,
         Normal,
         Fast
     }
+
+    #endregion
+
+    #region Private Class
 
     private class Lane
     {
@@ -20,7 +27,6 @@ public class TitleAnimalManager : MonoBehaviour
         // 次の生成までの時間
         public float nextGenerateTime = 0.0f;
     }
-    Lane[] LaneArray = null;
 
     [System.Serializable]
     private class AnimalData
@@ -51,8 +57,6 @@ public class TitleAnimalManager : MonoBehaviour
             }
         }
     }
-    [SerializeField]
-    AnimalData[] animalData = null;
 
     private class Animal
     {
@@ -65,14 +69,32 @@ public class TitleAnimalManager : MonoBehaviour
             animalId = id;
         }
     }
+
+    #endregion Private Class
+
+    // レーン情報
+    Lane[] laneArray = null;
+
+    // 動物の情報
+    [SerializeField]
+    AnimalData[] animalData = null;
+
+    // 生成した動物
     List<Animal> animalList = new List<Animal>();
+
+    // 動物の生成順番
+    int[] animalGeneratOrder = null;
+    int animalGeneratCurrentIndex = 0;
+
+    [System.NonSerialized]
+    public bool isStart = false;
 
     private void Start()
     {
         int childNum = 0;
         // レーン数を数える
         foreach (Transform child in transform) { ++childNum; }
-        LaneArray = new Lane[childNum];
+        laneArray = new Lane[childNum];
 
         int laneIndex = 0;
         foreach (Transform child in transform)
@@ -81,7 +103,7 @@ public class TitleAnimalManager : MonoBehaviour
             lane.generatePos = child.position;
             lane.elapsedTime = 0.0f;
             lane.nextGenerateTime = Random.Range(0.0f, 2.0f);
-            LaneArray[laneIndex] = lane;
+            laneArray[laneIndex] = lane;
             ++laneIndex;
         }
 
@@ -89,10 +111,10 @@ public class TitleAnimalManager : MonoBehaviour
         {
             animalData[i].Init();
         }
+        animalGeneratOrder = new int[animalData.Length];
+        AnimalGeneratRandom();
     }
 
-    [System.NonSerialized]
-    public bool isStart = false;
 
     private void Update()
     {
@@ -109,24 +131,32 @@ public class TitleAnimalManager : MonoBehaviour
     /// </summary>
     void Generate()
     {
-        for (int i = 0; i < LaneArray.Length; ++i)
+        for (int i = 0; i < laneArray.Length; ++i)
         {
             // 生成時間カウント
-            LaneArray[i].elapsedTime += Time.deltaTime;
+            laneArray[i].elapsedTime += Time.deltaTime;
 
-            if (LaneArray[i].elapsedTime > LaneArray[i].nextGenerateTime)
+            if (laneArray[i].elapsedTime > laneArray[i].nextGenerateTime)
             {
-                int animalIndex = Random.Range(0, animalData.Length);
+                int animalIndex = animalGeneratOrder[animalGeneratCurrentIndex];
 
-                GameObject animalObject = Instantiate(animalData[animalIndex].animalPrefab, LaneArray[i].generatePos, Quaternion.Euler(new Vector3(0, 90, 0)));
+                GameObject animalObject = Instantiate(animalData[animalIndex].animalPrefab, laneArray[i].generatePos, Quaternion.Euler(new Vector3(0, 90, 0)));
                 animalObject.transform.parent = transform;
                 PlayerAnimationController playerAnimationController = animalObject.GetComponent<PlayerAnimationController>();
                 playerAnimationController.AnimationSwitch(PlayerAnimationController.AnimationType.Run);
                 Animal animal = new Animal(animalObject, animalIndex);
                 animalList.Add(animal);
 
-                LaneArray[i].elapsedTime = 0.0f;
-                LaneArray[i].nextGenerateTime = animalData[animalIndex].nextTime;
+                laneArray[i].elapsedTime = 0.0f;
+                laneArray[i].nextGenerateTime = animalData[animalIndex].nextTime;
+                if (animalGeneratCurrentIndex < animalGeneratOrder.Length - 1)
+                {
+                    ++animalGeneratCurrentIndex;
+                }
+                else
+                {
+                    AnimalGeneratRandom();
+                }
             }
         }
     }
@@ -157,6 +187,28 @@ public class TitleAnimalManager : MonoBehaviour
                 Destroy(animalList[i].animalObject);
                 animalList.RemoveAt(i);
             }
+        }
+    }
+
+    // 生成する動物の種類に規則性を持たせる
+    void AnimalGeneratRandom()
+    {
+        animalGeneratCurrentIndex = 0;
+
+        for (int i = 0; i < animalGeneratOrder.Length; ++i)
+        {
+            animalGeneratOrder[i] = i;
+        }
+
+        // ランダム
+        for (int i = 0; i < animalGeneratOrder.Length; ++i)
+        {
+            int randomIndex = Random.Range(0, animalGeneratOrder.Length);
+            int temp = 0;
+
+            temp = animalGeneratOrder[i];
+            animalGeneratOrder[i] = animalGeneratOrder[randomIndex];
+            animalGeneratOrder[randomIndex] = temp;
         }
     }
 }
