@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// プレイヤーのタイプを管理するクラス
@@ -21,9 +21,11 @@ public class PlayerTypeManager : Singleton<PlayerTypeManager>
     PlayerTypeInfo[] playerTypeInfoList = null;
     public enum SceneType { Game, StageVoting, Object };
     //後々管理しやすい
-    Dictionary<PlayerType, PlayerTypeInfo> dictionaryPlayerTypeInfoByType = new Dictionary<PlayerType, PlayerTypeInfo>();
+    Dictionary<PlayerType, PlayerTypeInfo> dictionaryPlayerTypeInfoByType =
+        new Dictionary<PlayerType, PlayerTypeInfo>();
 
-    static PlayerType[] playerTypes = new PlayerType[PlayerCount.MaxValue];
+    static PlayerType[] playerTypes = new PlayerType[PlayerCount.MaxValue]
+    { PlayerType.Alpaca, PlayerType.Alpaca, PlayerType.Alpaca, PlayerType.Alpaca };
 
     public override void MyStart()
     {
@@ -44,10 +46,6 @@ public class PlayerTypeManager : Singleton<PlayerTypeManager>
                 Debug.LogError(((PlayerType)i).ToString() + "のタイプのプレイヤーが入っていません");
             }
         }
-        playerTypes[0] = PlayerType.Cat;
-        playerTypes[1] = PlayerType.Horse;
-        playerTypes[2] = PlayerType.Elephant;
-        playerTypes[3] = PlayerType.Lion;
     }
 
     /// <summary>

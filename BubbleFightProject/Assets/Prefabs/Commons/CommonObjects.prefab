@@ -203,7 +203,7 @@ MonoBehaviour:
       type: 3}
     objectPlayer: {fileID: 5223884368202450503, guid: 575cbcf98380db94f8dee07d8f28754c,
       type: 3}
-    statusObject: {fileID: 11400000, guid: a0101bdd3ab29794fbdd03e9d42172aa, type: 2}
+    statusObject: {fileID: 11400000, guid: b862cdbcc4a73474e9c063e236015e01, type: 2}
   - gamePlayer: {fileID: 8346774407205537459, guid: fc162cf9c08a9f64a911c7d0518b291c,
       type: 3}
     stageVotingPlayer: {fileID: 6664495767698135254, guid: b2758658a87299744b1c90f911b7b31d,

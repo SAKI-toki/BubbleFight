@@ -42,6 +42,10 @@ public partial class BallBehaviour : MonoBehaviour
         {
             //プレイヤーの情報を格納
             playerStatus = PlayerTypeManager.GetInstance().GetPlayerStatus(playerIndex);
+            if (playerStatus.Type == PlayerType.Alpaca)
+            {
+                ((AlpacaStatus)playerStatus).AlpacaStatusInit();
+            }
             transform.GetComponent<SphereCollider>().material = playerStatus.BallPhysicalMaterial;
             thisRigidbody.mass = playerStatus.BallMass;
             playerAnimationController = GetComponentInChildren<PlayerAnimationController>();
