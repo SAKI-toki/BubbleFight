@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4f36a03fdeff5a43ae0cc86a5dda6c7, type: 3}
-  m_Name: AlpacaSpecify
+  m_Name: Alpaca
   m_EditorClassIdentifier: 
-  type: 13
-  ballMovePower: 10
-  ballPhysicalMaterial: {fileID: 0}
-  ballEasyCurveWeight: 1
-  ballMass: 1
-  ballBoostPower: 20
-  ballBoostInterval: 1
-  minBallMovePower: 10
-  maxBallMovePower: 10
+  type: 0
+  ballMovePower: 38.451817
+  ballPhysicalMaterial: {fileID: 13400000, guid: 964bc9ebeb2b4ce4b869b2842562f40b,
+    type: 2}
+  ballEasyCurveWeight: 1.8137126
+  ballMass: 1.7671802
+  ballBoostPower: 1039.4186
+  ballBoostInterval: 1.2356367
+  minBallMovePower: 30
+  maxBallMovePower: 50
   minBallEasyCurveWeight: 1
-  maxBallEasyCurveWeight: 1
+  maxBallEasyCurveWeight: 2
   minBallMass: 1
-  maxBallMass: 1
-  minBallBoostPower: 20
-  maxBallBoostPower: 20
-  minBallBoostInterval: 1
-  maxBallBoostInterval: 1
-  ballPhysicalMaterial: {fileID: 0}
+  maxBallMass: 2
+  minBallBoostPower: 800
+  maxBallBoostPower: 1200
+  minBallBoostInterval: 0.5
+  maxBallBoostInterval: 1.5
