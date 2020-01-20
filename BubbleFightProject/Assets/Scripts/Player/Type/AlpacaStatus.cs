@@ -9,19 +9,11 @@ public class AlpacaStatus : PlayerTypeStatusScriptableObject
     public void AlpacaStatusInit(ref float movePower, ref float easyCurveWeight,
         ref float mass, ref float boostPower, ref float boostInterval)
     {
-        movePower = Calc(minBallMovePower, maxBallMovePower);
-        easyCurveWeight = Calc(minBallEasyCurveWeight, maxBallEasyCurveWeight);
-        mass = Calc(minBallMass, maxBallMass);
-        boostPower = Calc(minBallBoostPower, maxBallBoostPower);
-        boostInterval = Calc(minBallBoostInterval, maxBallBoostInterval);
-    }
-
-    /// <summary>
-    /// ランダムな値を計算
-    /// </summary>
-    float Calc(float min, float max)
-    {
-        return (max - min) * Random.Range(0.0f, 1.0f) + min;
+        movePower = Random.Range(minBallMovePower, maxBallMovePower);
+        easyCurveWeight = Random.Range(minBallEasyCurveWeight, maxBallEasyCurveWeight);
+        mass = Random.Range(minBallMass, maxBallMass);
+        boostPower = Random.Range(minBallBoostPower, maxBallBoostPower);
+        boostInterval = Random.Range(minBallBoostInterval, maxBallBoostInterval);
     }
 
     [SerializeField, Header("アルパカの場合は以下のパラメータを変更してください"), Tooltip("ボールでの移動時の力(最低)")]
