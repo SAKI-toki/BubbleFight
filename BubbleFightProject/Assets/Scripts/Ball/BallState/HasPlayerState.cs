@@ -141,10 +141,10 @@ public partial class BallBehaviour : MonoBehaviour
                         int goalNumber = other.gameObject.GetComponent<GoalController>().GetGoalNumber();
 
                         if (!PlayerJoinManager.IsJoin(goalNumber) || PointManager.GetPoint(goalNumber) <= 0) return;
-
-                        PointManager.GoalCalculate(goalNumber);
-                        //自分自身が入ったら自分のポイントも減る
-                        if (PointManager.GetPoint(ballBehaviour.playerIndex) > 0) PointManager.GoalCalculate(ballBehaviour.playerIndex);
+                        if (goalNumber == ballBehaviour.playerIndex)
+                        {
+                            PointManager.OwnGoalCalculate(goalNumber);
+                        }
 
                         ballStateManager.TranslationState(new RespawnState());
                     }

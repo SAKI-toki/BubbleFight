@@ -15,6 +15,8 @@ static public class PointManager
 
     //ゴールのポイント
     const int GoalPoint = 1;
+    //自分のゴールに入ったときのポイント
+    const int OwnGoalPoint = 3;
 
     /// <summary>
     /// ゴール時のポイント計算
@@ -22,7 +24,7 @@ static public class PointManager
     static public void GoalCalculate(int goalNumber)
     {
         if (pointLock) return;
-        if (playerPoints[goalNumber] == 0) return;
+        if (playerPoints[goalNumber] <= 0) return;
         playerPoints[goalNumber] -= GoalPoint;
         //ポイントが0になったら
         if (playerPoints[goalNumber] <= 0)
@@ -34,6 +36,24 @@ static public class PointManager
                 if (playerRanks[i] == 0) ++currentRank;
             }
             playerRanks[goalNumber] = currentRank;
+        }
+    }
+
+    static public void OwnGoalCalculate(int playerNumber)
+    {
+        if (pointLock) return;
+        if (playerPoints[playerNumber] <= 0) return;
+        playerPoints[playerNumber] -= OwnGoalPoint;
+        //ポイントが0になったら
+        if (playerPoints[playerNumber] <= 0)
+        {
+            int currentRank = 0;
+            for (int i = 0; i < PlayerCount.MaxValue; ++i)
+            {
+                if (!PlayerJoinManager.IsJoin(i)) continue;
+                if (playerRanks[i] == 0) ++currentRank;
+            }
+            playerRanks[playerNumber] = currentRank;
         }
     }
 
