@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: Horse
   m_EditorClassIdentifier: 
   type: 10
-  walkSpeed: 14
-  ballMovePower: 40
+  ballMovePower: 100
   ballPhysicalMaterial: {fileID: 13400000, guid: 964bc9ebeb2b4ce4b869b2842562f40b,
     type: 2}
   ballEasyCurveWeight: 1
-  ballMass: 5
-  ballBoostPower: 1200
-  ballBoostInterval: 4.5
+  ballMass: 10
+  ballBoostPower: 1000
+  ballBoostInterval: 3
