@@ -73,6 +73,8 @@ public class CharacterScelectManager : MonoBehaviour
     [SerializeField]
     GameObject[] animalArray = new GameObject[animalNum];
     Transform[] animalMoveObj = new Transform[animalNum];
+    PlayerAnimationController[] animalAnimation = new PlayerAnimationController[animalNum];
+    GameObject[] message = new GameObject[animalNum];
 
     Vector3[] startAnimal = new Vector3[animalNum];
 
@@ -117,7 +119,16 @@ public class CharacterScelectManager : MonoBehaviour
 
             foreach (Transform child in animalArray[i].transform)
             {
-                animalMoveObj[i] = child;
+                if (child.tag == "Animal")
+                {
+                    animalMoveObj[i] = child;
+                    animalAnimation[i] = child.gameObject.GetComponent<PlayerAnimationController>();
+                }
+                else
+                {
+                    message[i] = child.gameObject;
+                    message[i].SetActive(false);
+                }
             }
             PlayerType type = animalArray[i].GetComponent<CharaType>().type;
             animalIndex.Add(type, i);
@@ -226,12 +237,19 @@ public class CharacterScelectManager : MonoBehaviour
 
                 animalMoveObj[i].transform.localRotation = q * animalMoveObj[i].transform.localRotation;
 
-                if (!roteOldFlg[i]) { roteOldFlg[i] = true; }
+                if (!roteOldFlg[i])
+                {
+                    animalAnimation[i].AnimationSwitch(PlayerAnimationController.AnimationType.Run);
+                    roteOldFlg[i] = true;
+                    message[i].SetActive(true);
+                }
             }
             else if (roteOldFlg[i] && !roteNewFlg[i])
             {
+                animalAnimation[i].AnimationSwitch(PlayerAnimationController.AnimationType.Idle);
                 roteOldFlg[i] = false;
                 animalMoveObj[i].transform.localRotation = Quaternion.Euler(0, 138, 0);
+                message[i].SetActive(false);
             }
             roteNewFlg[i] = false;
         }

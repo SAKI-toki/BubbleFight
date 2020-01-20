@@ -30,6 +30,8 @@ public partial class BallBehaviour : MonoBehaviour
     GameObject playerRotationObject = null;
     PlayerTypeStatusScriptableObject playerStatus = null;
     PlayerAnimationController playerAnimationController = null;
+    public delegate void DestroyEvent();
+    DestroyEvent destroyEvent = null;
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
@@ -88,6 +90,7 @@ public partial class BallBehaviour : MonoBehaviour
     void OnDestroy()
     {
         ballStateManager.Destroy();
+        if (destroyEvent != null) destroyEvent();
     }
 
     /// <summary>
@@ -186,6 +189,14 @@ public partial class BallBehaviour : MonoBehaviour
     public Rigidbody GetRigidbody()
     {
         return thisRigidbody;
+    }
+
+    /// <summary>
+    /// 破棄時のイベントをセット
+    /// </summary>
+    public void SetDestroyEvent(DestroyEvent argDestroyEvent)
+    {
+        destroyEvent = argDestroyEvent;
     }
 
     /// <summary>
