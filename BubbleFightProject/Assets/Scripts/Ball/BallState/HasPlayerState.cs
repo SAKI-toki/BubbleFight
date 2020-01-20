@@ -84,10 +84,10 @@ public partial class BallBehaviour : MonoBehaviour
                 //入力方向に力を加える
                 ballBehaviour.thisRigidbody.AddForce(
                     ballBehaviour.lookatDir.normalized *
-                    ballBehaviour.playerStatus.BallBoostPower *
+                    ballBehaviour.boostPower *
                     ballBehaviour.thisRigidbody.mass);
 
-                boostIntervalTimeCount = ballBehaviour.playerStatus.BallBoostInterval;
+                boostIntervalTimeCount = ballBehaviour.boostInterval;
             }
         }
 
@@ -110,9 +110,9 @@ public partial class BallBehaviour : MonoBehaviour
             addTorque.x = addPower.z;
             addTorque.z = -addPower.x;
             //力
-            float power = ballBehaviour.playerStatus.BallMovePower *
+            float power = ballBehaviour.movePower *
                 ballBehaviour.thisRigidbody.mass *
-                Mathf.Pow(angle + 1, ballBehaviour.playerStatus.BallEasyCurveWeight);
+                Mathf.Pow(angle + 1, ballBehaviour.easyCurveWeight);
             //入力方向に力を加える
             ballBehaviour.thisRigidbody.AddForce(addPower * power * 0.1f);
             //入力方向に回転の力を加える

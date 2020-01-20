@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: Deer
   m_EditorClassIdentifier: 
   type: 6
-  walkSpeed: 12
-  ballMovePower: 35
+  ballMovePower: 25
   ballPhysicalMaterial: {fileID: 13400000, guid: 964bc9ebeb2b4ce4b869b2842562f40b,
     type: 2}
-  ballEasyCurveWeight: 1.25
-  ballMass: 6
+  ballEasyCurveWeight: 2
+  ballMass: 15
   ballBoostPower: 1000
-  ballBoostInterval: 2.5
+  ballBoostInterval: 3

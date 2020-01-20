@@ -13,20 +13,20 @@ MonoBehaviour:
   m_Name: Alpaca
   m_EditorClassIdentifier: 
   type: 0
-  ballMovePower: 38.451817
+  ballMovePower: 98.87094
   ballPhysicalMaterial: {fileID: 13400000, guid: 964bc9ebeb2b4ce4b869b2842562f40b,
     type: 2}
-  ballEasyCurveWeight: 1.8137126
-  ballMass: 1.7671802
-  ballBoostPower: 1039.4186
-  ballBoostInterval: 1.2356367
-  minBallMovePower: 30
-  maxBallMovePower: 50
+  ballEasyCurveWeight: 1.1538105
+  ballMass: 6.342172
+  ballBoostPower: 1094.0062
+  ballBoostInterval: 2.246771
+  minBallMovePower: 10
+  maxBallMovePower: 100
   minBallEasyCurveWeight: 1
   maxBallEasyCurveWeight: 2
-  minBallMass: 1
-  maxBallMass: 2
-  minBallBoostPower: 800
-  maxBallBoostPower: 1200
-  minBallBoostInterval: 0.5
-  maxBallBoostInterval: 1.5
+  minBallMass: 5
+  maxBallMass: 20
+  minBallBoostPower: 500
+  maxBallBoostPower: 1500
+  minBallBoostInterval: 1
+  maxBallBoostInterval: 5

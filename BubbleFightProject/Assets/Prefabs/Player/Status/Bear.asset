@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: Bear
   m_EditorClassIdentifier: 
   type: 1
-  walkSpeed: 6
   ballMovePower: 25
   ballPhysicalMaterial: {fileID: 13400000, guid: 964bc9ebeb2b4ce4b869b2842562f40b,
     type: 2}
-  ballEasyCurveWeight: 1.75
-  ballMass: 8
-  ballBoostPower: 800
-  ballBoostInterval: 2
+  ballEasyCurveWeight: 2
+  ballMass: 15
+  ballBoostPower: 1000
+  ballBoostInterval: 3

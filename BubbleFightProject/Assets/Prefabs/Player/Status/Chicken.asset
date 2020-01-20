@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: Chicken
   m_EditorClassIdentifier: 
   type: 4
-  walkSpeed: 12
-  ballMovePower: 35
+  ballMovePower: 75
   ballPhysicalMaterial: {fileID: 13400000, guid: 964bc9ebeb2b4ce4b869b2842562f40b,
     type: 2}
-  ballEasyCurveWeight: 1.5
-  ballMass: 3
-  ballBoostPower: 700
-  ballBoostInterval: 0.5
+  ballEasyCurveWeight: 2
+  ballMass: 5
+  ballBoostPower: 1000
+  ballBoostInterval: 3

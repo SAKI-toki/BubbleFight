@@ -28,10 +28,12 @@ public partial class BallBehaviour : MonoBehaviour
     Transform playerTransform = null;
     Quaternion playerRotation = Quaternion.identity;
     GameObject playerRotationObject = null;
-    PlayerTypeStatusScriptableObject playerStatus = null;
     PlayerAnimationController playerAnimationController = null;
     public delegate void DestroyEvent();
     DestroyEvent destroyEvent = null;
+
+    float movePower, easyCurveWeight, mass, boostPower, boostInterval;
+
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
@@ -43,13 +45,22 @@ public partial class BallBehaviour : MonoBehaviour
         if (IsInPlayer())
         {
             //プレイヤーの情報を格納
-            playerStatus = PlayerTypeManager.GetInstance().GetPlayerStatus(playerIndex);
+            var playerStatus = PlayerTypeManager.GetInstance().GetPlayerStatus(playerIndex);
             if (playerStatus.Type == PlayerType.Alpaca)
             {
-                ((AlpacaStatus)playerStatus).AlpacaStatusInit();
+                ((AlpacaStatus)playerStatus).AlpacaStatusInit(
+                    ref movePower, ref easyCurveWeight, ref mass, ref boostPower, ref boostInterval);
+            }
+            else
+            {
+                movePower = playerStatus.BallMovePower;
+                easyCurveWeight = playerStatus.BallEasyCurveWeight;
+                mass = playerStatus.BallMass;
+                boostPower = playerStatus.BallBoostPower;
+                boostInterval = playerStatus.BallBoostInterval;
             }
             transform.GetComponent<SphereCollider>().material = playerStatus.BallPhysicalMaterial;
-            thisRigidbody.mass = playerStatus.BallMass;
+            thisRigidbody.mass = mass;
             playerAnimationController = GetComponentInChildren<PlayerAnimationController>();
             playerTransform = playerAnimationController.transform;
             initPosition = transform.position;

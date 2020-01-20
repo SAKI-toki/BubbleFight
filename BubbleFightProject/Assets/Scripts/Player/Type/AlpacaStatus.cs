@@ -6,13 +6,14 @@ public class AlpacaStatus : PlayerTypeStatusScriptableObject
     /// <summary>
     /// アルパカの初期化
     /// </summary>
-    public void AlpacaStatusInit()
+    public void AlpacaStatusInit(ref float movePower, ref float easyCurveWeight,
+        ref float mass, ref float boostPower, ref float boostInterval)
     {
-        ballMovePower = Calc(minBallMovePower, maxBallMovePower);
-        ballEasyCurveWeight = Calc(minBallEasyCurveWeight, maxBallEasyCurveWeight);
-        ballMass = Calc(minBallMass, maxBallMass);
-        ballBoostPower = Calc(minBallBoostPower, maxBallBoostPower);
-        ballBoostInterval = Calc(minBallBoostInterval, maxBallBoostInterval);
+        movePower = Calc(minBallMovePower, maxBallMovePower);
+        easyCurveWeight = Calc(minBallEasyCurveWeight, maxBallEasyCurveWeight);
+        mass = Calc(minBallMass, maxBallMass);
+        boostPower = Calc(minBallBoostPower, maxBallBoostPower);
+        boostInterval = Calc(minBallBoostInterval, maxBallBoostInterval);
     }
 
     /// <summary>
