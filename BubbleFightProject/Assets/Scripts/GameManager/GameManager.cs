@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// ゲームを管理するクラス
@@ -14,12 +13,16 @@ public class GameManager : MonoBehaviour
     bool endFlag = false;
     AudioSource aud;
 
+    FadePostprocess fade = null;
+
     void Start()
     {
         PointManager.Reset();
         Time.timeScale = 0.0f;
         BgmManager.GetInstance().Stop();
         aud = GetComponent<AudioSource>();
+        fade = Camera.main.GetComponent<FadePostprocess>();
+        fade.StartFadeIn();
         StartCoroutine(Countdown());
     }
 
@@ -30,25 +33,9 @@ public class GameManager : MonoBehaviour
         if (!gameTimeManager.IsPlayGame() && !endFlag)
         {
             endFlag = true;
-            StartCoroutine(AllFadeCamera());
+            fade.StartFadeOut("ResultScene");
             PointManager.PointLock();
         }
-    }
-
-    /// <summary>
-    /// 全てのカメラのフェードをしシーン遷移
-    /// </summary>
-    IEnumerator AllFadeCamera()
-    {
-        var postprocess = Camera.main.GetComponent<FadePostprocess>();
-        float percent = 0.0f;
-        while (percent < 1.0f)
-        {
-            percent += Time.deltaTime / 2;
-            postprocess.SetValue(percent);
-            yield return null;
-        }
-        SceneManager.LoadScene("ResultScene");
     }
 
     [SerializeField]
@@ -56,7 +43,10 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Countdown()
     {
-        yield return null;
+        while (fade.IsFade)
+        {
+            yield return null;
+        }
         aud.Play();
         for (int count = countDownImage.Length - 1; count >= 0; count--)
         {

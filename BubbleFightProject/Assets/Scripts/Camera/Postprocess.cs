@@ -10,7 +10,7 @@ public abstract class Postprocess : MonoBehaviour
 
     protected Material material = null;
 
-    void Start()
+    void Awake()
     {
         material = new Material(shader);
         Initialize();

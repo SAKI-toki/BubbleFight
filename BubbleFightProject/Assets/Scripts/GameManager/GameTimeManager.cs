@@ -5,7 +5,7 @@
 /// </summary>
 public class GameTimeManager : MonoBehaviour
 {
-    float playTime = 180.0f;
+    float playTime = 5.0f;
 
     float playTimeCount = 0.0f;
 
