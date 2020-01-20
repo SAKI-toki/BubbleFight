@@ -80,19 +80,22 @@ public class GachaManager : MonoBehaviour
 
             if (ballGeneratCountTime > ballGeneratIntervalTime)
             {
-                BallGenerat();
+                BallGenerate();
             }
         }
     }
 
     // 玉の生成
-    void BallGenerat()
+    void BallGenerate()
     {
         int randomVent = Random.Range(0, gachaNum);
         gachaponAnimator[randomVent].SetTrigger("ShakeTrigger");
         GameObject ball = Instantiate(ballPrefab, ventPos[randomVent].position, ventPos[randomVent].rotation);
         Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
-        ballRigidbody.AddForce(ball.transform.forward * gamePhaseList[gamePhaseNum].ballSpeed);
+        var power = Vector3.Scale(
+            ball.transform.forward * gamePhaseList[gamePhaseNum].ballSpeed,
+            new Vector3(1 / Bumper.BouncePower, 1, 1 / Bumper.BouncePower));
+        ballRigidbody.AddForce(power);
 
         ballGeneratIntervalTime = Random.Range(
             gamePhaseList[gamePhaseNum].ballGeneratIntervalLowerLimitTime,

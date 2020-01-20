@@ -5,8 +5,7 @@
 /// </summary>
 public class Bumper : MonoBehaviour
 {
-    [SerializeField, Tooltip("跳ね返りの強さ")]
-    float bouncePower = 2.0f;
+    public const float BouncePower = 3.0f;
 
     void OnCollisionEnter(Collision other)
     {
@@ -15,7 +14,7 @@ public class Bumper : MonoBehaviour
             var ballBehaviour = other.gameObject.GetComponent<BallBehaviour>();
             var ballRigidbody = ballBehaviour.GetRigidbody();
             var ballVelocity = ballRigidbody.velocity;
-            ballVelocity = Vector3.Scale(ballVelocity, new Vector3(bouncePower, 1, bouncePower));
+            ballVelocity = Vector3.Scale(ballVelocity, new Vector3(BouncePower, 1, BouncePower));
             ballRigidbody.velocity = ballVelocity;
         }
     }
