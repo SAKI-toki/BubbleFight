@@ -13,13 +13,12 @@ public class PlayerTypeManager : Singleton<PlayerTypeManager>
     class PlayerTypeInfo
     {
         public GameObject gamePlayer = null;
-        public GameObject stageVotingPlayer = null;
         public GameObject objectPlayer = null;
         public PlayerTypeStatusScriptableObject statusObject = null;
     }
     [SerializeField, Tooltip("プレイヤーのタイプ別のステータスリスト")]
     PlayerTypeInfo[] playerTypeInfoList = null;
-    public enum SceneType { Game, StageVoting, Object };
+    public enum SceneType { Game, Object };
     //後々管理しやすい
     Dictionary<PlayerType, PlayerTypeInfo> dictionaryPlayerTypeInfoByType =
         new Dictionary<PlayerType, PlayerTypeInfo>();
@@ -65,8 +64,6 @@ public class PlayerTypeManager : Singleton<PlayerTypeManager>
         {
             case SceneType.Game:
                 return Instantiate(dictionaryPlayerTypeInfoByType[playerTypes[index]].gamePlayer);
-            case SceneType.StageVoting:
-                return Instantiate(dictionaryPlayerTypeInfoByType[playerTypes[index]].stageVotingPlayer);
             case SceneType.Object:
                 return Instantiate(dictionaryPlayerTypeInfoByType[playerTypes[index]].objectPlayer);
         }
