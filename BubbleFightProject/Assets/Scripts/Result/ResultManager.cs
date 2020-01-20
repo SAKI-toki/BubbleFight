@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
@@ -25,8 +24,12 @@ public class ResultManager : MonoBehaviour
 
     bool animEnd = false;
 
+    FadePostprocess fade = null;
+
     void Start()
     {
+        fade = Camera.main.GetComponent<FadePostprocess>();
+        fade.StartFadeIn();
         aud = GetComponent<AudioSource>();
         PointManager.ApplyRank();
         kusudamaArray = new GameObject[PlayerCount.MaxValue];
@@ -38,10 +41,10 @@ public class ResultManager : MonoBehaviour
 
     void Update()
     {
-        if (!animEnd) return;
+        if (!animEnd || fade.IsFade) return;
         if (SwitchInput.GetButtonDown(0, SwitchButton.Ok) || Input.GetKeyDown(KeyCode.Return))
         {
-            SceneManager.LoadScene("TitleScene");
+            fade.StartFadeOut("TitleScene");
         }
     }
 
@@ -87,6 +90,7 @@ public class ResultManager : MonoBehaviour
 
     IEnumerator ResultStart()
     {
+        while (fade.IsFade) yield return null;
         //各順位ごとにプレイヤーの番号を格納
         List<int>[] counts = new List<int>[PlayerCount.MaxValue];
         for (int i = 0; i < PlayerCount.MaxValue; ++i)

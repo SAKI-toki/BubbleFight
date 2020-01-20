@@ -43,10 +43,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Countdown()
     {
-        while (fade.IsFade)
-        {
-            yield return null;
-        }
+        while (fade.IsFade) yield return null;
         aud.Play();
         for (int count = countDownImage.Length - 1; count >= 0; count--)
         {

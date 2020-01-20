@@ -7,8 +7,6 @@ public partial class BallBehaviour : MonoBehaviour
     /// </summary>
     protected class RespawnState : BallStateBase
     {
-        float respawnTimeCount = 0.0f;
-        const float RespawnDelay = 3.0f;
         protected override void Init()
         {
             ballBehaviour.thisRigidbody.velocity = Vector3.zero;

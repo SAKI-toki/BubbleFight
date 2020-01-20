@@ -52,6 +52,8 @@ public class FadePostprocess : Postprocess
     IEnumerator FadeOut(string nextSceneName)
     {
         float percent = 0.0f;
+        SetValue(percent);
+        yield return null;
         while (percent < 1.0f)
         {
             percent += Time.unscaledDeltaTime / 2;
@@ -68,6 +70,8 @@ public class FadePostprocess : Postprocess
     IEnumerator FadeIn()
     {
         float percent = 1.0f;
+        SetValue(percent);
+        yield return null;
         while (percent > 0.0f)
         {
             percent -= Time.unscaledDeltaTime / 2;

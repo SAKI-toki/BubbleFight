@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CharacterScelectManager : MonoBehaviour
 {
@@ -82,8 +81,12 @@ public class CharacterScelectManager : MonoBehaviour
     Vector2 viewportMin = Vector2.zero;
     Vector2 viewportMax = Vector2.zero;
 
+    FadePostprocess fade = null;
+
     private void Start()
     {
+        fade = Camera.main.GetComponent<FadePostprocess>();
+        fade.StartFadeIn();
         BgmManager.GetInstance().Play(BgmEnum.Select);
         viewportMin = Camera.main.ViewportToWorldPoint(Vector2.zero);
         viewportMax = Camera.main.ViewportToWorldPoint(Vector2.one);
@@ -123,6 +126,7 @@ public class CharacterScelectManager : MonoBehaviour
 
     private void Update()
     {
+        if (fade.IsFade) return;
         // 各プレイヤー実行
         //----------------------
         for (int i = 0; i < playerUI.Length; ++i)
@@ -154,7 +158,7 @@ public class CharacterScelectManager : MonoBehaviour
             }
             if (count >= PlayerCount.MinValue)
             {
-                SceneManager.LoadScene("GameScene");
+                fade.StartFadeOut("GameScene");
             }
         }
     }
@@ -165,9 +169,9 @@ public class CharacterScelectManager : MonoBehaviour
     /// <param name="playerId"></param>
     void CursorMove(int playerId)
     {
-        float cursorSpeed = 0.015f;
+        float cursorSpeed = 1.5f;
 
-        var stick = SwitchInput.GetStick(playerId) * cursorSpeed;
+        var stick = SwitchInput.GetStick(playerId) * cursorSpeed * Time.deltaTime;
 
         Vector3 cursorPos = playerUI[playerId].cursor.transform.position;
 

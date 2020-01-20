@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
 public class TitleManager : MonoBehaviour
@@ -37,8 +36,12 @@ public class TitleManager : MonoBehaviour
     [SerializeField]
     AudioClip gachaRotateAudio = null, ballGenerateAudio = null;
 
+    FadePostprocess fade = null;
+
     private void Start()
     {
+        fade = Camera.main.GetComponent<FadePostprocess>();
+        fade.StartFadeIn();
         aud = GetComponent<AudioSource>();
         BgmManager.GetInstance().Stop();
         StartCoroutine(Gacha());
@@ -46,6 +49,7 @@ public class TitleManager : MonoBehaviour
 
     private void Update()
     {
+        if (fade.IsFade) return;
         RenderSettings.skybox = skybox;
         if (!titleAnimationPlaying)
         {
@@ -59,7 +63,7 @@ public class TitleManager : MonoBehaviour
                 nn.hid.NpadButton.Right |
                 nn.hid.NpadButton.Left))
             {
-                SceneManager.LoadScene("CharacterSelectScene");
+                fade.StartFadeOut("CharacterSelectScene");
             }
         }
 
@@ -90,6 +94,7 @@ public class TitleManager : MonoBehaviour
 
     IEnumerator Gacha()
     {
+        while (fade.IsFade) yield return null;
         gachaAnimator.SetTrigger("TurnTrigger");
         aud.PlayOneShot(gachaRotateAudio);
         yield return new WaitForSeconds(1.4f);

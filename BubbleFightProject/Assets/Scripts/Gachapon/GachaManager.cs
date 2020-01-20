@@ -4,7 +4,7 @@ public class GachaManager : MonoBehaviour
 {
     const int gachaNum = 4;
     [SerializeField]
-    GamePhase[] gamePhaseList;
+    GamePhase[] gamePhaseList = null;
     int gamePhaseNum = 0;
 
     Transform[] gachaponObj = new Transform[gachaNum];
