@@ -50,7 +50,7 @@ public partial class BallBehaviour : MonoBehaviour
         void TranslateInitPosition()
         {
             var pos = ballBehaviour.initPosition;
-            pos.y += 10;
+            pos.y += 3;
             ballBehaviour.transform.position = pos;
             ballBehaviour.transform.rotation = ballBehaviour.initRotation;
         }
