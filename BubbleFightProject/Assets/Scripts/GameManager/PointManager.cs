@@ -29,6 +29,7 @@ static public class PointManager
         //ポイントが0になったら
         if (playerPoints[goalNumber] <= 0)
         {
+            playerPoints[goalNumber] = 0;
             int currentRank = 0;
             for (int i = 0; i < PlayerCount.MaxValue; ++i)
             {
@@ -47,6 +48,7 @@ static public class PointManager
         //ポイントが0になったら
         if (playerPoints[playerNumber] <= 0)
         {
+            playerPoints[playerNumber] = 0;
             int currentRank = 0;
             for (int i = 0; i < PlayerCount.MaxValue; ++i)
             {
