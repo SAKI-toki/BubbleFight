@@ -2,19 +2,26 @@
 
 public class GachaManager : MonoBehaviour
 {
+    #region SerializeField
+
+    [SerializeField,Header("ボールプレファブ")]
+    GameObject ballPrefab = null;
+    [SerializeField,Header("フェーズ情報")]
+    GamePhase[] gamePhaseList = null;
+    [SerializeField,Header("ガチャポンの可動域")]
+    float gachaponMoveRange = 40;
+    [SerializeField,Header("ガチャポンの可動スピード")]
+    float gachaponMoveSpeed = 0.2f;
+
+    #endregion SerializeField
+
     const int gachaNum = 4;
-    [SerializeField]
-    GamePhase[] gamePhaseList;
-    int gamePhaseNum = 0;
+
+    int currentGamePhaseNum = 0;
 
     Transform[] gachaponObj = new Transform[gachaNum];
     Animator[] gachaponAnimator = new Animator[gachaNum];
     Transform[] ventPos = new Transform[gachaNum];
-    float[] gachaponStartRotation = new float[gachaNum];
-    float[] gachaponSetRotationYNum = new float[gachaNum];
-
-    [SerializeField]
-    GameObject ballPrefab = null;
 
     private void Start()
     {
@@ -57,8 +64,8 @@ public class GachaManager : MonoBehaviour
             }
         }
         ballGeneratIntervalTime = Random.Range(
-            gamePhaseList[gamePhaseNum].ballGeneratIntervalLowerLimitTime,
-            gamePhaseList[gamePhaseNum].ballGeneratIntervalUpperLimitTime);
+            gamePhaseList[currentGamePhaseNum].ballGeneratIntervalLowerLimitTime,
+            gamePhaseList[currentGamePhaseNum].ballGeneratIntervalUpperLimitTime);
     }
 
     private void Update()
@@ -68,13 +75,14 @@ public class GachaManager : MonoBehaviour
         GachaponMove();
     }
 
-    int ballCurrentNum = 0;
+    [System.NonSerialized]
+    public int currentBallNum = 0;
     float ballGeneratIntervalTime = 0.0f;
     float ballGeneratCountTime = 0.0f;
 
     void BallGenerator()
     {
-        if (ballCurrentNum < gamePhaseList[gamePhaseNum].ballNumUpperLimit)
+        if (currentBallNum < gamePhaseList[currentGamePhaseNum].ballNumUpperLimit)
         {
             ballGeneratCountTime += Time.deltaTime;
 
@@ -92,12 +100,12 @@ public class GachaManager : MonoBehaviour
         gachaponAnimator[randomVent].SetTrigger("ShakeTrigger");
         GameObject ball = Instantiate(ballPrefab, ventPos[randomVent].position, ventPos[randomVent].rotation);
         Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
-        ballRigidbody.AddForce(ball.transform.forward * gamePhaseList[gamePhaseNum].ballSpeed);
+        ballRigidbody.AddForce(ball.transform.forward * gamePhaseList[currentGamePhaseNum].ballSpeed);
 
         ballGeneratIntervalTime = Random.Range(
-            gamePhaseList[gamePhaseNum].ballGeneratIntervalLowerLimitTime,
-            gamePhaseList[gamePhaseNum].ballGeneratIntervalUpperLimitTime);
-        ++ballCurrentNum;
+            gamePhaseList[currentGamePhaseNum].ballGeneratIntervalLowerLimitTime,
+            gamePhaseList[currentGamePhaseNum].ballGeneratIntervalUpperLimitTime);
+        ++currentBallNum;
         ballGeneratCountTime = 0;
     }
 
@@ -105,16 +113,16 @@ public class GachaManager : MonoBehaviour
     void Timer()
     {
         elapsedTime += Time.deltaTime;
-        if (elapsedTime > gamePhaseList[gamePhaseNum].phaseTime)
+        if (elapsedTime > gamePhaseList[currentGamePhaseNum].phaseTime)
         {
             elapsedTime = 0.0f;
             // 次のフェーズに進む
-            if (gamePhaseNum < gamePhaseList.Length - 1) { ++gamePhaseNum; }
+            if (currentGamePhaseNum < gamePhaseList.Length - 1) { ++currentGamePhaseNum; }
         }
     }
 
-    float gachaponMoveRange = 40;
-    float gachaponMoveSpeed = 0.2f;
+    float[] gachaponStartRotation = new float[gachaNum];
+    float[] gachaponSetRotationYNum = new float[gachaNum];
     void GachaponMove()
     {
         for (int i = 0; i < gachaNum; ++i)
