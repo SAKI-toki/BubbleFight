@@ -38,6 +38,7 @@ public class GameTimeManager : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0.0f || Fade.instance.IsFade) return;
         if (!IsPlayGame()) return;
         UpdateTimeText();
         int alivePlayerCount = 0;

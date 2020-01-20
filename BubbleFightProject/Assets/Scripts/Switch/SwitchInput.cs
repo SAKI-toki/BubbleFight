@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using nn.hid;
+﻿using nn.hid;
+using UnityEngine;
 
 public enum SwitchButton : long
 {
@@ -8,10 +8,10 @@ public enum SwitchButton : long
     Boost = NpadButton.Down | NpadButton.X,
     Pause = NpadButton.Plus | NpadButton.Minus,
     //項目選択
-    SelectUp = NpadButton.StickLRight | NpadButton.StickRLeft,
-    SelectDown = NpadButton.StickLLeft | NpadButton.StickRRight,
-    SelectRight = NpadButton.StickLDown | NpadButton.StickRUp,
-    SelectLeft = NpadButton.StickLUp | NpadButton.StickRDown,
+    SelectUp = NpadButton.StickLUp | NpadButton.StickRUp,
+    SelectDown = NpadButton.StickLDown | NpadButton.StickRDown,
+    SelectRight = NpadButton.StickLRight | NpadButton.StickRRight,
+    SelectLeft = NpadButton.StickLLeft | NpadButton.StickRLeft,
 }
 
 /// <summary>

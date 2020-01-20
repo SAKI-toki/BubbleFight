@@ -88,6 +88,7 @@ public partial class BallBehaviour : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0.0f || Fade.instance.IsFade) return;
         prevVelocity = thisRigidbody.velocity;
         thisRigidbody.AddForce(Vector3.up * -ballScriptableObject.Gravity);
         ballStateManager.Update();
