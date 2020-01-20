@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     bool endFlag = false;
     AudioSource aud;
 
-    FadePostprocess fade = null;
+    Fade fade = null;
 
     void Start()
     {
@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0.0f;
         BgmManager.GetInstance().Stop();
         aud = GetComponent<AudioSource>();
-        fade = Camera.main.GetComponent<FadePostprocess>();
+        fade = Fade.instance;
         fade.StartFadeIn();
         StartCoroutine(Countdown());
     }

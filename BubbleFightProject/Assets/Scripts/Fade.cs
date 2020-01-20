@@ -1,31 +1,31 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-/// <summary>
-/// フェードのポストプロセス
-/// </summary>
-public class FadePostprocess : Postprocess
+public class Fade : MonoBehaviour
 {
-    float percentValue = 0.0f;
+    static public Fade instance = null;
+    [SerializeField]
+    Image fadeImage = null;
     bool isFade = false;
 
     public bool IsFade { get { return this.isFade; } }
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     /// <summary>
     /// 値のセット
     /// </summary>
     void SetValue(float value)
     {
-        percentValue = Mathf.Clamp(value, 0.0f, 1.0f);
-        material.SetFloat("_Percent", percentValue);
+        var col = Color.black;
+        col.a = Mathf.Clamp(value, 0.0f, 1.0f);
+        fadeImage.color = col;
     }
-
-    protected override void Initialize()
-    {
-        SetValue(1.0f);
-    }
-
     /// <summary>
     /// フェードアウトのスタート
     /// </summary>

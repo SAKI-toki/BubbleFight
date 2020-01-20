@@ -81,11 +81,11 @@ public class CharacterScelectManager : MonoBehaviour
     Vector2 viewportMin = Vector2.zero;
     Vector2 viewportMax = Vector2.zero;
 
-    FadePostprocess fade = null;
+    Fade fade = null;
 
     private void Start()
     {
-        fade = Camera.main.GetComponent<FadePostprocess>();
+        fade = Fade.instance;
         fade.StartFadeIn();
         BgmManager.GetInstance().Play(BgmEnum.Select);
         viewportMin = Camera.main.ViewportToWorldPoint(Vector2.zero);

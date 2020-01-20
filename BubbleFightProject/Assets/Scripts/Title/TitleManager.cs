@@ -36,11 +36,11 @@ public class TitleManager : MonoBehaviour
     [SerializeField]
     AudioClip gachaRotateAudio = null, ballGenerateAudio = null;
 
-    FadePostprocess fade = null;
+    Fade fade = null;
 
     private void Start()
     {
-        fade = Camera.main.GetComponent<FadePostprocess>();
+        fade = Fade.instance;
         fade.StartFadeIn();
         aud = GetComponent<AudioSource>();
         BgmManager.GetInstance().Stop();

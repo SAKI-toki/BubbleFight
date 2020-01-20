@@ -24,11 +24,11 @@ public class ResultManager : MonoBehaviour
 
     bool animEnd = false;
 
-    FadePostprocess fade = null;
+    Fade fade = null;
 
     void Start()
     {
-        fade = Camera.main.GetComponent<FadePostprocess>();
+        fade = Fade.instance;
         fade.StartFadeIn();
         aud = GetComponent<AudioSource>();
         PointManager.ApplyRank();
