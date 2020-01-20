@@ -7,38 +7,51 @@ public partial class BallBehaviour : MonoBehaviour
     /// </summary>
     protected class RespawnState : BallStateBase
     {
+        float timeCount = 0.0f;
+        float respawnDelayTime = 0.0f;
+        const float MaxRespawnDelayTime = 5.0f;
+
         protected override void Init()
         {
             ballBehaviour.thisRigidbody.velocity = Vector3.zero;
-            SwitchPhysics(false);
+            SwitchEnable(false);
+            ++ballBehaviour.destroyCount;
+            respawnDelayTime = Mathf.Clamp(ballBehaviour.destroyCount * 1.0f, 0.0f, MaxRespawnDelayTime);
         }
 
         public override BallStateBase Update()
         {
-            return new HasPlayerState();
+            timeCount += Time.deltaTime;
+            if (timeCount > respawnDelayTime)
+            {
+                return new HasPlayerState();
+            }
+            return this;
         }
 
         public override void Destroy()
         {
             TranslateInitPosition();
-            SwitchPhysics(true);
+            SwitchEnable(true);
         }
 
         /// <summary>
-        /// 物理演算のオンオフ
+        /// オンオフ
         /// </summary>
-        void SwitchPhysics(bool isOn)
+        void SwitchEnable(bool isOn)
         {
+            foreach (var collider in ballBehaviour.GetComponents<Collider>()) collider.enabled = isOn;
+            foreach (var collider in ballBehaviour.GetComponentsInChildren<Collider>()) collider.enabled = isOn;
+            foreach (var renderer in ballBehaviour.GetComponents<Renderer>()) renderer.enabled = isOn;
+            foreach (var renderer in ballBehaviour.GetComponentsInChildren<Renderer>()) renderer.enabled = isOn;
             //この順番にしないとエラーが出る
             if (isOn)
             {
-                foreach (var collider in ballBehaviour.GetComponents<Collider>()) collider.enabled = isOn;
                 ballBehaviour.thisRigidbody.isKinematic = !isOn;
                 ballBehaviour.thisRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             }
             else
             {
-                foreach (var collider in ballBehaviour.GetComponents<Collider>()) collider.enabled = isOn;
                 ballBehaviour.thisRigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
                 ballBehaviour.thisRigidbody.isKinematic = !isOn;
             }

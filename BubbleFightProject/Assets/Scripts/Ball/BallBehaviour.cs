@@ -34,6 +34,8 @@ public partial class BallBehaviour : MonoBehaviour
 
     float movePower, easyCurveWeight, mass, boostPower, boostInterval;
 
+    int destroyCount = 0;
+
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
