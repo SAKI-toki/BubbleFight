@@ -2,10 +2,31 @@
 
 public class GachaManager : MonoBehaviour
 {
+    #region Enum
+
+    enum BallType
+    {
+        Nomal,
+        Red,
+        Blue,
+        Yellow,
+        Green
+    }
+
+    #endregion Enum
+
     #region SerializeField
 
     [SerializeField, Header("ボールプレファブ")]
     GameObject ballPrefab = null;
+    [SerializeField, Header("ボーナスボール(Red)")]
+    GameObject redBonusBallPrefab = null;
+    [SerializeField, Header("ボーナスボール(Blue)")]
+    GameObject blueBonusBallPrefab = null;
+    [SerializeField, Header("ボーナスボール(Yellow)")]
+    GameObject yellowBonusBallPrefab = null;
+    [SerializeField, Header("ボーナスボール(Green)")]
+    GameObject greenBonusBallPrefab = null;
     [SerializeField, Header("フェーズ情報")]
     GamePhase[] gamePhaseList = null;
     [SerializeField, Header("ガチャポンの可動域")]
@@ -66,6 +87,8 @@ public class GachaManager : MonoBehaviour
         ballGeneratIntervalTime = Random.Range(
             gamePhaseList[currentGamePhaseNum].ballGeneratIntervalLowerLimitTime,
             gamePhaseList[currentGamePhaseNum].ballGeneratIntervalUpperLimitTime);
+        BallGenerateVentRandom();
+        BallTypeGenerateRandom();
     }
 
     private void Update()
@@ -96,9 +119,28 @@ public class GachaManager : MonoBehaviour
     // 玉の生成
     void BallGenerate()
     {
-        int randomVent = Random.Range(0, gachaNum);
+        int randomVent = ballGenerateVentOrder[ballGeneratVentCurrentIndex];
         gachaponAnimator[randomVent].SetTrigger("ShakeTrigger");
-        GameObject ball = Instantiate(ballPrefab, ventPos[randomVent].position, ventPos[randomVent].rotation);
+
+        GameObject ball = null;
+        switch (ballGenerateOrder[ballGeneratCurrentIndex])
+        {
+            case BallType.Nomal:
+                ball = Instantiate(ballPrefab, ventPos[randomVent].position, ventPos[randomVent].rotation);
+                break;
+            case BallType.Red:
+                ball = Instantiate(redBonusBallPrefab, ventPos[randomVent].position, ventPos[randomVent].rotation);
+                break;
+            case BallType.Blue:
+                ball = Instantiate(blueBonusBallPrefab, ventPos[randomVent].position, ventPos[randomVent].rotation);
+                break;
+            case BallType.Yellow:
+                ball = Instantiate(yellowBonusBallPrefab, ventPos[randomVent].position, ventPos[randomVent].rotation);
+                break;
+            case BallType.Green:
+                ball = Instantiate(greenBonusBallPrefab, ventPos[randomVent].position, ventPos[randomVent].rotation);
+                break;
+        }
         Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
         var power = Vector3.Scale(
             ball.transform.forward * gamePhaseList[currentGamePhaseNum].ballSpeed,
@@ -108,9 +150,33 @@ public class GachaManager : MonoBehaviour
         ballGeneratIntervalTime = Random.Range(
             gamePhaseList[currentGamePhaseNum].ballGeneratIntervalLowerLimitTime,
             gamePhaseList[currentGamePhaseNum].ballGeneratIntervalUpperLimitTime);
+        if (++ballGeneratVentCurrentIndex >= ballGenerateVentOrder.Length) { BallGenerateVentRandom(); }
+        if (++ballGeneratCurrentIndex >= GamePhase.bonusBallFrequencyDenominator * bonusBallTypeNum) { BallTypeGenerateRandom(); }
         ++currentBallNum;
         ballGeneratCountTime = 0;
         ball.GetComponent<BallBehaviour>().SetDestroyEvent(delegate { --currentBallNum; });
+    }
+
+    int ballGeneratVentCurrentIndex = 0;
+    int[] ballGenerateVentOrder = new int[gachaNum];
+    void BallGenerateVentRandom()
+    {
+        ballGeneratVentCurrentIndex = 0;
+
+        for (int i = 0; i < ballGenerateVentOrder.Length; ++i)
+        {
+            ballGenerateVentOrder[i] = i;
+        }
+        // ランダム
+        for (int i = 0; i < ballGenerateVentOrder.Length; ++i)
+        {
+            int randomIndex = Random.Range(0, ballGenerateVentOrder.Length);
+            int temp = 0;
+
+            temp = ballGenerateVentOrder[i];
+            ballGenerateVentOrder[i] = ballGenerateVentOrder[randomIndex];
+            ballGenerateVentOrder[randomIndex] = temp;
+        }
     }
 
     float elapsedTime = 0.0f;
@@ -157,6 +223,39 @@ public class GachaManager : MonoBehaviour
                         gachaponStartRotation[i] + (gachaponMoveRange / 2));
                 }
             }
+        }
+    }
+
+    const int bonusBallTypeNum = 4;
+    int ballGeneratCurrentIndex = 0;
+    BallType[] ballGenerateOrder = new BallType[GamePhase.bonusBallFrequencyDenominator * bonusBallTypeNum];
+    void BallTypeGenerateRandom()
+    {
+        ballGeneratCurrentIndex = 0;
+
+        for (int i = 0; i < GamePhase.bonusBallFrequencyDenominator; ++i)
+        {
+            for (int j = i * bonusBallTypeNum; j < (i * bonusBallTypeNum) + bonusBallTypeNum; ++j)
+            {
+                if (i < gamePhaseList[currentGamePhaseNum].bonusBallFrequency)
+                {
+                    ballGenerateOrder[j] = BallType.Red + j - (i * bonusBallTypeNum);
+                }
+                else
+                {
+                    ballGenerateOrder[j] = BallType.Nomal;
+                }
+            }
+        }
+        // ランダム
+        for (int i = 0; i < GamePhase.bonusBallFrequencyDenominator * bonusBallTypeNum; ++i)
+        {
+            int randomIndex = Random.Range(0, GamePhase.bonusBallFrequencyDenominator * bonusBallTypeNum);
+            BallType temp = 0;
+
+            temp = ballGenerateOrder[i];
+            ballGenerateOrder[i] = ballGenerateOrder[randomIndex];
+            ballGenerateOrder[randomIndex] = temp;
         }
     }
 }

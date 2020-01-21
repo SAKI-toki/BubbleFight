@@ -83,7 +83,7 @@ public class TitleAnimalManager : MonoBehaviour
     List<Animal> animalList = new List<Animal>();
 
     // 動物の生成順番
-    int[] animalGeneratOrder = null;
+    int[] animalGenerateOrder = null;
     int animalGeneratCurrentIndex = 0;
 
     [System.NonSerialized]
@@ -111,7 +111,7 @@ public class TitleAnimalManager : MonoBehaviour
         {
             animalData[i].Init();
         }
-        animalGeneratOrder = new int[animalData.Length];
+        animalGenerateOrder = new int[animalData.Length];
         AnimalGeneratRandom();
     }
 
@@ -138,7 +138,7 @@ public class TitleAnimalManager : MonoBehaviour
 
             if (laneArray[i].elapsedTime > laneArray[i].nextGenerateTime)
             {
-                int animalIndex = animalGeneratOrder[animalGeneratCurrentIndex];
+                int animalIndex = animalGenerateOrder[animalGeneratCurrentIndex];
 
                 GameObject animalObject = Instantiate(animalData[animalIndex].animalPrefab, laneArray[i].generatePos, Quaternion.Euler(new Vector3(0, 90, 0)));
                 animalObject.transform.parent = transform;
@@ -149,7 +149,7 @@ public class TitleAnimalManager : MonoBehaviour
 
                 laneArray[i].elapsedTime = 0.0f;
                 laneArray[i].nextGenerateTime = animalData[animalIndex].nextTime;
-                if (animalGeneratCurrentIndex < animalGeneratOrder.Length - 1)
+                if (animalGeneratCurrentIndex < animalGenerateOrder.Length - 1)
                 {
                     ++animalGeneratCurrentIndex;
                 }
@@ -195,20 +195,20 @@ public class TitleAnimalManager : MonoBehaviour
     {
         animalGeneratCurrentIndex = 0;
 
-        for (int i = 0; i < animalGeneratOrder.Length; ++i)
+        for (int i = 0; i < animalGenerateOrder.Length; ++i)
         {
-            animalGeneratOrder[i] = i;
+            animalGenerateOrder[i] = i;
         }
 
         // ランダム
-        for (int i = 0; i < animalGeneratOrder.Length; ++i)
+        for (int i = 0; i < animalGenerateOrder.Length; ++i)
         {
-            int randomIndex = Random.Range(0, animalGeneratOrder.Length);
+            int randomIndex = Random.Range(0, animalGenerateOrder.Length);
             int temp = 0;
 
-            temp = animalGeneratOrder[i];
-            animalGeneratOrder[i] = animalGeneratOrder[randomIndex];
-            animalGeneratOrder[randomIndex] = temp;
+            temp = animalGenerateOrder[i];
+            animalGenerateOrder[i] = animalGenerateOrder[randomIndex];
+            animalGenerateOrder[randomIndex] = temp;
         }
     }
 }
