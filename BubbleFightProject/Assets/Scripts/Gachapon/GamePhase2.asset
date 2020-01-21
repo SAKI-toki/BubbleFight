@@ -17,3 +17,4 @@ MonoBehaviour:
   ballSpeed: 1250
   ballGeneratIntervalUpperLimitTime: 3
   ballGeneratIntervalLowerLimitTime: 2
+  bonusBallFrequency: 1
