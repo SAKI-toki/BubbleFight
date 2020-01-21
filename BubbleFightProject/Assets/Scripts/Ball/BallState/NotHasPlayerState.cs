@@ -15,10 +15,16 @@ public partial class BallBehaviour : MonoBehaviour
                     {
                         //入れたゴールの番号を取得
                         int goalNumber = other.gameObject.GetComponent<GoalController>().GetGoalNumber();
-
                         if (!PlayerJoinManager.IsJoin(goalNumber) || PointManager.GetPoint(goalNumber) <= 0) return;
 
-                        PointManager.GoalCalculate(goalNumber);
+                        if (ballBehaviour.isColor && ballBehaviour.playerNumberByColor == goalNumber)
+                        {
+                            PointManager.ByColorGoalCalculate(goalNumber);
+                        }
+                        else
+                        {
+                            PointManager.GoalCalculate(goalNumber);
+                        }
 
                         GameObject.Destroy(ballBehaviour.gameObject);
                     }

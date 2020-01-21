@@ -17,6 +17,8 @@ static public class PointManager
     const int GoalPoint = 1;
     //自分のゴールに入ったときのポイント
     const int OwnGoalPoint = 3;
+    //自分の色がゴールに入ったときのポイント
+    const int ByColorGoalPoint = 3;
 
     /// <summary>
     /// ゴール時のポイント計算
@@ -26,18 +28,7 @@ static public class PointManager
         if (pointLock) return;
         if (playerPoints[goalNumber] <= 0) return;
         playerPoints[goalNumber] -= GoalPoint;
-        //ポイントが0になったら
-        if (playerPoints[goalNumber] <= 0)
-        {
-            playerPoints[goalNumber] = 0;
-            int currentRank = 0;
-            for (int i = 0; i < PlayerCount.MaxValue; ++i)
-            {
-                if (!PlayerJoinManager.IsJoin(i)) continue;
-                if (playerRanks[i] == 0) ++currentRank;
-            }
-            playerRanks[goalNumber] = currentRank;
-        }
+        GoalCalculateImpl(goalNumber);
     }
 
     static public void OwnGoalCalculate(int playerNumber)
@@ -45,17 +36,30 @@ static public class PointManager
         if (pointLock) return;
         if (playerPoints[playerNumber] <= 0) return;
         playerPoints[playerNumber] -= OwnGoalPoint;
+        GoalCalculateImpl(playerNumber);
+    }
+    static public void ByColorGoalCalculate(int playerNumber)
+    {
+        if (pointLock) return;
+        if (playerPoints[playerNumber] <= 0) return;
+        playerPoints[playerNumber] -= ByColorGoalPoint;
+        GoalCalculateImpl(playerNumber);
+    }
+
+
+    static void GoalCalculateImpl(int n)
+    {
         //ポイントが0になったら
-        if (playerPoints[playerNumber] <= 0)
+        if (playerPoints[n] <= 0)
         {
-            playerPoints[playerNumber] = 0;
+            playerPoints[n] = 0;
             int currentRank = 0;
             for (int i = 0; i < PlayerCount.MaxValue; ++i)
             {
                 if (!PlayerJoinManager.IsJoin(i)) continue;
                 if (playerRanks[i] == 0) ++currentRank;
             }
-            playerRanks[playerNumber] = currentRank;
+            playerRanks[n] = currentRank;
         }
     }
 

@@ -4822,3 +4822,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballScriptableObject: {fileID: 11400000, guid: c8b278ad44638554c9d6fb47c5520bbe,
     type: 2}
+  isColor: 1
+  playerNumberByColor: 3

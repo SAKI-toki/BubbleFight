@@ -36,6 +36,11 @@ public partial class BallBehaviour : MonoBehaviour
 
     int destroyCount = 0;
 
+    [SerializeField]
+    bool isColor = false;
+    [SerializeField]
+    int playerNumberByColor = 0;
+
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
@@ -169,15 +174,6 @@ public partial class BallBehaviour : MonoBehaviour
     void OnTriggerEnter(Collider other) { ballStateManager.OnTriggerEnter(other); }
     void OnTriggerStay(Collider other) { ballStateManager.OnTriggerStay(other); }
     void OnTriggerExit(Collider other) { ballStateManager.OnTriggerExit(other); }
-
-    /// <summary>
-    /// 受けるダメージを計算する
-    /// </summary>
-    float DamageCalculate(float collisionPower, float hitObjectPower)
-    {
-        return DamageCalculator.Damage(collisionPower,
-                                        hitObjectPower / (prevVelocity.sqrMagnitude + hitObjectPower));
-    }
 
     /// <summary>
     /// プレイヤーが入っているかどうか

@@ -4713,7 +4713,7 @@ GameObject:
   - component: {fileID: 4063578691180799558}
   - component: {fileID: 5292204108031782743}
   m_Layer: 0
-  m_Name: Ball 1
+  m_Name: RedBonusBall
   m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4822,3 +4822,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballScriptableObject: {fileID: 11400000, guid: c8b278ad44638554c9d6fb47c5520bbe,
     type: 2}
+  isColor: 1
+  playerNumberByColor: 0
