@@ -43,6 +43,7 @@ public partial class BallBehaviour : MonoBehaviour
 
     void Start()
     {
+        playerRotation = transform.rotation;
         thisRigidbody.maxAngularVelocity = ballScriptableObject.MaxAngularVelocity;
         if (IsInPlayer())
         {
@@ -96,6 +97,7 @@ public partial class BallBehaviour : MonoBehaviour
 
     void LateUpdate()
     {
+        if (Time.timeScale == 0.0f || Fade.instance.IsFade) return;
         RestrictVelocity();
         ballStateManager.LateUpdate();
         if (IsInPlayer()) playerTransform.rotation = playerRotation;
