@@ -7,10 +7,6 @@ public class CameraShake : MonoBehaviour
     Vector3 initPosition = Vector3.zero;
     static float timeCount = 0.0f;
     Vector3 incrementPosition = Vector3.zero;
-    [SerializeField]
-    bool debugIsShake = false;
-    [SerializeField]
-    float debugShakeTime = 0.0f;
     void Start()
     {
         cameraTransform = GetComponent<Transform>();
@@ -31,11 +27,6 @@ public class CameraShake : MonoBehaviour
         else
         {
             cameraTransform.position = initPosition;
-        }
-        if (debugIsShake)
-        {
-            debugIsShake = false;
-            Shake(debugShakeTime);
         }
     }
 
