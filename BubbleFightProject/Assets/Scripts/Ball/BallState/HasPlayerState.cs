@@ -134,7 +134,7 @@ public partial class BallBehaviour : MonoBehaviour
         {
             ballBehaviour.numberUiTransform.position = RectTransformUtility.WorldToScreenPoint(
                 Camera.main, ballBehaviour.transform.position +
-                Vector3.Cross(Camera.main.transform.forward, Camera.main.transform.right) * 4.0f);
+                Vector3.Cross(Camera.main.transform.forward, Camera.main.transform.right) * 2.5f);
         }
         public override void OnCollisionEnter(Collision other)
         {

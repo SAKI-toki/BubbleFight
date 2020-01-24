@@ -1902,12 +1902,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007258440}
   m_CullTransparentMesh: 0
---- !u!4 &1016055259 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 405256, guid: c44bd9bdc114d4a60932c0087d9d1732,
-    type: 3}
-  m_PrefabInstance: {fileID: 1786227664}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1031746690 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 405256, guid: c44bd9bdc114d4a60932c0087d9d1732,
@@ -3894,6 +3888,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5666861927968773011, guid: 77d5586967c131249acdb08b5b79ab22,
         type: 3}
+      propertyPath: numbers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5666861927968773011, guid: 77d5586967c131249acdb08b5b79ab22,
+        type: 3}
       propertyPath: generateTransforms.Array.data[0]
       value: 
       objectReference: {fileID: 1667958288}
@@ -3937,6 +3936,36 @@ PrefabInstance:
       propertyPath: ballPrefab
       value: 
       objectReference: {fileID: 9115919894792072580, guid: 4b0322c7a851d634db7102f5fb8e6d7a,
+        type: 3}
+    - target: {fileID: 5666861927968773011, guid: 77d5586967c131249acdb08b5b79ab22,
+        type: 3}
+      propertyPath: numberUI
+      value: 
+      objectReference: {fileID: 7822366715524808349, guid: 0f88c920f225077449ffb5af57e2b972,
+        type: 3}
+    - target: {fileID: 5666861927968773011, guid: 77d5586967c131249acdb08b5b79ab22,
+        type: 3}
+      propertyPath: numbers.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: aa6563db11968dd48906fd8b752731ad,
+        type: 3}
+    - target: {fileID: 5666861927968773011, guid: 77d5586967c131249acdb08b5b79ab22,
+        type: 3}
+      propertyPath: numbers.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: bda0599baff09fa4a9b8367ff58621ab,
+        type: 3}
+    - target: {fileID: 5666861927968773011, guid: 77d5586967c131249acdb08b5b79ab22,
+        type: 3}
+      propertyPath: numbers.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 0626d3e635dcf0a4fa1d8e28894f031e,
+        type: 3}
+    - target: {fileID: 5666861927968773011, guid: 77d5586967c131249acdb08b5b79ab22,
+        type: 3}
+      propertyPath: numbers.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: b90f98c74df5e5046bff4d287a134f9a,
         type: 3}
     - target: {fileID: 1301506771713847203, guid: 77d5586967c131249acdb08b5b79ab22,
         type: 3}
