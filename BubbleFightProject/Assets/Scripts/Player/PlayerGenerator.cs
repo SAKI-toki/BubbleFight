@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// プレイヤーの生成器
@@ -10,6 +11,11 @@ public class PlayerGenerator : MonoBehaviour
 
     [SerializeField, Tooltip("ボール")]
     GameObject ballPrefab = null;
+
+    [SerializeField]
+    GameObject numberUI = null;
+    [SerializeField]
+    Sprite[] numbers = null;
 
     void Start()
     {
@@ -48,6 +54,11 @@ public class PlayerGenerator : MonoBehaviour
         player.transform.parent = ball.transform;
         player.transform.localPosition = Vector3.zero;
         player.transform.localRotation = Quaternion.identity;
+
+        GameObject imageObject = Instantiate(numberUI);
+        Image image = imageObject.GetComponentInChildren<Image>();
+        image.sprite = numbers[index];
+        ballBehaviour.SetNumberUI(image.rectTransform);
 
         var uiPlayer = PlayerTypeManager.GetInstance().GeneratePlayer(index, PlayerTypeManager.SceneType.Object);
         uiPlayer.layer = LayerMask.NameToLayer("3DUI");

@@ -41,6 +41,8 @@ public partial class BallBehaviour : MonoBehaviour
     [SerializeField]
     int playerNumberByColor = 0;
 
+    RectTransform numberUiTransform = null;
+
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
@@ -106,7 +108,11 @@ public partial class BallBehaviour : MonoBehaviour
         if (Time.timeScale == 0.0f || Fade.instance.IsFade) return;
         RestrictVelocity();
         ballStateManager.LateUpdate();
-        if (IsInPlayer()) playerTransform.rotation = playerRotation;
+        if (IsInPlayer())
+        {
+            playerTransform.rotation = playerRotation;
+        }
+
     }
 
     void OnDestroy()
@@ -210,6 +216,11 @@ public partial class BallBehaviour : MonoBehaviour
     public void SetDestroyEvent(DestroyEvent argDestroyEvent)
     {
         destroyEvent = argDestroyEvent;
+    }
+
+    public void SetNumberUI(RectTransform rectTransform)
+    {
+        numberUiTransform = rectTransform;
     }
 
     /// <summary>

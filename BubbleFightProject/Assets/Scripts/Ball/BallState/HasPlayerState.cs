@@ -13,6 +13,7 @@ public partial class BallBehaviour : MonoBehaviour
         protected override void Init()
         {
             particleSystem = ballBehaviour.GetComponentInChildren<ParticleSystem>();
+            AdjustNumberUI();
         }
 
         public override BallStateBase Update()
@@ -30,6 +31,7 @@ public partial class BallBehaviour : MonoBehaviour
                 velocity /= 1 + Time.deltaTime * ballBehaviour.brakePower;
                 ballBehaviour.thisRigidbody.velocity = velocity;
             }
+            AdjustNumberUI();
         }
 
         /// <summary>
@@ -128,6 +130,12 @@ public partial class BallBehaviour : MonoBehaviour
             ballBehaviour.thisRigidbody.AddTorque(addTorque * power * 0.9f);
         }
 
+        void AdjustNumberUI()
+        {
+            ballBehaviour.numberUiTransform.position = RectTransformUtility.WorldToScreenPoint(
+                Camera.main, ballBehaviour.transform.position +
+                Vector3.Cross(Camera.main.transform.forward, Camera.main.transform.right) * 4.0f);
+        }
         public override void OnCollisionEnter(Collision other)
         {
             switch (other.gameObject.tag)
