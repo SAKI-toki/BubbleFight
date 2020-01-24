@@ -9,6 +9,8 @@ public class GoalController : MonoBehaviour
     int goalNumber = 0;
     Transform childTransform = null;
     bool zeroPointFlag = false;
+    [SerializeField]
+    GameObject[] destroyZeroPointObjects = null;
 
     void Start()
     {
@@ -44,5 +46,9 @@ public class GoalController : MonoBehaviour
         var scale = childTransform.localScale;
         scale.y = 4;
         childTransform.localScale = scale;
+        foreach (var obj in destroyZeroPointObjects)
+        {
+            if (obj) Destroy(obj);
+        }
     }
 }
