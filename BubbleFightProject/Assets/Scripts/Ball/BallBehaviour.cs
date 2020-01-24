@@ -269,7 +269,6 @@ public partial class BallBehaviour : MonoBehaviour
         velocity.x *= bounceAddPower;
         velocity.z *= bounceAddPower;
         thisRigidbody.velocity = velocity;
-        Debug.Log(other.relativeVelocity.magnitude);
         if (other.relativeVelocity.magnitude > 8.0f)
         {
             hitSound.volume = Mathf.Clamp(other.relativeVelocity.magnitude / 25.0f, 0.1f, 1.0f);
