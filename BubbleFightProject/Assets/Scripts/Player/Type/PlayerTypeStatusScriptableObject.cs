@@ -34,4 +34,8 @@ public class PlayerTypeStatusScriptableObject : ScriptableObject
     protected float ballBoostInterval = 1.0f;
     public float BallBoostInterval { get { return ballBoostInterval; } }
 
+    [SerializeField, Tooltip("ボールのブレーキの強さ"), Range(1, 10)]
+    protected float ballBrakePower = 1.0f;
+    public float BallBrakePower { get { return ballBrakePower; } }
+
 }

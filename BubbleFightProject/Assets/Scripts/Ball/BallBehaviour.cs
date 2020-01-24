@@ -32,7 +32,7 @@ public partial class BallBehaviour : MonoBehaviour
     public delegate void DestroyEvent();
     DestroyEvent destroyEvent = null;
 
-    float movePower, easyCurveWeight, mass, boostPower, boostInterval;
+    float movePower, easyCurveWeight, mass, boostPower, boostInterval, brakePower;
 
     int destroyCount = 0;
 
@@ -57,7 +57,7 @@ public partial class BallBehaviour : MonoBehaviour
             if (playerStatus.Type == PlayerType.Alpaca)
             {
                 ((AlpacaStatus)playerStatus).AlpacaStatusInit(
-                    ref movePower, ref easyCurveWeight, ref mass, ref boostPower, ref boostInterval);
+                    ref movePower, ref easyCurveWeight, ref mass, ref boostPower, ref boostInterval, ref brakePower);
             }
             else
             {
@@ -66,6 +66,7 @@ public partial class BallBehaviour : MonoBehaviour
                 mass = playerStatus.BallMass;
                 boostPower = playerStatus.BallBoostPower;
                 boostInterval = playerStatus.BallBoostInterval;
+                brakePower = playerStatus.BallBrakePower;
             }
             transform.GetComponent<SphereCollider>().material = playerStatus.BallPhysicalMaterial;
             thisRigidbody.mass = mass;

@@ -7,13 +7,14 @@ public class AlpacaStatus : PlayerTypeStatusScriptableObject
     /// アルパカの初期化
     /// </summary>
     public void AlpacaStatusInit(ref float movePower, ref float easyCurveWeight,
-        ref float mass, ref float boostPower, ref float boostInterval)
+        ref float mass, ref float boostPower, ref float boostInterval, ref float brakePower)
     {
         movePower = Random.Range(minBallMovePower, maxBallMovePower);
         easyCurveWeight = Random.Range(minBallEasyCurveWeight, maxBallEasyCurveWeight);
         mass = Random.Range(minBallMass, maxBallMass);
         boostPower = Random.Range(minBallBoostPower, maxBallBoostPower);
         boostInterval = Random.Range(minBallBoostInterval, maxBallBoostInterval);
+        brakePower = Random.Range(minBallBrakePower, maxBallBrakePower);
     }
 
     [SerializeField, Header("アルパカの場合は以下のパラメータを変更してください"), Tooltip("ボールでの移動時の力(最低)")]
@@ -40,4 +41,9 @@ public class AlpacaStatus : PlayerTypeStatusScriptableObject
     float minBallBoostInterval = 1.0f;
     [SerializeField, Tooltip("ボールのブーストを再使用できる間隔(最高)")]
     float maxBallBoostInterval = 1.0f;
+
+    [SerializeField, Tooltip("ボールのブレーキの強さ(最低)"), Range(1, 10)]
+    float minBallBrakePower = 1.0f;
+    [SerializeField, Tooltip("ボールのブレーキの強さ(最高)"), Range(1, 10)]
+    float maxBallBrakePower = 1.0f;
 }

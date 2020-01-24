@@ -22,6 +22,16 @@ public partial class BallBehaviour : MonoBehaviour
             return this;
         }
 
+        public override void LateUpdate()
+        {
+            if (SwitchInput.GetButton(ballBehaviour.playerIndex, SwitchButton.Brake))
+            {
+                var velocity = ballBehaviour.thisRigidbody.velocity;
+                velocity /= 1 + Time.deltaTime * ballBehaviour.brakePower;
+                ballBehaviour.thisRigidbody.velocity = velocity;
+            }
+        }
+
         /// <summary>
         /// 移動
         /// </summary>
