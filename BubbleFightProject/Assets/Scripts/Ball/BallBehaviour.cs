@@ -43,9 +43,22 @@ public partial class BallBehaviour : MonoBehaviour
 
     RectTransform numberUiTransform = null;
 
+    [SerializeField]
+    AudioClip brakeClip = null, hitClip = null;
+
+    AudioSource brakeSound = null, hitSound = null;
+
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
+        brakeSound = gameObject.AddComponent<AudioSource>();
+        brakeSound.loop = false;
+        brakeSound.playOnAwake = false;
+        brakeSound.clip = brakeClip;
+        hitSound = gameObject.AddComponent<AudioSource>();
+        hitSound.loop = false;
+        hitSound.playOnAwake = false;
+        hitSound.clip = hitClip;
     }
 
     void Start()
@@ -250,5 +263,6 @@ public partial class BallBehaviour : MonoBehaviour
         velocity.x *= bounceAddPower;
         velocity.z *= bounceAddPower;
         thisRigidbody.velocity = velocity;
+        hitSound.Play();
     }
 }

@@ -27,9 +27,14 @@ public partial class BallBehaviour : MonoBehaviour
         {
             if (SwitchInput.GetButton(ballBehaviour.playerIndex, SwitchButton.Brake))
             {
+                if (SwitchInput.GetButtonDown(ballBehaviour.playerIndex, SwitchButton.Brake))
+                {
+                    ballBehaviour.brakeSound.Play();
+                }
                 var velocity = ballBehaviour.thisRigidbody.velocity;
                 velocity /= 1 + Time.deltaTime * ballBehaviour.brakePower;
                 ballBehaviour.thisRigidbody.velocity = velocity;
+                ballBehaviour.brakeSound.Play();
             }
             AdjustNumberUI();
         }

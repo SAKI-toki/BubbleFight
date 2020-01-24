@@ -4822,3 +4822,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballScriptableObject: {fileID: 11400000, guid: c8b278ad44638554c9d6fb47c5520bbe,
     type: 2}
+  isColor: 0
+  playerNumberByColor: 0
+  brakeClip: {fileID: 8300000, guid: d5b42c4db0079dc4ba712c5a85bff88d, type: 3}
+  hitClip: {fileID: 0}
