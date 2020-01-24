@@ -50,7 +50,7 @@ public partial class BallBehaviour : MonoBehaviour
 
     AudioSource brakeSound = null, hitSound = null;
 
-    [SerializeField,Range(0,1)]
+    [SerializeField, Range(0, 1)]
     float hitSoundVolume = 0.0f, brakeSoundVolume = 0.0f;
 
     void Awake()
@@ -275,7 +275,9 @@ public partial class BallBehaviour : MonoBehaviour
         thisRigidbody.velocity = velocity;
         if (other.relativeVelocity.magnitude > 8.0f)
         {
-            hitSound.volume = Mathf.Clamp(other.relativeVelocity.magnitude / 25.0f, 0.1f, 1.0f) * hitSoundVolume;
+            float volume = Mathf.Clamp(other.relativeVelocity.magnitude / 25.0f, 0.1f, 1.0f);
+            hitSound.volume = volume * hitSoundVolume;
+            if (volume >= 1.0f) CameraShake.Shake(0.2f);
             hitSound.Play();
         }
     }
