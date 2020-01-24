@@ -50,6 +50,9 @@ public partial class BallBehaviour : MonoBehaviour
 
     AudioSource brakeSound = null, hitSound = null;
 
+    [SerializeField,Range(0,1)]
+    float hitSoundVolume = 0.0f, brakeSoundVolume = 0.0f;
+
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody>();
@@ -57,6 +60,7 @@ public partial class BallBehaviour : MonoBehaviour
         brakeSound.loop = false;
         brakeSound.playOnAwake = false;
         brakeSound.clip = brakeClip;
+        brakeSound.volume = brakeSoundVolume;
         hitSound = gameObject.AddComponent<AudioSource>();
         hitSound.loop = false;
         hitSound.playOnAwake = false;
@@ -272,7 +276,7 @@ public partial class BallBehaviour : MonoBehaviour
         Debug.Log(other.relativeVelocity.magnitude);
         if (other.relativeVelocity.magnitude > 8.0f)
         {
-            hitSound.volume = Mathf.Clamp(other.relativeVelocity.magnitude / 25.0f, 0.1f, 1.0f);
+            hitSound.volume = Mathf.Clamp(other.relativeVelocity.magnitude / 25.0f, 0.1f, 1.0f) * hitSoundVolume;
             hitSound.Play();
         }
     }

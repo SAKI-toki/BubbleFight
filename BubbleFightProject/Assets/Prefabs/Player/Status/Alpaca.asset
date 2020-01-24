@@ -31,5 +31,5 @@ MonoBehaviour:
   maxBallBoostPower: 1500
   minBallBoostInterval: 1
   maxBallBoostInterval: 5
-  minBallBrakePower: 5
-  maxBallBrakePower: 5
+  minBallBrakePower: 1
+  maxBallBrakePower: 3

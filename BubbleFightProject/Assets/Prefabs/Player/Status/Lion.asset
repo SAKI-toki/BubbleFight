@@ -20,3 +20,4 @@ MonoBehaviour:
   ballMass: 10
   ballBoostPower: 1250
   ballBoostInterval: 1.5
+  ballBrakePower: 2
