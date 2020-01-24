@@ -140,6 +140,7 @@ public partial class BallBehaviour : MonoBehaviour
                         int goalNumber = other.gameObject.GetComponent<GoalController>().GetGoalNumber();
 
                         if (!PlayerJoinManager.IsJoin(goalNumber) || PointManager.GetPoint(goalNumber) <= 0) return;
+                        other.gameObject.GetComponent<GoalController>().goalAudioPlay();
                         if (goalNumber == ballBehaviour.playerIndex)
                         {
                             PointManager.OwnGoalCalculate(goalNumber);

@@ -15,6 +15,7 @@ public class PlayerTypeManager : Singleton<PlayerTypeManager>
         public GameObject gamePlayer = null;
         public GameObject objectPlayer = null;
         public PlayerTypeStatusScriptableObject statusObject = null;
+        public float uiOffset = 0.0f;
     }
     [SerializeField, Tooltip("プレイヤーのタイプ別のステータスリスト")]
     PlayerTypeInfo[] playerTypeInfoList = null;
@@ -24,7 +25,7 @@ public class PlayerTypeManager : Singleton<PlayerTypeManager>
         new Dictionary<PlayerType, PlayerTypeInfo>();
 
     static PlayerType[] playerTypes = new PlayerType[PlayerCount.MaxValue]
-    { PlayerType.Alpaca, PlayerType.Alpaca, PlayerType.Alpaca, PlayerType.Alpaca };
+    { PlayerType.Bear, PlayerType.Cat, PlayerType.Dog, PlayerType.Chicken };
 
     public override void MyStart()
     {
@@ -84,6 +85,11 @@ public class PlayerTypeManager : Singleton<PlayerTypeManager>
     public PlayerTypeStatusScriptableObject GetPlayerStatus(int index)
     {
         return GetPlayerStatus(playerTypes[index]);
+    }
+
+public float GetUiOffset(int index)
+    {
+        return dictionaryPlayerTypeInfoByType[playerTypes[index]].uiOffset;
     }
 }
 

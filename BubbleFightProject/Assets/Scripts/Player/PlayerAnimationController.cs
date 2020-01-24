@@ -33,6 +33,7 @@ public class PlayerAnimationController : MonoBehaviour
     /// </summary>
     public void AnimationSwitch(AnimationType type)
     {
+        if (animator == null) return;
         switch (type)
         {
             case AnimationType.Idle:

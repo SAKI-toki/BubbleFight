@@ -20,6 +20,7 @@ public class CharacterScelectManager : MonoBehaviour
             decisionInfo = new DecisionInfo();
         }
 
+        // 決定
         public void Decision(PlayerType type)
         {
             cursor.SetActive(false);
@@ -28,6 +29,7 @@ public class CharacterScelectManager : MonoBehaviour
             decisionInfo.isDecision = true;
         }
 
+        // キャンセル
         public void Cancel()
         {
             cursor.SetActive(true);
@@ -180,7 +182,7 @@ public class CharacterScelectManager : MonoBehaviour
     /// <param name="playerId"></param>
     void CursorMove(int playerId)
     {
-        float cursorSpeed = 1.5f;
+        const float cursorSpeed = 1.5f;
 
         var stick = SwitchInput.GetStick(playerId) * cursorSpeed * Time.deltaTime;
 
@@ -204,7 +206,7 @@ public class CharacterScelectManager : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Camera.main.WorldToScreenPoint(cursorPos));
         RaycastHit hit = new RaycastHit();
-        float distance = 15;
+        const float distance = 15;
 
         if (Physics.Raycast(ray, out hit, distance))
         {
@@ -260,6 +262,7 @@ public class CharacterScelectManager : MonoBehaviour
     /// </summary>
     void Decision(int playerId, PlayerType type)
     {
+        SeManager.GetInstance().Play(SeEnum.Decision);
         animalArray[animalIndex[type]].GetComponent<BoxCollider>().enabled = false;
         animalArray[animalIndex[type]].transform.position = new Vector3(
             playerUI[playerId].capusuleTransform.position.x - 0.01f,

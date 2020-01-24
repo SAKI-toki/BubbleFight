@@ -5,6 +5,7 @@ Shader "Custom/ground"
     Properties
     {
         [NoScaleOffset] _MainTex ("Texture", 2D) = "white" {}
+		_Color("Main Color", Color) = (1,1,1,1)
     }
     SubShader
     {
@@ -46,10 +47,12 @@ Shader "Custom/ground"
             }
 
             sampler2D _MainTex;
+			fixed4 _Color;
+
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.uv);
+                fixed4 col = tex2D(_MainTex, i.uv) * _Color;
                 // compute shadow attenuation (1.0 = fully lit, 0.0 = fully shadowed)
                 fixed shadow = SHADOW_ATTENUATION(i);
                 // darken light's illumination with shadow, keep ambient intact

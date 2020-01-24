@@ -9,6 +9,8 @@ public class GoalController : MonoBehaviour
     int goalNumber = 0;
     Transform childTransform = null;
     bool zeroPointFlag = false;
+    [SerializeField]
+    AudioSource goalAudio = null;
 
     void Start()
     {
@@ -44,5 +46,13 @@ public class GoalController : MonoBehaviour
         var scale = childTransform.localScale;
         scale.y = 4;
         childTransform.localScale = scale;
+    }
+
+    /// <summary>
+    /// ゴールに入った時の音を鳴らす
+    /// </summary>
+    public void goalAudioPlay()
+    {
+        goalAudio.Play();
     }
 }

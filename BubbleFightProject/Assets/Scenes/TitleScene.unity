@@ -182,7 +182,7 @@ MonoBehaviour:
   skybox: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   titleAnimalManager: {fileID: 1946288457}
   gachaRotateAudio: {fileID: 8300000, guid: 5b7dbba536602464e9d32530cf0a2712, type: 3}
-  ballGenerateAudio: {fileID: 8300000, guid: b440d1746a1930a4390affbcad2f06e8, type: 3}
+  ballGenerateAudio: {fileID: 8300000, guid: 5fcdef3516be97f4daa24b4ff112812d, type: 3}
 --- !u!95 &140880059
 Animator:
   serializedVersion: 3

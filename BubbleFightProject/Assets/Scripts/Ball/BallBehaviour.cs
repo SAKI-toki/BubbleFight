@@ -36,6 +36,8 @@ public partial class BallBehaviour : MonoBehaviour
 
     int destroyCount = 0;
 
+    PlayerAnimationController uiPlayerAnim = null;
+
     [SerializeField]
     bool isColor = false;
     [SerializeField]
@@ -209,6 +211,11 @@ public partial class BallBehaviour : MonoBehaviour
     public void SetDestroyEvent(DestroyEvent argDestroyEvent)
     {
         destroyEvent = argDestroyEvent;
+    }
+
+    public void SetUiPlayerAnim(PlayerAnimationController anim)
+    {
+        uiPlayerAnim = anim;
     }
 
     /// <summary>

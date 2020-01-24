@@ -5,6 +5,7 @@
 /// </summary>
 public class GameTimeManager : MonoBehaviour
 {
+    [SerializeField]
     float playTime = 180.0f;
 
     float playTimeCount = 0.0f;

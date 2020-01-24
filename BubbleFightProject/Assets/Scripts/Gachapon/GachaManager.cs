@@ -33,11 +33,14 @@ public class GachaManager : MonoBehaviour
     float gachaponMoveRange = 40;
     [SerializeField, Header("ガチャポンの可動スピード")]
     float gachaponMoveSpeed = 0.2f;
+    [SerializeField, Header("PauseManager")]
+    PauseManager pauseManager = null;
+    [SerializeField, Header("ガチャ排出音")]
+    AudioSource gachaDischargeSound = null;
 
     #endregion SerializeField
 
     const int gachaNum = 4;
-
     int currentGamePhaseNum = 0;
 
     Transform[] gachaponObj = new Transform[gachaNum];
@@ -93,12 +96,14 @@ public class GachaManager : MonoBehaviour
 
     private void Update()
     {
-        BallGenerator();
-        Timer();
-        GachaponMove();
+        if (!pauseManager.isPause)
+        {
+            BallGenerator();
+            Timer();
+            GachaponMove();
+        }
     }
 
-    [SerializeField]
     int currentBallNum = 0;
     float ballGeneratIntervalTime = 0.0f;
     float ballGeneratCountTime = 0.0f;
@@ -119,6 +124,7 @@ public class GachaManager : MonoBehaviour
     // 玉の生成
     void BallGenerate()
     {
+        gachaDischargeSound.Play();
         int randomVent = ballGenerateVentOrder[ballGeneratVentCurrentIndex];
         gachaponAnimator[randomVent].SetTrigger("ShakeTrigger");
 

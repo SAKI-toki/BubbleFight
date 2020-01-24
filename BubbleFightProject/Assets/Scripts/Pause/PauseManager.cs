@@ -14,7 +14,8 @@ public class PauseManager : MonoBehaviour
 
     bool isTranslation = false;
 
-    bool isPause = false;
+    [System.NonSerialized]
+    public bool isPause = false;
 
     [SerializeField]
     PauseItem[] pauseItems = null;
@@ -56,6 +57,7 @@ public class PauseManager : MonoBehaviour
         {
             if (SwitchInput.GetButtonDown(0, SwitchButton.Pause))
             {
+                SeManager.GetInstance().Play(SeEnum.Decision);
                 StartCoroutine(ReturnGame());
             }
             else
@@ -64,6 +66,7 @@ public class PauseManager : MonoBehaviour
                 if (SwitchInput.GetButtonDown(0, SwitchButton.Ok))
                 {
                     isPause = false;
+                    SeManager.GetInstance().Play(SeEnum.Decision);
                     currentItem.transform.localScale = Vector3.Scale(defaultScale
                     , new Vector3(1 + SizeRange, 1 + SizeRange, 1.0f));
                     currentItem.Execute();
