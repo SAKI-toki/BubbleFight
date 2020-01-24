@@ -4825,4 +4825,4 @@ MonoBehaviour:
   isColor: 0
   playerNumberByColor: 0
   brakeClip: {fileID: 8300000, guid: d5b42c4db0079dc4ba712c5a85bff88d, type: 3}
-  hitClip: {fileID: 0}
+  hitClip: {fileID: 8300000, guid: 2972a635d2e141a4ea7a387fe247ea74, type: 3}

@@ -61,6 +61,6 @@ public class GameManager : MonoBehaviour
         }
         Time.timeScale = 1.0f;
         yield return new WaitForSeconds(1.0f);
-        BgmManager.GetInstance().Play(BgmEnum.Game);
+        BgmManager.GetInstance().Play(BgmEnum.Game, true, 0.3f);
     }
 }

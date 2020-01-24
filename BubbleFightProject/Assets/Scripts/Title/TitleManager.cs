@@ -63,6 +63,7 @@ public class TitleManager : MonoBehaviour
                 nn.hid.NpadButton.Right |
                 nn.hid.NpadButton.Left))
             {
+                SeManager.GetInstance().Play(SeEnum.Decision);
                 fade.StartFadeOut("CharacterSelectScene");
             }
         }

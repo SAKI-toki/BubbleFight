@@ -3,6 +3,7 @@
 /// <summary>
 /// ゴールの制御クラス
 /// </summary>
+[RequireComponent(typeof(AudioSource))]
 public class GoalController : MonoBehaviour
 {
     [SerializeField, Tooltip("ゴールの番号")]
@@ -11,9 +12,11 @@ public class GoalController : MonoBehaviour
     bool zeroPointFlag = false;
     [SerializeField]
     GameObject[] destroyZeroPointObjects = null;
+    AudioSource goalAudio = null;
 
     void Start()
     {
+        goalAudio = GetComponent<AudioSource>();
         childTransform = transform.GetChild(0);
         var mat = childTransform.GetComponent<MeshRenderer>().material;
         mat.color = PlayerColor.GetColor(goalNumber);
@@ -50,5 +53,13 @@ public class GoalController : MonoBehaviour
         {
             if (obj) Destroy(obj);
         }
+    }
+
+    /// <summary>
+    /// ゴールに入った時の音を鳴らす
+    /// </summary>
+    public void goalAudioPlay()
+    {
+        goalAudio.Play();
     }
 }

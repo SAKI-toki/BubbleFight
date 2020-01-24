@@ -5,7 +5,7 @@
 /// </summary>
 public class Bumper : MonoBehaviour
 {
-    public const float BouncePower = 3.0f;
+    public const float BouncePower = 2.0f;
 
     void OnCollisionEnter(Collision other)
     {

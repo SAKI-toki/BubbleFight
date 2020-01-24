@@ -36,6 +36,8 @@ public partial class BallBehaviour : MonoBehaviour
 
     int destroyCount = 0;
 
+    PlayerAnimationController uiPlayerAnim = null;
+
     [SerializeField]
     bool isColor = false;
     [SerializeField]
@@ -235,6 +237,10 @@ public partial class BallBehaviour : MonoBehaviour
     {
         numberUiTransform = rectTransform;
     }
+    public void SetUiPlayerAnim(PlayerAnimationController anim)
+    {
+        uiPlayerAnim = anim;
+    }
 
     /// <summary>
     /// プレイヤーの回転
@@ -263,6 +269,11 @@ public partial class BallBehaviour : MonoBehaviour
         velocity.x *= bounceAddPower;
         velocity.z *= bounceAddPower;
         thisRigidbody.velocity = velocity;
-        hitSound.Play();
+        Debug.Log(other.relativeVelocity.magnitude);
+        if (other.relativeVelocity.magnitude > 8.0f)
+        {
+            hitSound.volume = Mathf.Clamp(other.relativeVelocity.magnitude / 25.0f, 0.1f, 1.0f);
+            hitSound.Play();
+        }
     }
 }

@@ -61,6 +61,7 @@ public class PlayerGenerator : MonoBehaviour
         ballBehaviour.SetNumberUI(image.rectTransform);
 
         var uiPlayer = PlayerTypeManager.GetInstance().GeneratePlayer(index, PlayerTypeManager.SceneType.Object);
+        ballBehaviour.SetUiPlayerAnim(uiPlayer.GetComponent<PlayerAnimationController>());
         uiPlayer.layer = LayerMask.NameToLayer("3DUI");
         foreach (var uiPlayerTransform in uiPlayer.GetComponentsInChildren<Transform>())
         {
@@ -83,5 +84,8 @@ public class PlayerGenerator : MonoBehaviour
                 break;
         }
         uiPlayer.transform.LookAt(Vector3.zero);
+        var uiPos = uiPlayer.transform.position;
+        uiPos.y = PlayerTypeManager.GetInstance().GetUiOffset(index);
+        uiPlayer.transform.position = uiPos;
     }
 }

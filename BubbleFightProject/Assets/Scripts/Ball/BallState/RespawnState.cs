@@ -18,6 +18,7 @@ public partial class BallBehaviour : MonoBehaviour
             ++ballBehaviour.destroyCount;
             respawnDelayTime = Mathf.Clamp(ballBehaviour.destroyCount * 1.0f, 0.0f, MaxRespawnDelayTime);
             if (ballBehaviour.numberUiTransform) ballBehaviour.numberUiTransform.gameObject.SetActive(false);
+            if (ballBehaviour.uiPlayerAnim) ballBehaviour.uiPlayerAnim.AnimationSwitch(PlayerAnimationController.AnimationType.Rest);
         }
 
         public override BallStateBase Update()
@@ -35,6 +36,7 @@ public partial class BallBehaviour : MonoBehaviour
             TranslateInitPosition();
             SwitchEnable(true);
             if (ballBehaviour.numberUiTransform) ballBehaviour.numberUiTransform.gameObject.SetActive(true);
+            if (ballBehaviour.uiPlayerAnim) ballBehaviour.uiPlayerAnim.AnimationSwitch(PlayerAnimationController.AnimationType.Idle);
         }
 
         /// <summary>

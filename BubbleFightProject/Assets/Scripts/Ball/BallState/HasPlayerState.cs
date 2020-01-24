@@ -27,14 +27,14 @@ public partial class BallBehaviour : MonoBehaviour
         {
             if (SwitchInput.GetButton(ballBehaviour.playerIndex, SwitchButton.Brake))
             {
-                if (SwitchInput.GetButtonDown(ballBehaviour.playerIndex, SwitchButton.Brake))
-                {
-                    ballBehaviour.brakeSound.Play();
-                }
                 var velocity = ballBehaviour.thisRigidbody.velocity;
                 velocity /= 1 + Time.deltaTime * ballBehaviour.brakePower;
                 ballBehaviour.thisRigidbody.velocity = velocity;
-                ballBehaviour.brakeSound.Play();
+                if (SwitchInput.GetButtonDown(ballBehaviour.playerIndex, SwitchButton.Brake) &&
+                    velocity.magnitude > 1.0f)
+                {
+                    ballBehaviour.brakeSound.Play();
+                }
             }
             AdjustNumberUI();
         }
@@ -163,6 +163,7 @@ public partial class BallBehaviour : MonoBehaviour
                         int goalNumber = other.gameObject.GetComponent<GoalController>().GetGoalNumber();
 
                         if (!PlayerJoinManager.IsJoin(goalNumber) || PointManager.GetPoint(goalNumber) <= 0) return;
+                        other.gameObject.GetComponent<GoalController>().goalAudioPlay();
                         if (goalNumber == ballBehaviour.playerIndex)
                         {
                             PointManager.OwnGoalCalculate(goalNumber);
